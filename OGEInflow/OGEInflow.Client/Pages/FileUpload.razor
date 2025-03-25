@@ -1,15 +1,7 @@
 @page "/FileUpload"
-@rendermode InteractiveServer
+@using OGEInflow.Services
 
-
-<PageTitle>Blazor Server File Upload</PageTitle>
-
-<MudText>File Upload - MudText</MudText>
-
-<div style="margin-bottom: 20px; display: flex;">
-    <div>Select your file:</div>
-    <InputFile OnChange="FileUploaded" />
-</div>
+<PageTitle>File Upload</PageTitle>
 
 <MudFileUpload T="IBrowserFile" OnFilesChanged="FileUploaded">
     <ActivatorContent>
@@ -21,7 +13,7 @@
     </ActivatorContent>
 </MudFileUpload>
 
-<label>Reader Events Count: @readerEvents.Count</label>
+<label>Reader Events Count: @ReaderEvent.readerEvents.Count</label>
 
 <h2>Selected file</h2>
 <div>

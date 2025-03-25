@@ -47,17 +47,17 @@ public partial class FileUpload : ComponentBase
                     Console.WriteLine("File project root" + projectRoot);
                     Console.WriteLine("Target file path: " + targetFilePath);
                     
-                    populateEvents(targetFilePath);
-                    Console.WriteLine($"Lines in csv from {targetFilePath}: {readerEvents.Count}");
+                    // populateEvents(targetFilePath);
+                    // Console.WriteLine($"Lines in csv from {targetFilePath}: {readerEvents.Count}");
 
-                    ProcessReaderEvents(readerEvents);
-                    Console.WriteLine("ProcessReaderEvents called");
-                    
-                    DayOfWeekReaderEvents(readerEvents);
-                    Console.WriteLine("DayOfWeekReaderEvents called");
-                    
-                    LoadReaderEventsLineGraph();
-                    Console.WriteLine("LoadReaderEventsLineGraph called");
+                    // ProcessReaderEvents(readerEvents);
+                    // Console.WriteLine("ProcessReaderEvents called");
+                    //
+                    // DayOfWeekReaderEvents(readerEvents);
+                    // Console.WriteLine("DayOfWeekReaderEvents called");
+                    //
+                    // LoadReaderEventsLineGraph();
+                    // Console.WriteLine("LoadReaderEventsLineGraph called");
                     
                 }
                 catch (Exception exception)
@@ -71,7 +71,7 @@ public partial class FileUpload : ComponentBase
     
     /* ReaderEvent Section */
     
-    private static List<ReaderEvent> readerEvents = new List<ReaderEvent>();
+    // private static List<ReaderEvent> readerEvents = new List<ReaderEvent>();
 
     public static void populateEvents(string file)
     {
@@ -87,7 +87,7 @@ public partial class FileUpload : ComponentBase
                     if (fields.Count >= 6)
                     {
                         ReaderEvent re = new ReaderEvent(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
-                        readerEvents.Add(re);
+                        ReaderEvent.readerEvents.Add(re);
                     }
                     else
                     {
@@ -97,7 +97,7 @@ public partial class FileUpload : ComponentBase
             }
 
             Console.WriteLine("Events populated");
-            Console.WriteLine($"Total events: {readerEvents.Count}");
+            Console.WriteLine($"Total events: {ReaderEvent.readerEvents.Count}");
         }
         else
         {
@@ -147,6 +147,8 @@ public partial class FileUpload : ComponentBase
         }
     }
     
+    
+    /* Graphs Section */
     private static ChartOptions options = new ChartOptions();
     public static List<ChartSeries> Series;
     public static string[] XAxisLabels = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };

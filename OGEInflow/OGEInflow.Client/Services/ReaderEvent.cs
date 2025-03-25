@@ -9,6 +9,9 @@ public class ReaderEvent
     public string DEVID { get; set; }
     public string MACHINE { get; set; }
     
+    //To be accessed by multiple files 
+    public static List<ReaderEvent> readerEvents = new List<ReaderEvent>();
+    
     public ReaderEvent(string eventTime, string location, string readerDesc, string id, string devid, string machine)
     {
         EventTime = eventTime;
