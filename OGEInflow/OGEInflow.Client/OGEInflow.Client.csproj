@@ -13,4 +13,10 @@
         <PackageReference Include="MudBlazor" Version="8.*"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Pages\FileUpload.razor.cs">
+        <DependentUpon>FileUpload.razor</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

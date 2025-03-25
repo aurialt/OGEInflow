@@ -1,0 +1,38 @@
+@page "/FileUpload"
+@rendermode InteractiveServer
+
+
+<PageTitle>Blazor Server File Upload</PageTitle>
+
+<MudText>File Upload - MudText</MudText>
+
+<div style="margin-bottom: 20px; display: flex;">
+    <div>Select your file:</div>
+    <InputFile OnChange="FileUploaded" />
+</div>
+
+<MudFileUpload T="IBrowserFile" OnFilesChanged="FileUploaded">
+    <ActivatorContent>
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.CloudUpload">
+            Upload Files
+        </MudButton>
+    </ActivatorContent>
+</MudFileUpload>
+
+<label>Reader Events Count: @readerEvents.Count</label>
+
+<h2>Selected file</h2>
+<div>
+    <div>File name: @FileName</div>
+    <div>File size: @FileSize.ToString("n0") bytes</div>
+    <div>File type: @FileType</div>
+    <div>Last modified: @LastModified</div>
+</div>
+
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div>Error: @ErrorMessage</div>
+}
