@@ -11,8 +11,8 @@ public partial class Home : ComponentBase
     // Handles multiple files
     public static void LoadGraphs()
     {
-        ReaderEvent.GenerateDayOfWeekReaderEvents(ReaderEvent.readerEventsList);
-        Console.WriteLine("DayOfWeekReaderEvents called");
+        // ReaderEvent.GenerateDayOfWeekReaderEvents(ReaderEvent.readerEventsList);
+        // Console.WriteLine("DayOfWeekReaderEvents called");
         
         LoadReaderEventsLineGraph();
         Console.WriteLine("LoadReaderEventsLineGraph called");
@@ -40,7 +40,7 @@ public partial class Home : ComponentBase
     {
         eventCounts = XAxisLabels.ToDictionary(day => day, _ => 0);
 
-        foreach (var entry in ReaderEvent.ListDayOfWeekReaderEvents)
+        foreach (var entry in ReaderEvent.DayOfWeekReaderEventsDict)
         {
             if (eventCounts.ContainsKey(entry.Key))
             {
