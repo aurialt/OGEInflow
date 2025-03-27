@@ -8,8 +8,7 @@ namespace OGEInflow.Client.Pages;
 
 public partial class Home : ComponentBase
 {
-    // Handles multiple files
-    public static void LoadGraphs()
+    private static void LoadGraphs()
     {
         // ReaderEvent.GenerateDayOfWeekReaderEvents(ReaderEvent.readerEventsList);
         // Console.WriteLine("DayOfWeekReaderEvents called");

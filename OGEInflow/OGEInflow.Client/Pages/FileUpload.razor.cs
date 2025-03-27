@@ -15,8 +15,7 @@ public partial class FileUpload : ComponentBase
     public static string ErrorMessage { get; set; } = "";
     
     const int MAX_FILESIZE = 5000 * 1024; // 2 MB
-
-    // Handles multiple files
+    
     public static async Task FileUploaded(InputFileChangeEventArgs e)
     {
         var browserFiles = e.GetMultipleFiles();
@@ -70,9 +69,6 @@ public partial class FileUpload : ComponentBase
     
     
     /* ReaderEvent Section */
-    
-    // private static List<ReaderEvent> readerEvents = new List<ReaderEvent>();
-
     public static void populateEvents(string file)
     {
         if (Path.Exists(file) && Path.GetExtension(file) == ".csv")
@@ -106,7 +102,4 @@ public partial class FileUpload : ComponentBase
             ErrorMessage = $"File {file} does not exist or is not a .csv file.";
         }
     }
-    
-    /*# 7 */
-    
 }
