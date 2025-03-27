@@ -22,4 +22,10 @@
       </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Pages\FileUpload.razor.css">
+        <DependentUpon>FileUpload.razor</DependentUpon>
+      </None>
+    </ItemGroup>
+
 </Project>

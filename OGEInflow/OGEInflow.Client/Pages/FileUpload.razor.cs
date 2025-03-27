@@ -87,7 +87,7 @@ public partial class FileUpload : ComponentBase
                     if (fields.Count >= 6)
                     {
                         ReaderEvent re = new ReaderEvent(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
-                        ReaderEvent.readerEvents.Add(re);
+                        ReaderEvent.readerEventsList.Add(re);
                     }
                     else
                     {
@@ -97,7 +97,7 @@ public partial class FileUpload : ComponentBase
             }
 
             Console.WriteLine("Events populated");
-            Console.WriteLine($"Total events: {ReaderEvent.readerEvents.Count}");
+            Console.WriteLine($"Total events: {ReaderEvent.readerEventsList.Count}");
         }
         else
         {
@@ -106,83 +106,5 @@ public partial class FileUpload : ComponentBase
     }
     
     /*# 7 */
-    private static Dictionary<string, List<ReaderEvent>> readerEventsDict = new Dictionary<string, List<ReaderEvent>>();
-    //My notes: initially empty, but scan events either create or append to the dictionary.
-
-    public static void ProcessReaderEvents(List<ReaderEvent> eventsList)
-    {
-
-        foreach (var eventItem in eventsList)
-        {
-            string readerID = $"{eventItem.DEVID}-{eventItem.MACHINE}";
-            
-            if (!readerEventsDict.ContainsKey(readerID))
-            {
-                readerEventsDict[readerID] = new List<ReaderEvent> { eventItem };
-            }
-            else
-            {
-                readerEventsDict[readerID].Add(eventItem);
-            }
-        }
-    }
-
-    static Dictionary<string, List<ReaderEvent>> ListDayOfWeekReaderEvents = new Dictionary<string, List<ReaderEvent>>();
-    public static void DayOfWeekReaderEvents(List<ReaderEvent> eventsList)
-    {
-        foreach (var eventItem in eventsList)
-        {
-            string date = eventItem.EventTime;
-            DateTime dateTime = DateTime.Parse(date);
-            string dayOfWeek = dateTime.DayOfWeek.ToString();
-
-            if (!ListDayOfWeekReaderEvents.ContainsKey(dayOfWeek))
-            {
-                ListDayOfWeekReaderEvents[dayOfWeek] = new List<ReaderEvent>();
-            }
-            else
-            {
-                ListDayOfWeekReaderEvents[dayOfWeek].Add(eventItem);
-            }
-        }
-    }
     
-    
-    /* Graphs Section */
-    private static ChartOptions options = new ChartOptions();
-    public static List<ChartSeries> Series;
-    public static string[] XAxisLabels = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-
-    private static Dictionary<string, int> eventCounts = new();
-
-    protected override void OnInitialized()
-    {
-        // Call static method to load data
-        LoadReaderEventsLineGraph();
-    }
-
-    public static void LoadReaderEventsLineGraph()
-    {
-        // options.YAxisFormat = "n0"; // Displays numbers normally
-
-        eventCounts = XAxisLabels.ToDictionary(day => day, _ => 0);
-
-        foreach (var entry in ListDayOfWeekReaderEvents)
-        {
-            if (eventCounts.ContainsKey(entry.Key))
-            {
-                eventCounts[entry.Key] = entry.Value.Count;
-            }
-        }
-
-        // Populates chart data
-        Series = new List<ChartSeries>
-        {
-            new()
-            {
-                Name = "Events per Day",
-                Data = eventCounts.Values.Select(count => (double)count).ToArray()
-            }
-        };
-    }
 }

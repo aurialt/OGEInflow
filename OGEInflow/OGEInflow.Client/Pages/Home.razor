@@ -1,13 +1,21 @@
 ﻿@page "/"
+<link rel="stylesheet" href="css/home.css">
+
 
 <PageTitle>Home</PageTitle>
 <h1>Welcome</h1>
 
 <section class="main">
     <MudGrid>
-        <div>
+        <MudPaper>
+            <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="350" ></MudChart>
+        </MudPaper>
+        <MudPaper>
+            <h2>Warning Flags</h2>
+        </MudPaper>
+        <MudPaper>
             <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="350" ChartOptions="options" ></MudChart>
-        </div>
+        </MudPaper>
 
     </MudGrid>
 </section>

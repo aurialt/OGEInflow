@@ -8,43 +8,17 @@ namespace OGEInflow.Client.Pages;
 
 public partial class Home : ComponentBase
 {
-    public static string FileName { get; set; } = "";
-    public static long FileSize { get; set; }
-    public static string FileType { get; set; } = "";
-    public static DateTimeOffset LastModified { get; set; }
-    public static string ErrorMessage { get; set; } = "";
-    
-    const int MAX_FILESIZE = 5000 * 1024; // 2 MB
-
     // Handles multiple files
     public static void LoadGraphs()
     {
-        DayOfWeekReaderEvents(ReaderEvent.readerEvents);
+        ReaderEvent.GenerateDayOfWeekReaderEvents(ReaderEvent.readerEventsList);
         Console.WriteLine("DayOfWeekReaderEvents called");
         
         LoadReaderEventsLineGraph();
         Console.WriteLine("LoadReaderEventsLineGraph called");
     }
 
-    static Dictionary<string, List<ReaderEvent>> ListDayOfWeekReaderEvents = new Dictionary<string, List<ReaderEvent>>();
-    public static void DayOfWeekReaderEvents(List<ReaderEvent> eventsList)
-    {
-        foreach (var eventItem in eventsList)
-        {
-            string date = eventItem.EventTime;
-            DateTime dateTime = DateTime.Parse(date);
-            string dayOfWeek = dateTime.DayOfWeek.ToString();
-
-            if (!ListDayOfWeekReaderEvents.ContainsKey(dayOfWeek))
-            {
-                ListDayOfWeekReaderEvents[dayOfWeek] = new List<ReaderEvent>();
-            }
-            else
-            {
-                ListDayOfWeekReaderEvents[dayOfWeek].Add(eventItem);
-            }
-        }
-    }
+    
     
     
     /* Graphs Section */
@@ -56,7 +30,7 @@ public partial class Home : ComponentBase
 
     protected override void OnInitialized()
     {
-        if (ReaderEvent.readerEvents != null)
+        if (ReaderEvent.readerEventsList != null)
         {
             LoadGraphs();
         }
@@ -66,7 +40,7 @@ public partial class Home : ComponentBase
     {
         eventCounts = XAxisLabels.ToDictionary(day => day, _ => 0);
 
-        foreach (var entry in ListDayOfWeekReaderEvents)
+        foreach (var entry in ReaderEvent.ListDayOfWeekReaderEvents)
         {
             if (eventCounts.ContainsKey(entry.Key))
             {
