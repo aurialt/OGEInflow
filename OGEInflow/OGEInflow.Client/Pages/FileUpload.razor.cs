@@ -46,17 +46,7 @@ public partial class FileUpload : ComponentBase
                     Console.WriteLine("File project root" + projectRoot);
                     Console.WriteLine("Target file path: " + targetFilePath);
                     
-                    // populateEvents(targetFilePath);
-                    // Console.WriteLine($"Lines in csv from {targetFilePath}: {readerEvents.Count}");
-
-                    // ProcessReaderEvents(readerEvents);
-                    // Console.WriteLine("ProcessReaderEvents called");
-                    //
-                    // DayOfWeekReaderEvents(readerEvents);
-                    // Console.WriteLine("DayOfWeekReaderEvents called");
-                    //
-                    // LoadReaderEventsLineGraph();
-                    // Console.WriteLine("LoadReaderEventsLineGraph called");
+                    PopulateReaderEvents(targetFilePath);
                     
                 }
                 catch (Exception exception)
@@ -69,7 +59,7 @@ public partial class FileUpload : ComponentBase
     
     
     /* ReaderEvent Section */
-    public static void populateEvents(string file)
+    public static void PopulateReaderEvents(string file)
     {
         if (Path.Exists(file) && Path.GetExtension(file) == ".csv")
         {
