@@ -8,13 +8,13 @@
 <section class="main">
     <div class="grid-container">
         <div class="grid-item">
-            <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%"></MudChart>
+            <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" XAxisLabels="@ScanActivations_x" Width="100%"></MudChart>
         </div>
         <div class="grid-item">
             <h2>Warning Flags</h2>
         </div>
         <div class="grid-item">
-            <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="350" ChartOptions="options"></MudChart>
+            <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@ScanActivations_x" Width="100%" Height="350" ChartOptions="options"></MudChart>
         </div>
     </div>
 </section>

@@ -15,9 +15,11 @@ public class ReaderEvent
     /* Dictionaries dependent on readerEvent List*/
     private static Dictionary<string, List<ReaderEvent>> dayOfWeekReaderEventsDict = new Dictionary<string, List<ReaderEvent>>();
     private static Dictionary<string, List<ReaderEvent>> readerIdDict = new Dictionary<string, List<ReaderEvent>>();
+    private static Dictionary<string, List<ReaderEvent>> readerDescDict = new Dictionary<string, List<ReaderEvent>>();
     //My notes: initially empty, but scan events either create or append to the dictionary.
 
 
+    /* Property access to to private dictionaries  */
     public static Dictionary<string, List<ReaderEvent>> DayOfWeekReaderEventsDict
     {
         get { return dayOfWeekReaderEventsDict; }
@@ -26,6 +28,11 @@ public class ReaderEvent
     public static Dictionary<string, List<ReaderEvent>> ReaderIdDict
     {
         get { return readerIdDict; } 
+    }
+
+    public static Dictionary<string, List<ReaderEvent>> ReaderDescDict
+    {
+        get { return readerDescDict; }
     }
         
     
@@ -38,11 +45,13 @@ public class ReaderEvent
         DEVID = devid;
         MACHINE = machine;
     }
-
+    
+    
+    /* Generate Dictionaries Implentations */
     public static void GenerateDictionaries()
     {
         GenerateReaderIdDict(readerEventsList);
-        GenerateDayOfWeekReaderEvents(readerEventsList);
+        GenerateDayOfWeekReaderEventsDict(readerEventsList);
     }
     
     private static void GenerateReaderIdDict(List<ReaderEvent> eventsList)
@@ -63,7 +72,7 @@ public class ReaderEvent
         }
     }
     
-    private static void GenerateDayOfWeekReaderEvents(List<ReaderEvent> eventsList)
+    private static void GenerateDayOfWeekReaderEventsDict(List<ReaderEvent> eventsList)
     {
         foreach (var eventItem in eventsList)
         {
@@ -81,4 +90,21 @@ public class ReaderEvent
             }
         }
     }
+
+    private static void GenerateReaderDescDict(List<ReaderEvent> eventsList)
+    {
+        foreach (var eventItem in eventsList)
+        {
+            if (!readerIdDict.ContainsKey(eventItem.ReaderDesc))
+            {
+                readerIdDict[eventItem.ReaderDesc] = new List<ReaderEvent>();
+            }
+            else
+            {
+                readerIdDict[eventItem.ReaderDesc].Add(eventItem);
+            }
+        }
+    }
+    
+    
 }

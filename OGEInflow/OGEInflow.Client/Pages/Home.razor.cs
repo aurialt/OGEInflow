@@ -10,11 +10,7 @@ public partial class Home : ComponentBase
 {
     private static void LoadGraphs()
     {
-        // ReaderEvent.GenerateDayOfWeekReaderEvents(ReaderEvent.readerEventsList);
-        // Console.WriteLine("DayOfWeekReaderEvents called");
-        
         LoadReaderEventsLineGraph();
-        Console.WriteLine("LoadReaderEventsLineGraph called");
     }
 
     
@@ -23,7 +19,7 @@ public partial class Home : ComponentBase
     /* Graphs Section */
     private static ChartOptions options = new ChartOptions();
     public static List<ChartSeries> Series;
-    public static string[] XAxisLabels = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+    public static string[] ScanActivations_x = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
     private static Dictionary<string, int> eventCounts = new();
 
@@ -37,7 +33,7 @@ public partial class Home : ComponentBase
 
     public static void LoadReaderEventsLineGraph()
     {
-        eventCounts = XAxisLabels.ToDictionary(day => day, _ => 0);
+        eventCounts = ScanActivations_x.ToDictionary(day => day, _ => 0);
 
         foreach (var entry in ReaderEvent.DayOfWeekReaderEventsDict)
         {
@@ -52,9 +48,15 @@ public partial class Home : ComponentBase
         {
             new()
             {
-                Name = "Events per Day",
+                Name = "Scan Activations",
                 Data = eventCounts.Values.Select(count => (double)count).ToArray()
             }
         };
     }
+
+    // public MudBlazorGraph LoadReaderDescGraph()
+    // {
+    //     
+    //     return new MudBlazorGraph();
+    // }
 }
