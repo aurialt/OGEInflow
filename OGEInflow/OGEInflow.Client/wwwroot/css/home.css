@@ -1,3 +1,28 @@
-/*div {*/
-/*    background-color: lightgray;*/
-/*}*/
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 16px;
+}
+
+.grid-item {
+    background-color: gray;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+
+/* Medium screens: 2 columns */
+@media (max-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Small screens: 1 column */
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}

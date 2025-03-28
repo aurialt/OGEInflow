@@ -6,16 +6,15 @@
 <h1>Welcome</h1>
 
 <section class="main">
-    <MudGrid>
-        <MudPaper>
-            <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="350" ></MudChart>
-        </MudPaper>
-        <MudPaper>
+    <div class="grid-container">
+        <div class="grid-item">
+            <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%"></MudChart>
+        </div>
+        <div class="grid-item">
             <h2>Warning Flags</h2>
-        </MudPaper>
-        <MudPaper>
-            <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="350" ChartOptions="options" ></MudChart>
-        </MudPaper>
-
-    </MudGrid>
+        </div>
+        <div class="grid-item">
+            <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="350" ChartOptions="options"></MudChart>
+        </div>
+    </div>
 </section>
