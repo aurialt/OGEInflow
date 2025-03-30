@@ -7,8 +7,7 @@ namespace OGEInflow.Client.Pages;
 public partial class Home : ComponentBase
 {
     /* Graphs Section */
-    private static readonly ChartOptions options = new ChartOptions();
-    public static MudBlazorGraph ScanActivationsGraph, ReaderDescGraph;
+    public static MudBlazorGraph ScanActivationsGraph, ReaderDescGraph, PersonIDGraph;
 
     protected override void OnInitialized()
     {
@@ -18,14 +17,18 @@ public partial class Home : ComponentBase
         }
     }
 
+    //Will cause page error if all create graphs aren't put into here
     private static void LoadGraphs()
     {
         createReaderDescGraph();
         createScanActivationGraph();
+        createPersonIDGraph();
     }
     
-    public static void createReaderDescGraph()
+    private static void createReaderDescGraph()
     {
+        ChartOptions options = new ChartOptions();
+        
         List<ChartSeries> series = new List<ChartSeries>
         {
             new()
@@ -40,8 +43,10 @@ public partial class Home : ComponentBase
         ReaderDescGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.ReaderDescDict, null, options);
     }
 
-    public static void createScanActivationGraph()
+    private static void createScanActivationGraph()
     {
+        ChartOptions options = new ChartOptions();
+        
         string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
         
         var sortedDayOfWeekReaderEvents = ReaderEvent.DayOfWeekReaderEventsDict
@@ -61,6 +66,24 @@ public partial class Home : ComponentBase
         };
         
         ScanActivationsGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.DayOfWeekReaderEventsDict, daysOfWeek, options);
+    }
+
+    private static void createPersonIDGraph()
+    {
+        ChartOptions options = new ChartOptions();
+        
+        List<ChartSeries> series = new List<ChartSeries>
+        {
+            new ()
+            {
+                Name = "Scan Activations",
+                Data = ReaderEvent.PersonIDDict.Values
+                    .Select(entry => (double)entry.Count)
+                    .ToArray()
+            }
+        };
+        
+        PersonIDGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.PersonIDDict, null, options);
     }
     
 }

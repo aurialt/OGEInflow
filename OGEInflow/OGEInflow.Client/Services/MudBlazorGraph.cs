@@ -21,6 +21,10 @@ public class MudBlazorGraph
         // If xAxisLabels is null, generate labels from the source data
         string[] labels = xAxisLabels ?? ExtractLabels(sourceData);
         Dictionary<string, int> eventCounts = ComputeEventCounts(sourceData, labels);
+        foreach (var ec in eventCounts)
+        {
+            Console.WriteLine("CreateGraph() ec: " + ec.Key + " - " + ec.Value);
+        }
 
         return new MudBlazorGraph(options, labels, eventCounts, series);
     }

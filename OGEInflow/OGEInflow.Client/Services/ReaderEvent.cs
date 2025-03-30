@@ -14,26 +14,20 @@ public class ReaderEvent
     
     /* Dictionaries dependent on readerEvent List*/
     private static Dictionary<string, List<ReaderEvent>> dayOfWeekReaderEventsDict = new Dictionary<string, List<ReaderEvent>>();
+    private static Dictionary<string, List<ReaderEvent>> personIDDict = new Dictionary<string, List<ReaderEvent>>();
     private static Dictionary<string, List<ReaderEvent>> readerIdDict = new Dictionary<string, List<ReaderEvent>>();
     private static Dictionary<string, List<ReaderEvent>> readerDescDict = new Dictionary<string, List<ReaderEvent>>();
     //My notes: initially empty, but scan events either create or append to the dictionary.
 
 
     /* Property access to to private dictionaries  */
-    public static Dictionary<string, List<ReaderEvent>> DayOfWeekReaderEventsDict
-    {
-        get { return dayOfWeekReaderEventsDict; }
-    }
+    public static Dictionary<string, List<ReaderEvent>> DayOfWeekReaderEventsDict { get { return dayOfWeekReaderEventsDict; } }
 
-    public static Dictionary<string, List<ReaderEvent>> ReaderIdDict
-    {
-        get { return readerIdDict; } 
-    }
+    public static Dictionary<string, List<ReaderEvent>> PersonIDDict { get { return personIDDict; } }
 
-    public static Dictionary<string, List<ReaderEvent>> ReaderDescDict
-    {
-        get { return readerDescDict; }
-    }
+    public static Dictionary<string, List<ReaderEvent>> ReaderIdDict { get { return readerIdDict; } }
+
+    public static Dictionary<string, List<ReaderEvent>> ReaderDescDict { get { return readerDescDict; } }
         
     
     public ReaderEvent(string eventTime, string location, string readerDesc, string id, string devid, string machine)
@@ -50,9 +44,20 @@ public class ReaderEvent
     /* Generate Dictionaries Implentations */
     public static void GenerateDictionaries()
     {
-        GenerateReaderIdDict(readerEventsList);
         GenerateDayOfWeekReaderEventsDict(readerEventsList);
+        GeneratePersonIDDict(readerEventsList);
+        GenerateReaderIdDict(readerEventsList);
         GenerateReaderDescDict(readerEventsList);
+    }
+
+    private static void GeneratePersonIDDict(List<ReaderEvent> eventList)
+    {
+        personIDDict.Clear();
+        foreach (var eventItem in eventList)
+        {
+            AddEventToDict(personIDDict, eventItem.ID, eventItem);
+            Console.WriteLine("PersonID: " + eventItem.ID);
+        }
     }
     
     private static void GenerateReaderIdDict(List<ReaderEvent> eventsList)
@@ -87,6 +92,10 @@ public class ReaderEvent
         }
     }
     
+ 
+    
+    
+    /* Helper Methods */
     private static void AddEventToDict(Dictionary<string, List<ReaderEvent>> targetDict, string key, ReaderEvent eventItem)
     {
         if (!targetDict.ContainsKey(key))
@@ -98,6 +107,8 @@ public class ReaderEvent
             targetDict[key].Add(eventItem);
         }
     }
+    
+    
 
     /*Testing Code */
     public static void printDescList()
@@ -108,6 +119,7 @@ public class ReaderEvent
             Console.WriteLine("printDescList - eventItem: " + eventItem.Count);
         }
     }
+    
     
     
 }
