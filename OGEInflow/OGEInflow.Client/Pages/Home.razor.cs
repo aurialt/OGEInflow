@@ -28,7 +28,7 @@ public partial class Home : ComponentBase
     {
         List<ChartSeries> series = new List<ChartSeries>
         {
-            new ChartSeries
+            new()
             {
                 Name = "Reader Description",
                 Data = ReaderEvent.ReaderDescDict.Values
@@ -51,7 +51,7 @@ public partial class Home : ComponentBase
         
         List<ChartSeries> series = new List<ChartSeries>
         {
-            new ChartSeries
+            new ()
             {
                 Name = "Scan Activations",
                 Data = sortedDayOfWeekReaderEvents

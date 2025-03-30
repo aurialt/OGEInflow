@@ -14,7 +14,7 @@ public partial class FileUpload : ComponentBase
     public static DateTimeOffset LastModified { get; set; }
     public static string ErrorMessage { get; set; } = "";
     
-    const int MAX_FILESIZE = 5000 * 1024; // 2 MB
+    const int MAX_FILESIZE = 5000 * 1024; // 5 MB
     
     public static async Task FileUploaded(InputFileChangeEventArgs e)
     {

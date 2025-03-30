@@ -61,15 +61,7 @@ public class ReaderEvent
         foreach (var eventItem in eventsList)
         {
             string readerID = $"{eventItem.DEVID}-{eventItem.MACHINE}";
-            
-            if (!readerIdDict.ContainsKey(readerID))
-            {
-                readerIdDict[readerID] = new List<ReaderEvent> { eventItem };
-            }
-            else
-            {
-                readerIdDict[readerID].Add(eventItem);
-            }
+            AddEventToDict(readerIdDict, readerID, eventItem);
         }
     }
     
@@ -82,14 +74,7 @@ public class ReaderEvent
             DateTime dateTime = DateTime.Parse(date);
             string dayOfWeek = dateTime.DayOfWeek.ToString();
 
-            if (!dayOfWeekReaderEventsDict.ContainsKey(dayOfWeek))
-            {
-                dayOfWeekReaderEventsDict[dayOfWeek] = new List<ReaderEvent>();
-            }
-            else
-            {
-                dayOfWeekReaderEventsDict[dayOfWeek].Add(eventItem);
-            }
+            AddEventToDict(dayOfWeekReaderEventsDict, dayOfWeek, eventItem);
         }
     }
 
@@ -98,17 +83,23 @@ public class ReaderEvent
         readerDescDict.Clear();
         foreach (var eventItem in eventsList)
         {
-            if (!readerDescDict.ContainsKey(eventItem.ReaderDesc))
-            {
-                readerDescDict[eventItem.ReaderDesc] = new List<ReaderEvent>();
-            }
-            else
-            {
-                readerDescDict[eventItem.ReaderDesc].Add(eventItem);
-            }
+            AddEventToDict(readerDescDict, eventItem.ReaderDesc, eventItem);
+        }
+    }
+    
+    private static void AddEventToDict(Dictionary<string, List<ReaderEvent>> targetDict, string key, ReaderEvent eventItem)
+    {
+        if (!targetDict.ContainsKey(key))
+        {
+            targetDict[key] = new List<ReaderEvent> { eventItem };
+        }
+        else
+        {
+            targetDict[key].Add(eventItem);
         }
     }
 
+    /*Testing Code */
     public static void printDescList()
     {
         Console.WriteLine("printDescList : ===");
