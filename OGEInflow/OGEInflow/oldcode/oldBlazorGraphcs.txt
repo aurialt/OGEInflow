@@ -1,0 +1,51 @@
+namespace OGEInflow.Services;
+
+public class MudBlazorGraph
+{
+    public ChartOptions Options {get; set;}
+    public List<ChartSeries> Series { get; set; }
+    public string[] XAxisLabels {get; set;}
+
+    public Dictionary<string, int> EventCounts {get; set;}
+
+    public MudBlazorGraph(ChartOptions options, string[] xAxisLabels, Dictionary<string, int> eventCounts, List<ChartSeries> series)
+    {
+        Options = options;
+        XAxisLabels = xAxisLabels;
+        EventCounts = eventCounts;
+        Series = series;
+    }
+    
+    public static string[] ExtractLabels(Dictionary<string, List<object>> sourceData)
+    {
+        List<string> labelsList = sourceData.Keys.ToList();
+        Console.WriteLine($"Labels Extracted: {string.Join(", ", labelsList)}");
+        return labelsList.ToArray();
+    }
+
+    public static Dictionary<string, int> ComputeEventCounts(Dictionary<string, List<object>> sourceData, string[] labels)
+    {
+        Dictionary<string, int> eventCounts = labels.ToDictionary(label => label, _ => 0);
+        foreach (var entry in sourceData)
+        {
+            if (eventCounts.ContainsKey(entry.Key))
+            {
+                eventCounts[entry.Key] = entry.Value.Count;
+                Console.WriteLine($"Label: {entry.Key}, Count: {entry.Value.Count}");
+            }
+        }
+        return eventCounts;
+    }
+
+    public static List<ChartSeries> CreateSeries(string name, Dictionary<string, int> eventCounts)
+    {
+        return new List<ChartSeries>
+        {
+            new()
+            {
+                Name = name,
+                Data = eventCounts.Values.Select(count => (double)count).ToArray()
+            }
+        };
+    }
+}

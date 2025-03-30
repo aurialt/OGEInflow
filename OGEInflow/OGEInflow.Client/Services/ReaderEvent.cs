@@ -52,11 +52,12 @@ public class ReaderEvent
     {
         GenerateReaderIdDict(readerEventsList);
         GenerateDayOfWeekReaderEventsDict(readerEventsList);
+        GenerateReaderDescDict(readerEventsList);
     }
     
     private static void GenerateReaderIdDict(List<ReaderEvent> eventsList)
     {
-
+        readerIdDict.Clear();
         foreach (var eventItem in eventsList)
         {
             string readerID = $"{eventItem.DEVID}-{eventItem.MACHINE}";
@@ -74,6 +75,7 @@ public class ReaderEvent
     
     private static void GenerateDayOfWeekReaderEventsDict(List<ReaderEvent> eventsList)
     {
+        dayOfWeekReaderEventsDict.Clear();
         foreach (var eventItem in eventsList)
         {
             string date = eventItem.EventTime;
@@ -93,16 +95,26 @@ public class ReaderEvent
 
     private static void GenerateReaderDescDict(List<ReaderEvent> eventsList)
     {
+        readerDescDict.Clear();
         foreach (var eventItem in eventsList)
         {
-            if (!readerIdDict.ContainsKey(eventItem.ReaderDesc))
+            if (!readerDescDict.ContainsKey(eventItem.ReaderDesc))
             {
-                readerIdDict[eventItem.ReaderDesc] = new List<ReaderEvent>();
+                readerDescDict[eventItem.ReaderDesc] = new List<ReaderEvent>();
             }
             else
             {
-                readerIdDict[eventItem.ReaderDesc].Add(eventItem);
+                readerDescDict[eventItem.ReaderDesc].Add(eventItem);
             }
+        }
+    }
+
+    public static void printDescList()
+    {
+        Console.WriteLine("printDescList : ===");
+        foreach (var eventItem in readerDescDict.Values)
+        {
+            Console.WriteLine("printDescList - eventItem: " + eventItem.Count);
         }
     }
     

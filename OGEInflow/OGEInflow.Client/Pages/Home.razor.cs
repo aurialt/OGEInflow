@@ -1,27 +1,14 @@
 using OGEInflow.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 
 namespace OGEInflow.Client.Pages;
 
-
 public partial class Home : ComponentBase
 {
-    private static void LoadGraphs()
-    {
-        LoadReaderEventsLineGraph();
-    }
-
-    
-    
-    
     /* Graphs Section */
-    private static ChartOptions options = new ChartOptions();
-    public static List<ChartSeries> Series;
-    public static string[] ScanActivations_x = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-
-    private static Dictionary<string, int> eventCounts = new();
+    private static readonly ChartOptions options = new ChartOptions();
+    public static MudBlazorGraph ScanActivationsGraph, ReaderDescGraph;
 
     protected override void OnInitialized()
     {
@@ -31,32 +18,49 @@ public partial class Home : ComponentBase
         }
     }
 
-    public static void LoadReaderEventsLineGraph()
+    private static void LoadGraphs()
     {
-        eventCounts = ScanActivations_x.ToDictionary(day => day, _ => 0);
-
-        foreach (var entry in ReaderEvent.DayOfWeekReaderEventsDict)
+        createReaderDescGraph();
+        createScanActivationGraph();
+    }
+    
+    public static void createReaderDescGraph()
+    {
+        List<ChartSeries> series = new List<ChartSeries>
         {
-            if (eventCounts.ContainsKey(entry.Key))
+            new ChartSeries
             {
-                eventCounts[entry.Key] = entry.Value.Count;
-            }
-        }
-
-        // Populates chart data
-        Series = new List<ChartSeries>
-        {
-            new()
-            {
-                Name = "Scan Activations",
-                Data = eventCounts.Values.Select(count => (double)count).ToArray()
+                Name = "Reader Description",
+                Data = ReaderEvent.ReaderDescDict.Values
+                    .Select(entry => (double)entry.Count)
+                    .ToArray()
             }
         };
+        
+        ReaderDescGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.ReaderDescDict, null, options);
     }
 
-    // public MudBlazorGraph LoadReaderDescGraph()
-    // {
-    //     
-    //     return new MudBlazorGraph();
-    // }
+    public static void createScanActivationGraph()
+    {
+        string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+        
+        var sortedDayOfWeekReaderEvents = ReaderEvent.DayOfWeekReaderEventsDict
+            .Where(entry => daysOfWeek.Contains(entry.Key))
+            .OrderBy(entry => Array.IndexOf(daysOfWeek, entry.Key)) 
+            .ToList();
+        
+        List<ChartSeries> series = new List<ChartSeries>
+        {
+            new ChartSeries
+            {
+                Name = "Scan Activations",
+                Data = sortedDayOfWeekReaderEvents
+                    .Select(entry => (double)entry.Value.Count) 
+                    .ToArray()
+            }
+        };
+        
+        ScanActivationsGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.DayOfWeekReaderEventsDict, daysOfWeek, options);
+    }
+    
 }

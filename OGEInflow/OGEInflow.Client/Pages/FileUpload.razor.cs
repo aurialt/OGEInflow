@@ -65,6 +65,7 @@ public partial class FileUpload : ComponentBase
         {
             using (StreamReader sr = new StreamReader(file))
             {
+                ReaderEvent.readerEventsList.Clear();
                 string str = sr.ReadLine();
                 while ((str = sr.ReadLine()) != null) // Skips the first line since ReadLine was already Called
                 {
@@ -83,6 +84,7 @@ public partial class FileUpload : ComponentBase
             }
             
             ReaderEvent.GenerateDictionaries();
+            ReaderEvent.printDescList();
 
             Console.WriteLine("Events populated");
             Console.WriteLine($"Total events: {ReaderEvent.readerEventsList.Count}");

@@ -1,0 +1,140 @@
+OGEInflow.Services;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using MudBlazor;
+
+namespace OGEInflow.Client.Pages;
+
+
+public partial class Home : ComponentBase
+{
+   
+
+    
+    
+    
+    /* Graphs Section */
+    private static ChartOptions options = new ChartOptions();
+    public static List<ChartSeries> Series;
+    public static string[] ScanActivations_x = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
+    private static Dictionary<string, int> EventCounts = new();
+
+    public static MudBlazorGraph ScanActivationsGraph, ReaderDescGraph;
+
+    protected override void OnInitialized()
+    {
+        if (ReaderEvent.readerEventsList != null)
+        {
+            LoadGraphs();
+        }
+    }
+    
+    private static void LoadGraphs()
+    {
+        LoadReaderEventsLineGraph();
+        ReaderDescGraph = createReaderDescGraph();
+    }
+
+    public static void LoadReaderEventsLineGraph()
+    {
+        EventCounts = ScanActivations_x.ToDictionary(day => day, _ => 0);
+
+        foreach (var entry in ReaderEvent.DayOfWeekReaderEventsDict)
+        {
+            if (EventCounts.ContainsKey(entry.Key))
+            {
+                EventCounts[entry.Key] = entry.Value.Count;
+            }
+        }
+
+        // Populates chart data
+        Series = new List<ChartSeries>
+        {
+            new()
+            {
+                Name = "Scan Activations",
+                Data = EventCounts.Values.Select(count => (double)count).ToArray()
+            }
+        };
+    }
+
+    public static MudBlazorGraph createScanActivationsGraph()
+    {
+        //ChartOptions
+        ChartOptions options = new ChartOptions(); 
+        
+        //XLabels
+        List<string> ScanActivationsLabelsList = new List<string>();
+        foreach (var entry in ReaderEvent.DayOfWeekReaderEventsDict)
+        {
+            ScanActivationsLabelsList.Add(entry.Key);
+            Console.WriteLine("REDescLabels Label Key: " + entry.Key);
+        }
+        string[] readerDescLabels = ScanActivationsLabelsList.ToArray();
+        
+        
+        //EventCounts
+        Dictionary<string, int> eventCounts = readerDescLabels.ToDictionary(readerDesc => readerDesc, _ => 0);
+        foreach (var entry in ReaderEvent.ReaderDescDict)
+        {
+            if (eventCounts.ContainsKey(entry.Key))
+            {
+                eventCounts[entry.Key] = entry.Value.Count;
+            }
+        }
+        
+        //ChartSeries
+        List<ChartSeries> series  = new List<ChartSeries>
+        {
+            new()
+            {
+                Name = "Scan Activations",
+                Data = eventCounts.Values.Select(count => (double)count).ToArray()
+            }
+        };
+        return new MudBlazorGraph(options, readerDescLabels, eventCounts, series);
+    }
+
+    public static MudBlazorGraph createReaderDescGraph()
+    {
+        //ChartOptions
+        ChartOptions chartOptions = new ChartOptions();
+        
+        //XLabels
+        List<string> readerDescLabelsList = new List<string>();
+        foreach (var entry in ReaderEvent.ReaderDescDict)
+        {
+            readerDescLabelsList.Add(entry.Key);
+            Console.WriteLine("REDescLabels Label Key: " + entry.Key);
+        }
+        string[] readerDescLabels = readerDescLabelsList.ToArray();
+        
+        
+        //EventCounts
+        Dictionary<string, int> eventCounts = readerDescLabels.ToDictionary(readerDesc => readerDesc, _ => 0);
+        foreach (var entry in ReaderEvent.ReaderDescDict)
+        {
+            if (eventCounts.ContainsKey(entry.Key))
+            {
+                eventCounts[entry.Key] = entry.Value.Count;
+                Console.WriteLine("REDescLabels Label Key Count: " + entry.Value.Count);
+            }
+        }
+
+        //ChartSeries
+        List<ChartSeries> series  = new List<ChartSeries>
+        {
+            new()
+            {
+                Name = "Reader Description",
+                Data = eventCounts.Values.Select(count => (double)count).ToArray()
+            }
+        };
+        
+        Console.WriteLine(eventCounts.Values.Count);
+        
+        
+        return new MudBlazorGraph(chartOptions, readerDescLabels, eventCounts, series);
+    }
+}
