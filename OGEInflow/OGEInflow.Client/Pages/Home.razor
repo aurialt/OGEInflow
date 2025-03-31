@@ -8,16 +8,16 @@
 <section class="main">
     <div class="grid-container">
         <div class="grid-item">
-            <MudChart ChartType="ChartType.Bar" ChartSeries="@ReaderDescGraph.Series" XAxisLabels="@ReaderDescGraph.XAxisLabels" Width="100%" ChartOptions="@ReaderDescGraph.Options"></MudChart>
+            <MudChart ChartType="ChartType.Bar" ChartSeries="@ReaderDescGraph.Series" XAxisLabels="@ReaderDescGraph.Labels" Width="100%" ChartOptions="@ReaderDescGraph.Options"></MudChart>
         </div>
         <div class="grid-item">
             <h2>Warning Flags</h2>
         </div>
         <div class="grid-item">
-            <MudChart ChartType="ChartType.Line" ChartSeries="@ScanActivationsGraph.Series" XAxisLabels="@ScanActivationsGraph.XAxisLabels" Width="100%" Height="350" ChartOptions="ScanActivationsGraph.Options"></MudChart>
+            <MudChart ChartType="ChartType.Line" ChartSeries="@ScanActivationsGraph.Series" XAxisLabels="@ScanActivationsGraph.Labels" Width="100%" Height="350" ChartOptions="ScanActivationsGraph.Options"></MudChart>
         </div>
         <div class="grid-item">
-            <MudChart ChartType="ChartType.Bar" ChartSeries="@PersonIDGraph.Series" XAxisLabels="@PersonIDGraph.XAxisLabels" Width="100%" Height="350" ChartOptions="PersonIDGraph.Options"></MudChart>
+            <MudChart ChartType="ChartType.Bar" ChartSeries="@PersonIDGraph.Series" XAxisLabels="@PersonIDGraph.Labels" Width="100%" Height="350" ChartOptions="PersonIDGraph.Options"></MudChart>
         </div>
     </div>
 </section>
