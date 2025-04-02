@@ -7,7 +7,7 @@ namespace OGEInflow.Client.Pages;
 public partial class Home : ComponentBase
 {
     /* Graphs Section */
-    public static MudBlazorGraph ScanActivationsGraph, ReaderDescGraph, PersonIDGraph;
+    public static MudBlazorGraph ScanActivationsGraph, ReaderDescGraph, PersonIDGraph, RankedPersonIDGraph;
 
     protected override void OnInitialized()
     {
@@ -23,6 +23,7 @@ public partial class Home : ComponentBase
         createReaderDescGraph();
         createScanActivationGraph();
         createPersonIDGraph();
+        createRankedPersonIDGraph();
     }
     
     private static void createReaderDescGraph()
@@ -58,7 +59,7 @@ public partial class Home : ComponentBase
         {
             new ()
             {
-                Name = "Scan Activations",
+                Name = "Scan Activations per Day",
                 Data = sortedDayOfWeekReaderEvents
                     .Select(entry => (double)entry.Value.Count) 
                     .ToArray()
@@ -76,7 +77,7 @@ public partial class Home : ComponentBase
         {
             new ()
             {
-                Name = "Scan Activations",
+                Name = "Scan Activations per Person",
                 Data = ReaderEvent.PersonIDDict.Values
                     .Select(entry => (double)entry.Count)
                     .ToArray()
@@ -85,5 +86,28 @@ public partial class Home : ComponentBase
         
         PersonIDGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.PersonIDDict, null, options);
     }
-    
+
+    private static void createRankedPersonIDGraph()
+    {
+        //Gets Top 5 Scan Activations
+        var rankedPersonIDGraph = ReaderEvent.PersonIDDict
+            .OrderByDescending(entry => entry.Value.Count)
+            .Take(5)
+            .ToDictionary();
+        
+        ChartOptions options = new ChartOptions();
+        
+        List<ChartSeries> series = new List<ChartSeries>
+        {
+            new ()
+            {
+                Name = "Top 5 People",
+                Data = rankedPersonIDGraph.Values
+                    .Select(entry => (double)entry.Count)
+                    .ToArray()
+            }
+        };
+        
+        RankedPersonIDGraph = MudBlazorGraph.CreateGraph(series, rankedPersonIDGraph, null, options);
+    }
 }
