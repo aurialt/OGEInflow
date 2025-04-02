@@ -5,22 +5,50 @@
 <PageTitle>Home</PageTitle>
 <h1>Welcome</h1>
 
-<section class="main">
-    <div class="grid-container">
-        <div class="grid-item">
-            <MudChart ChartType="ChartType.Bar" ChartSeries="@ReaderDescGraph.Series" XAxisLabels="@ReaderDescGraph.Labels" Width="100%" ChartOptions="@ReaderDescGraph.Options"></MudChart>
-        </div>
-        <div class="grid-item">
-            <h2>Warning Flags</h2>
-        </div>
-        <div class="grid-item">
-            <MudChart ChartType="ChartType.Line" ChartSeries="@ScanActivationsGraph.Series" XAxisLabels="@ScanActivationsGraph.Labels" Width="100%" Height="350" ChartOptions="ScanActivationsGraph.Options"></MudChart>
-        </div>
-        <div class="grid-item">
-            <MudChart ChartType="ChartType.Bar" ChartSeries="@PersonIDGraph.Series" XAxisLabels="@PersonIDGraph.Labels" Width="100%" Height="350" ChartOptions="PersonIDGraph.Options"></MudChart>
-        </div>
-        <div class="grid-item">
-            <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedPersonIDGraph.Series" XAxisLabels="@RankedPersonIDGraph.Labels" Width="100%" Height="350" ChartOptions="RankedPersonIDGraph.Options"></MudChart>
-        </div>
+<div>
+    <h2 class="timeframe">TimeFrame</h2>
+    <MudDatePicker @ref="_picker" Label="With action buttons" @bind-Date="_date" AutoClose="@_autoClose">
+        <PickerActions>
+            <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.ClearAsync())">Clear</MudButton>
+            <MudButton OnClick="@(() => _picker.CloseAsync(false))">Cancel</MudButton>
+            <MudButton Color="Color.Primary" OnClick="@(() => _picker.CloseAsync())">Ok</MudButton>
+        </PickerActions>
+    </MudDatePicker>
+    <MudSwitch @bind-Value="_autoClose" Color="Color.Secondary">AutoClose</MudSwitch>
+    <p>to</p>
+  <!-- Second TimeFrame -->
+    <MudDatePicker class="datepicker" @ref="_picker" Label="With action buttons" @bind-Date="_date" AutoClose="@_autoClose">
+        <PickerActions>
+            <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.ClearAsync())">Clear</MudButton>
+            <MudButton OnClick="@(() => _picker.CloseAsync(false))">Cancel</MudButton>
+            <MudButton Color="Color.Primary" OnClick="@(() => _picker.CloseAsync())">Ok</MudButton>
+        </PickerActions>
+    </MudDatePicker>
+    <MudSwitch @bind-Value="_autoClose" Color="Color.Secondary">AutoClose</MudSwitch>
+    
+</div>
+
+@code {
+    private MudDatePicker _picker;
+    private DateTime? _date = DateTime.Today;
+    private bool _autoClose;
+}
+
+<div class="grid-container">
+    <div class="grid-item">
+        <MudChart ChartType="ChartType.Bar" ChartSeries="@ReaderDescGraph.Series" XAxisLabels="@ReaderDescGraph.Labels" Width="100%" ChartOptions="@ReaderDescGraph.Options"></MudChart>
     </div>
-</section>
+    <div class="grid-item">
+        <h2>Warning Flags</h2>
+    </div>
+   
+    <div class="grid-item">
+        <MudChart ChartType="ChartType.Line" ChartSeries="@ScanActivationsGraph.Series" XAxisLabels="@ScanActivationsGraph.Labels" Width="100%" Height="350" ChartOptions="ScanActivationsGraph.Options"></MudChart>
+    </div>
+    <div class="grid-item">
+        <MudChart ChartType="ChartType.Bar" ChartSeries="@PersonIDGraph.Series" XAxisLabels="@PersonIDGraph.Labels" Width="100%" Height="350" ChartOptions="PersonIDGraph.Options"></MudChart>
+    </div>
+    <div class="grid-item">
+        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedPersonIDGraph.Series" XAxisLabels="@RankedPersonIDGraph.Labels" Width="100%" Height="350" ChartOptions="RankedPersonIDGraph.Options"></MudChart>
+    </div>
+</div>
