@@ -125,7 +125,7 @@ public partial class FileUpload : ComponentBase
             DateTime fullDateTime = DateTime.Parse(dateString, null, DateTimeStyles.AdjustToUniversal);
             DateTime dateOnly = fullDateTime.Date;
             
-            if (ReaderEvent.MinDate == null || dateOnly < ReaderEvent.MinDate)
+            if (ReaderEvent.MinDate == DateTime.MinValue || dateOnly < ReaderEvent.MinDate)
             {
                 ReaderEvent.MinDate = dateOnly;
                 Console.WriteLine($"Min date Updated: {ReaderEvent.MinDate}");

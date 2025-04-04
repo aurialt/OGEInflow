@@ -21,7 +21,10 @@
     <div>File size: @FileSize.ToString("n0") bytes</div>
     <div>File type: @FileType</div>
     <div>Last modified: @LastModified</div>
+    <div>Min Date: @ReaderEvent.MinDate</div>
+    <div>Max Date: @ReaderEvent.MaxDate</div>
 </div>
+
 
 
 @if (!string.IsNullOrEmpty(ErrorMessage))
