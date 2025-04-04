@@ -8,16 +8,32 @@ public partial class Home : ComponentBase
 {
     /* Graphs Section */
     public static MudBlazorGraph ScanActivationsGraph, ReaderDescGraph, PersonIDGraph, RankedPersonIDGraph;
+    
+    private static MudDatePicker StartPicker;
+    private static MudDatePicker EndPicker;
+    
+    //Date Boundaries for the file given
+    private static DateTime? FirstDate => ReaderEvent.MinDate;
+    private static DateTime? LastDate => ReaderEvent.MaxDate;
+    
+    //Dates User can Filter (Date Bounds)
+    private static DateTime? StartDate {get; set;}
+    private static DateTime? EndDate {get; set;}
+    private static bool _autoClose = true;
 
     protected override void OnInitialized()
     {
-        _startDate = DateTime.Today.AddDays(-7); // Default to 7 days ago
-        _endDate = DateTime.Today;               // Default to today
-        
         if (ReaderEvent.readerEventsList != null)
         {
             LoadGraphs();
         }
+    }
+    
+
+    public static void InitializeDateBounds(DateTime startDate, DateTime endDate)
+    {
+        StartDate = startDate;
+        EndDate = endDate;
     }
 
     //Will cause page error if all create graphs aren't put into here
@@ -94,10 +110,24 @@ public partial class Home : ComponentBase
     {
         //Gets Top 5 Scan Activations
         var rankedPersonIDGraph = ReaderEvent.PersonIDDict
+            .ToDictionary(
+                entry => entry.Key,
+                entry => entry.Value
+                    .Where(re => {
+                        if (DateTime.TryParse(re.EventTime, out DateTime eventDate))
+                        {
+                            return (!StartDate.HasValue || eventDate >= StartDate.Value)
+                                   && (!EndDate.HasValue || eventDate <= EndDate.Value);
+                        }
+                        return false; // Skip if can't parse EventTime
+                    })
+                    .ToList()
+            )
+            .Where(entry => entry.Value.Any()) // Only keep entries that have events left after filtering
             .OrderByDescending(entry => entry.Value.Count)
             .Take(5)
-            .ToDictionary();
-        
+            .ToDictionary(entry => entry.Key, entry => entry.Value);
+
         ChartOptions options = new ChartOptions();
         
         List<ChartSeries> series = new List<ChartSeries>
@@ -113,4 +143,6 @@ public partial class Home : ComponentBase
         
         RankedPersonIDGraph = MudBlazorGraph.CreateGraph(series, rankedPersonIDGraph, null, options);
     }
+
+
 }
