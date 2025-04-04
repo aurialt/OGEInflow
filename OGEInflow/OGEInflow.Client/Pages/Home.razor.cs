@@ -11,6 +11,9 @@ public partial class Home : ComponentBase
 
     protected override void OnInitialized()
     {
+        _startDate = DateTime.Today.AddDays(-7); // Default to 7 days ago
+        _endDate = DateTime.Today;               // Default to today
+        
         if (ReaderEvent.readerEventsList != null)
         {
             LoadGraphs();

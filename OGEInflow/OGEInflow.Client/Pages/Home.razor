@@ -49,11 +49,12 @@
 @code {
     private MudDatePicker _startPicker;
     private MudDatePicker _endPicker;
-    private DateTime? _startDate = DateTime.Today.AddDays(-7); // Default to 7 days ago
-    private DateTime? _endDate = DateTime.Today;              // Default to today
-
+    
     private DateTime? _firstDate => ReaderEvent.MinDate;
     private DateTime? _lastDate => ReaderEvent.MaxDate;
+    
+    private DateTime? _startDate {get; set;}
+    private DateTime? _endDate {get; set;}
     
     private bool _autoClose = true;
 }
