@@ -1,3 +1,17 @@
+.dateFilter {
+margin: 0 auto;
+}
+.dateFilter .timeframe_between,.datepicker {
+    display: inline-block;
+}
+
+.timeframe_between {
+    margin: 0 20px;
+}
+.datepicker {
+    display: inline-block;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 

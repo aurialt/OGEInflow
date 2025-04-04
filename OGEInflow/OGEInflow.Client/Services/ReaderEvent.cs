@@ -9,6 +9,9 @@ public class ReaderEvent
     public string DEVID { get; set; }
     public string MACHINE { get; set; }
     
+    public static DateTime MinDate { get; set; } 
+    public static DateTime MaxDate { get; set; }
+    
     //To be accessed by multiple files 
     public static List<ReaderEvent> readerEventsList = new List<ReaderEvent>();
     

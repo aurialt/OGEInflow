@@ -1,3 +1,4 @@
+using System.Globalization;
 using OGEInflow.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -70,11 +71,14 @@ public partial class FileUpload : ComponentBase
                 while ((str = sr.ReadLine()) != null) // Skips the first line since ReadLine was already Called
                 {
                     List<string> fields = str.Split(',').ToList();
-                    
+                    string eventTime = fields[0];
                     if (fields.Count >= 6)
                     {
-                        ReaderEvent re = new ReaderEvent(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
+                        ReaderEvent re = new ReaderEvent(eventTime, fields[1], fields[2], fields[3], fields[4], fields[5]);
                         ReaderEvent.readerEventsList.Add(re);
+                        
+                        CheckMinDate(eventTime);
+                        CheckMaxDate(eventTime);
                     }
                     else
                     {
@@ -94,4 +98,45 @@ public partial class FileUpload : ComponentBase
             ErrorMessage = $"File {file} does not exist or is not a .csv file.";
         }
     }
+    
+    public static void CheckMaxDate(string dateString)
+    {
+        try
+        {
+            DateTime fullDateTime = DateTime.Parse(dateString, null, DateTimeStyles.AdjustToUniversal);
+            DateTime dateOnly = fullDateTime.Date;
+            
+            if (ReaderEvent.MaxDate == null || dateOnly > ReaderEvent.MaxDate)
+            {
+                ReaderEvent.MaxDate = dateOnly;
+                Console.WriteLine($"Max date Updated: {ReaderEvent.MaxDate}");
+            }
+        }
+        catch (FormatException)
+        {
+            ErrorMessage = $"Invalid date format: {dateString}";
+        }
+    }
+    
+    public static void CheckMinDate(string dateString)
+    {
+        try
+        {
+            DateTime fullDateTime = DateTime.Parse(dateString, null, DateTimeStyles.AdjustToUniversal);
+            DateTime dateOnly = fullDateTime.Date;
+            
+            if (ReaderEvent.MinDate == null || dateOnly < ReaderEvent.MinDate)
+            {
+                ReaderEvent.MinDate = dateOnly;
+                Console.WriteLine($"Min date Updated: {ReaderEvent.MinDate}");
+            }
+            
+        }
+        catch (FormatException)
+        {
+            ErrorMessage = $"Invalid date format: {dateString}";
+        }
+    }
 }
+
+

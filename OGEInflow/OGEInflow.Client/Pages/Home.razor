@@ -1,38 +1,63 @@
 ﻿@page "/"
+@using OGEInflow.Services
 <link rel="stylesheet" href="css/home.css">
 
 
 <PageTitle>Home</PageTitle>
 <h1>Welcome</h1>
 
-<div>
+<div class="dateFilter">
     <h2 class="timeframe">TimeFrame</h2>
-    <MudDatePicker @ref="_picker" Label="With action buttons" @bind-Date="_date" AutoClose="@_autoClose">
-        <PickerActions>
-            <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.ClearAsync())">Clear</MudButton>
-            <MudButton OnClick="@(() => _picker.CloseAsync(false))">Cancel</MudButton>
-            <MudButton Color="Color.Primary" OnClick="@(() => _picker.CloseAsync())">Ok</MudButton>
-        </PickerActions>
-    </MudDatePicker>
-    <MudSwitch @bind-Value="_autoClose" Color="Color.Secondary">AutoClose</MudSwitch>
-    <p>to</p>
-  <!-- Second TimeFrame -->
-    <MudDatePicker class="datepicker" @ref="_picker" Label="With action buttons" @bind-Date="_date" AutoClose="@_autoClose">
-        <PickerActions>
-            <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.ClearAsync())">Clear</MudButton>
-            <MudButton OnClick="@(() => _picker.CloseAsync(false))">Cancel</MudButton>
-            <MudButton Color="Color.Primary" OnClick="@(() => _picker.CloseAsync())">Ok</MudButton>
-        </PickerActions>
-    </MudDatePicker>
-    <MudSwitch @bind-Value="_autoClose" Color="Color.Secondary">AutoClose</MudSwitch>
-    
+
+    <!-- Start Date Picker -->
+    <div class="datepicker">
+        <MudDatePicker @ref="_startPicker"
+                       Label="Start Date"
+                       @bind-Date="_startDate"
+                       MinDate="@_firstDate"
+                       MaxDate="_endDate"
+                       AutoClose="@_autoClose">
+            <PickerActions>
+                <MudButton Class="mr-auto align-self-start" OnClick="@(() => _startPicker.ClearAsync())">Clear</MudButton>
+                <MudButton OnClick="@(() => _startPicker.CloseAsync(false))">Cancel</MudButton>
+                <MudButton Color="Color.Primary" OnClick="@(() => _startPicker.CloseAsync())">Ok</MudButton>
+            </PickerActions>
+        </MudDatePicker>
+        <MudSwitch @bind-Value="_autoClose" Color="Color.Secondary">AutoClose</MudSwitch>
+    </div>
+
+    <h3 class="timeframe_between">to</h3>
+
+    <!-- End Date Picker -->
+    <div class="datepicker">
+        <MudDatePicker @ref="@_endPicker"
+                       Label="End Date"
+                       @bind-Date="@_endDate"
+                       MinDate="@_startDate"
+                       MaxDate="@_lastDate"
+                       AutoClose="@_autoClose">
+            <PickerActions>
+                <MudButton Class="mr-auto align-self-start" OnClick="@(() => _endPicker.ClearAsync())">Clear</MudButton>
+                <MudButton OnClick="@(() => _endPicker.CloseAsync(false))">Cancel</MudButton>
+                <MudButton Color="Color.Primary" OnClick="@(() => _endPicker.CloseAsync())">Ok</MudButton>
+            </PickerActions>
+        </MudDatePicker>
+        <MudSwitch @bind-Value="_autoClose" Color="Color.Secondary">AutoClose</MudSwitch>
+    </div>
 </div>
 
 @code {
-    private MudDatePicker _picker;
-    private DateTime? _date = DateTime.Today;
-    private bool _autoClose;
+    private MudDatePicker _startPicker;
+    private MudDatePicker _endPicker;
+    private DateTime? _startDate = DateTime.Today.AddDays(-7); // Default to 7 days ago
+    private DateTime? _endDate = DateTime.Today;              // Default to today
+
+    private DateTime? _firstDate => ReaderEvent.MinDate;
+    private DateTime? _lastDate => ReaderEvent.MaxDate;
+    
+    private bool _autoClose = true;
 }
+
 
 <div class="grid-container">
     <div class="grid-item">
