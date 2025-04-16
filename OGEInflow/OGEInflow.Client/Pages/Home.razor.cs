@@ -35,6 +35,12 @@ public partial class Home : ComponentBase
         StartDate = startDate;
         EndDate = endDate;
     }
+    
+    public void UpdateDateBounds()
+    {
+        LoadGraphs();
+        StateHasChanged();
+    }
 
     //Will cause page error if all create graphs aren't put into here
     private static void LoadGraphs()
@@ -116,8 +122,7 @@ public partial class Home : ComponentBase
                     .Where(re => {
                         if (DateTime.TryParse(re.EventTime, out DateTime eventDate))
                         {
-                            return (!StartDate.HasValue || eventDate >= StartDate.Value)
-                                   && (!EndDate.HasValue || eventDate <= EndDate.Value);
+                            return eventDate >= StartDate.Value && eventDate <= EndDate.Value;
                         }
                         return false; // Skip if can't parse EventTime
                     })
@@ -127,6 +132,25 @@ public partial class Home : ComponentBase
             .OrderByDescending(entry => entry.Value.Count)
             .Take(5)
             .ToDictionary(entry => entry.Key, entry => entry.Value);
+
+        Console.WriteLine("RankedPersonIDGraph FILTERED DICTIONARY ");
+        int rank = 1;
+        foreach (var entry in rankedPersonIDGraph)
+        {
+            Console.WriteLine($"Rank #{rank}");
+            Console.WriteLine($"PersonID: {entry.Key}");
+            Console.WriteLine($"Event Count: {entry.Value.Count}");
+
+            foreach (var readerEvent in entry.Value)
+            {
+                Console.WriteLine($" - EventTime: {readerEvent.EventTime}");
+                // You can print other properties of readerEvent here as needed
+            }
+
+            rank++;
+        }
+       
+        Console.WriteLine("FORLOOP END - RankedPersonIDGraph FILTERED DICTIONARY ");
 
         ChartOptions options = new ChartOptions();
         
@@ -143,6 +167,4 @@ public partial class Home : ComponentBase
         
         RankedPersonIDGraph = MudBlazorGraph.CreateGraph(series, rankedPersonIDGraph, null, options);
     }
-
-
 }

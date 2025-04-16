@@ -23,7 +23,7 @@
                 <MudButton Color="Color.Primary" OnClick="@(() => StartPicker.CloseAsync())">Ok</MudButton>
             </PickerActions>
         </MudDatePicker>
-        <MudSwitch @bind-Value="_autoClose" Color="Color.Secondary">AutoClose</MudSwitch>
+        @* <MudSwitch @bind-Value="_autoClose" Color="Color.Secondary">AutoClose</MudSwitch> *@
     </div>
 
     <h3 class="timeframe_between">to</h3>
@@ -42,9 +42,11 @@
                 <MudButton Color="Color.Primary" OnClick="@(() => EndPicker.CloseAsync())">Ok</MudButton>
             </PickerActions>
         </MudDatePicker>
-        <MudSwitch @bind-Value="_autoClose" Color="Color.Secondary">AutoClose</MudSwitch>
+        @* <MudSwitch @bind-Value="_autoClose" Color="Color.Secondary">AutoClose</MudSwitch> *@
     </div>
 </div>
+
+<MudButton OnClick="@UpdateDateBounds">Refresh Graphs</MudButton>
 
 
 <div class="grid-container">

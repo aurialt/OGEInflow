@@ -88,7 +88,7 @@ public partial class FileUpload : ComponentBase
             }
             
             ReaderEvent.GenerateDictionaries();
-            ReaderEvent.printDescList();
+            // ReaderEvent.printDescList();
 
             Console.WriteLine("Events populated");
             Console.WriteLine($"Total events: {ReaderEvent.readerEventsList.Count}");

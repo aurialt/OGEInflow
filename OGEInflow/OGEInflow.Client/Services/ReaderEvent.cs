@@ -23,7 +23,7 @@ public class ReaderEvent
     //My notes: initially empty, but scan events either create or append to the dictionary.
 
 
-    /* Property access to to private dictionaries  */
+    /* Property access to private dictionaries  */
     public static Dictionary<string, List<ReaderEvent>> DayOfWeekReaderEventsDict { get { return dayOfWeekReaderEventsDict; } }
 
     public static Dictionary<string, List<ReaderEvent>> PersonIDDict { get { return personIDDict; } }
@@ -59,7 +59,7 @@ public class ReaderEvent
         foreach (var eventItem in eventList)
         {
             AddEventToDict(personIDDict, eventItem.ID, eventItem);
-            Console.WriteLine("PersonID: " + eventItem.ID);
+            // Console.WriteLine("PersonID: " + eventItem.ID);
         }
     }
     
