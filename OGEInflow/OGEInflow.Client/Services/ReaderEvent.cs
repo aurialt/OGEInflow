@@ -28,7 +28,7 @@ public class ReaderEvent
 
     public static Dictionary<string, List<ReaderEvent>> PersonIDDict { get { return personIDDict; } }
 
-    public static Dictionary<string, List<ReaderEvent>> ReaderIdDict { get { return readerIdDict; } }
+    public static Dictionary<string, List<ReaderEvent>> ReaderIDDict { get { return readerIdDict; } }
 
     public static Dictionary<string, List<ReaderEvent>> ReaderDescDict { get { return readerDescDict; } }
         
