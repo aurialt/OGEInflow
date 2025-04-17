@@ -23,7 +23,7 @@ public partial class Home : ComponentBase
     //Dates User can Filter (Date Bounds)
     private static DateTime? StartDate { get; set; }
     private static DateTime? EndDate { get; set; }
-    private static bool _autoClose = true;
+    private static bool _autoClose = false;
 
     protected override void OnInitialized()
     {
@@ -40,7 +40,7 @@ public partial class Home : ComponentBase
         EndDate = endDate;
     }
 
-    public void UpdateDateBounds()
+    public void RefreshGraphs()
     {
         LoadGraphs();
         StateHasChanged();
@@ -183,6 +183,7 @@ public partial class Home : ComponentBase
     }
 
 
+    /* Helper functions */
     public static  Dictionary<string, List<ReaderEvent>> GetTopRankedEventsFiltered(Dictionary<string, List<ReaderEvent>> inputDict, int topCount)
     {
         var rankedDict = inputDict
