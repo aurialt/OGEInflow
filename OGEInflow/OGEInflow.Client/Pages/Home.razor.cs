@@ -154,6 +154,7 @@ public partial class Home : ComponentBase
         };
         
         RankedReaderIDGraph = MudBlazorGraph.CreateGraph(series, rankedReaderIDGraph, null, options);
+        ReaderEventWarning.CheckTooManyReaderScans(5);
     }
 
     public static void createRankedDevIDGraph()
