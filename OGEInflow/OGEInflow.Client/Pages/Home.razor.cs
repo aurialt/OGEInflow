@@ -8,11 +8,10 @@ public partial class Home : ComponentBase
 {
     /* Graphs Section */
     public static MudBlazorGraph ScanActivationsGraph,
-        ReaderDescGraph,
-        PersonIDGraph,
         RankedPersonIDGraph,
         RankedReaderIDGraph,
-        RankedDevIDGraph;
+        RankedDevIDGraph,
+        RankedAvgAreaGraph;
 
     private static MudDatePicker StartPicker;
     private static MudDatePicker EndPicker;
@@ -20,8 +19,10 @@ public partial class Home : ComponentBase
     //Date Boundaries for the file given
     private static DateTime? FirstDate => ReaderEvent.MinDate;
     private static DateTime? LastDate => ReaderEvent.MaxDate;
+    
+    private static int dateRange;
 
-    //Dates User can Filter (Date Bounds)
+    //Dates user can filter (Date Bounds)
     private static DateTime? StartDate { get; set; }
     private static DateTime? EndDate { get; set; }
     private static bool _autoClose = false;
@@ -45,39 +46,28 @@ public partial class Home : ComponentBase
     {
         LoadGraphs();
         StateHasChanged();
+        Console.WriteLine(" (LoadGraphs) Date Range: " + dateRange);
     }
 
     //Will cause page error if all create graphs aren't put into here
     private static void LoadGraphs()
     {
-        createReaderDescGraph();
+        if (StartDate != null || EndDate != null)
+        {
+            TimeSpan diff = EndDate.Value - StartDate.Value;
+            dateRange = (int)diff.TotalDays;
+        }
+
+        createRankedAvgAreaGraph();
         createScanActivationGraph();
-        createPersonIDGraph();
         createRankedPersonIDGraph();
         createRankedReaderIDGraph();
         createRankedDevIDGraph();
     }
-
-    private static void createReaderDescGraph()
-    {
-        ChartOptions options = new ChartOptions();
-
-        List<ChartSeries> series = new List<ChartSeries>
-        {
-            new()
-            {
-                Name = "Reader Description",
-                Data = ReaderEvent.ReaderDescDict.Values
-                    .Select(entry => (double)entry.Count)
-                    .ToArray()
-            }
-        };
-
-        ReaderDescGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.ReaderDescDict, null, options);
-    }
-
-
-
+    
+    
+    
+    /* Graph Creation Functions */
     private static void createScanActivationGraph()
     {
         ChartOptions options = new ChartOptions();
@@ -102,24 +92,6 @@ public partial class Home : ComponentBase
 
         ScanActivationsGraph =
             MudBlazorGraph.CreateGraph(series, ReaderEvent.DayOfWeekReaderEventsDict, daysOfWeek, options);
-    }
-
-    private static void createPersonIDGraph()
-    {
-        ChartOptions options = new ChartOptions();
-
-        List<ChartSeries> series = new List<ChartSeries>
-        {
-            new()
-            {
-                Name = "Scan Activations per Person",
-                Data = ReaderEvent.PersonIDDict.Values
-                    .Select(entry => (double)entry.Count)
-                    .ToArray()
-            }
-        };
-
-        PersonIDGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.PersonIDDict, null, options);
     }
 
     private static void createRankedPersonIDGraph()
@@ -204,6 +176,28 @@ public partial class Home : ComponentBase
         RankedDevIDGraph = MudBlazorGraph.CreateGraph(series, rankedDevIDGraph, null, options);
     }
 
+    public static void createRankedAvgAreaGraph()
+    {
+        var rankedAvgAreaGraph = GetTopRankedEventsFiltered(ReaderEvent.ReaderDescDict, 5);
+        
+        ChartOptions options = new ChartOptions();
+    
+        List<ChartSeries> series = new List<ChartSeries>
+        {
+            new()
+            {
+                Name = "Top 5 Areas (Based on ReaderDesc)",
+                Data = rankedAvgAreaGraph.Values
+                    .Select(entry => (double)entry.Count / dateRange)
+                    .ToArray()
+            }
+        };
+        
+        RankedAvgAreaGraph = MudBlazorGraph.CreateGraph(series, rankedAvgAreaGraph, null, options);
+    }
+
+    
+    
 
     /* Helper functions */
     public static Dictionary<string, List<ReaderEvent>> GetTopRankedEventsFiltered(Dictionary<string, List<ReaderEvent>> inputDict, int topCount)
@@ -229,5 +223,6 @@ public partial class Home : ComponentBase
 
         return rankedDict;
     }
+    
 
 }
