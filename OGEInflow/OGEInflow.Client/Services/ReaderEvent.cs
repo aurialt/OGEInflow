@@ -20,6 +20,8 @@ public class ReaderEvent
     private static Dictionary<string, List<ReaderEvent>> personIDDict = new Dictionary<string, List<ReaderEvent>>();
     private static Dictionary<string, List<ReaderEvent>> readerIdDict = new Dictionary<string, List<ReaderEvent>>();
     private static Dictionary<string, List<ReaderEvent>> readerDescDict = new Dictionary<string, List<ReaderEvent>>();
+    private static Dictionary<string, List<ReaderEvent>> devIdDict = new Dictionary<string, List<ReaderEvent>>();
+    private static Dictionary<string, List<ReaderEvent>> machineDict = new Dictionary<string, List<ReaderEvent>>();
     //My notes: initially empty, but scan events either create or append to the dictionary.
 
 
@@ -31,6 +33,10 @@ public class ReaderEvent
     public static Dictionary<string, List<ReaderEvent>> ReaderIDDict { get { return readerIdDict; } }
 
     public static Dictionary<string, List<ReaderEvent>> ReaderDescDict { get { return readerDescDict; } }
+    
+    public static Dictionary<string, List<ReaderEvent>> DevIdDict { get { return devIdDict; } }
+    
+    public static Dictionary<string, List<ReaderEvent>> MachineDict { get { return machineDict; } }
         
     
     public ReaderEvent(string eventTime, string location, string readerDesc, string id, string devid, string machine)
@@ -51,6 +57,8 @@ public class ReaderEvent
         GeneratePersonIDDict(readerEventsList);
         GenerateReaderIdDict(readerEventsList);
         GenerateReaderDescDict(readerEventsList);
+        GenerateDevIdDict(readerEventsList);
+        GenerateMachineDict(readerEventsList);
     }
 
     private static void GeneratePersonIDDict(List<ReaderEvent> eventList)
@@ -61,6 +69,7 @@ public class ReaderEvent
             AddEventToDict(personIDDict, eventItem.ID, eventItem);
             // Console.WriteLine("PersonID: " + eventItem.ID);
         }
+        Console.WriteLine("GeneratePersonIDDict Count: " + personIDDict.Count);
     }
     
     private static void GenerateReaderIdDict(List<ReaderEvent> eventsList)
@@ -71,6 +80,7 @@ public class ReaderEvent
             string readerID = $"{eventItem.DEVID}-{eventItem.MACHINE}";
             AddEventToDict(readerIdDict, readerID, eventItem);
         }
+        Console.WriteLine("GenerateReaderIdDict Count: " + readerIdDict.Count);
     }
     
     private static void GenerateDayOfWeekReaderEventsDict(List<ReaderEvent> eventsList)
@@ -93,9 +103,28 @@ public class ReaderEvent
         {
             AddEventToDict(readerDescDict, eventItem.ReaderDesc, eventItem);
         }
+        Console.WriteLine("GenerateReaderDescDict Count: " + readerDescDict.Count);
+    }
+
+    private static void GenerateDevIdDict(List<ReaderEvent> eventsList)
+    {
+        devIdDict.Clear();
+        foreach (var eventItem in eventsList)
+        {
+            AddEventToDict(devIdDict, eventItem.DEVID, eventItem);
+        }
+        Console.WriteLine("GenerateDevIdDict Count: " + devIdDict.Count);
     }
     
- 
+    private static void GenerateMachineDict(List<ReaderEvent> eventsList)
+    {
+        machineDict.Clear();
+        foreach (var eventItem in eventsList)
+        {
+            AddEventToDict(machineDict, eventItem.MACHINE, eventItem);
+        }
+        Console.WriteLine("GenerateMachineDict Count: " + machineDict.Count);
+    }
     
     
     /* Helper Methods */

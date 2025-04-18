@@ -11,7 +11,8 @@ public partial class Home : ComponentBase
         ReaderDescGraph,
         PersonIDGraph,
         RankedPersonIDGraph,
-        RankedReaderIDGraph;
+        RankedReaderIDGraph,
+        RankedDevIDGraph;
 
     private static MudDatePicker StartPicker;
     private static MudDatePicker EndPicker;
@@ -54,6 +55,7 @@ public partial class Home : ComponentBase
         createPersonIDGraph();
         createRankedPersonIDGraph();
         createRankedReaderIDGraph();
+        createRankedDevIDGraph();
     }
 
     private static void createReaderDescGraph()
@@ -182,9 +184,29 @@ public partial class Home : ComponentBase
         RankedReaderIDGraph = MudBlazorGraph.CreateGraph(series, rankedReaderIDGraph, null, options);
     }
 
+    public static void createRankedDevIDGraph()
+    {
+        var rankedDevIDGraph = GetTopRankedEventsFiltered(ReaderEvent.DevIdDict, 5);
+        
+        ChartOptions options = new ChartOptions();
+    
+        List<ChartSeries> series = new List<ChartSeries>
+        {
+            new()
+            {
+                Name = "Top 5 Panels (Based on DevID)",
+                Data = rankedDevIDGraph.Values
+                    .Select(entry => (double)entry.Count)
+                    .ToArray()
+            }
+        };
+        
+        RankedDevIDGraph = MudBlazorGraph.CreateGraph(series, rankedDevIDGraph, null, options);
+    }
+
 
     /* Helper functions */
-    public static  Dictionary<string, List<ReaderEvent>> GetTopRankedEventsFiltered(Dictionary<string, List<ReaderEvent>> inputDict, int topCount)
+    public static Dictionary<string, List<ReaderEvent>> GetTopRankedEventsFiltered(Dictionary<string, List<ReaderEvent>> inputDict, int topCount)
     {
         var rankedDict = inputDict
             .ToDictionary(

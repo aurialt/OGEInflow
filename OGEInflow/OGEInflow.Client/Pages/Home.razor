@@ -50,22 +50,38 @@
 
 <div class="grid-container">
     <div class="grid-item">
-        <MudChart ChartType="ChartType.Bar" ChartSeries="@ReaderDescGraph.Series" XAxisLabels="@ReaderDescGraph.Labels" Width="100%" ChartOptions="@ReaderDescGraph.Options"></MudChart>
+        <MudChart ChartType="ChartType.Bar" ChartSeries="@ReaderDescGraph.Series" 
+                  XAxisLabels="@ReaderDescGraph.Labels" Width="100%" 
+                  ChartOptions="@ReaderDescGraph.Options"></MudChart>
     </div>
+    <!-- Warnings -->
     <div class="grid-item">
         <h2>Warning Flags</h2>
     </div>
    
     <div class="grid-item">
-        <MudChart ChartType="ChartType.Line" ChartSeries="@ScanActivationsGraph.Series" XAxisLabels="@ScanActivationsGraph.Labels" Width="100%" Height="350" ChartOptions="ScanActivationsGraph.Options"></MudChart>
+        <MudChart ChartType="ChartType.Line" ChartSeries="@ScanActivationsGraph.Series"
+                  XAxisLabels="@ScanActivationsGraph.Labels" Width="100%" Height="350" 
+                  ChartOptions="ScanActivationsGraph.Options"></MudChart>
     </div>
+    <!-- Most Active Reader -->
     <div class="grid-item">
-        <MudChart ChartType="ChartType.Bar" ChartSeries="@PersonIDGraph.Series" XAxisLabels="@PersonIDGraph.Labels" Width="100%" Height="350" ChartOptions="PersonIDGraph.Options"></MudChart>
+        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedReaderIDGraph.Series"
+                  XAxisLabels="@RankedReaderIDGraph.Labels" Width="100%" Height="350"
+                  ChartOptions="RankedReaderIDGraph.Options"></MudChart>
     </div>
+    
+    <!-- Most Active People Ranked -->
     <div class="grid-item">
-        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedPersonIDGraph.Series" XAxisLabels="@RankedPersonIDGraph.Labels" Width="100%" Height="350" ChartOptions="RankedPersonIDGraph.Options"></MudChart>
+        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedPersonIDGraph.Series" 
+                  XAxisLabels="@RankedPersonIDGraph.Labels"Width="100%" Height="350"
+                  ChartOptions="RankedPersonIDGraph.Options"></MudChart>
     </div>
+    <!-- Most Active Panels Ranked -->
     <div class="grid-item">
-        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedReaderIDGraph.Series" XAxisLabels="@RankedReaderIDGraph.Labels" Width="100%" Height="350" ChartOptions="RankedReaderIDGraph.Options"></MudChart>
+        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedDevIDGraph.Series"
+                  XAxisLabels="@RankedDevIDGraph.Labels" Width="100%" Height="350"
+                  ChartOptions="RankedDevIDGraph.Options"></MudChart>
     </div>
+    
 </div>
