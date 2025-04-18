@@ -10,7 +10,7 @@ public partial class Home : ComponentBase
     public static MudBlazorGraph ScanActivationsGraph,
         RankedPersonIDGraph,
         RankedReaderIDGraph,
-        RankedDevIDGraph,
+        RankedMachineGraph,
         RankedAvgAreaGraph;
 
     private static MudDatePicker StartPicker;
@@ -62,7 +62,8 @@ public partial class Home : ComponentBase
         createScanActivationGraph();
         createRankedPersonIDGraph();
         createRankedReaderIDGraph();
-        createRankedDevIDGraph();
+        // createRankedDevIDGraph();
+        createRankedMachineGraph();
     }
     
     
@@ -157,9 +158,9 @@ public partial class Home : ComponentBase
         ReaderEventWarning.CheckTooManyReaderScans(5);
     }
 
-    public static void createRankedDevIDGraph()
+    public static void createRankedMachineGraph()
     {
-        var rankedDevIDGraph = GetTopRankedEventsFiltered(ReaderEvent.DevIdDict, 5);
+        var rankedMachineGraph = GetTopRankedEventsFiltered(ReaderEvent.MachineDict, 5);
         
         ChartOptions options = new ChartOptions();
     
@@ -167,14 +168,14 @@ public partial class Home : ComponentBase
         {
             new()
             {
-                Name = "Top 5 Panels (Based on DevID)",
-                Data = rankedDevIDGraph.Values
+                Name = "Top 5 Panels (Based on Machine)",
+                Data = rankedMachineGraph.Values
                     .Select(entry => (double)entry.Count)
                     .ToArray()
             }
         };
         
-        RankedDevIDGraph = MudBlazorGraph.CreateGraph(series, rankedDevIDGraph, null, options);
+        RankedMachineGraph = MudBlazorGraph.CreateGraph(series, rankedMachineGraph, null, options);
     }
 
     public static void createRankedAvgAreaGraph()
