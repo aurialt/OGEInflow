@@ -134,6 +134,7 @@ public partial class Home : ComponentBase
         };
 
         RankedPersonIDGraph = MudBlazorGraph.CreateGraph(series, rankedPersonIDGraph, null, options);
+        // ReaderEventWarning.CheckDoubleScans(ReaderEvent.PersonIDDict);
     }
 
 
@@ -155,7 +156,7 @@ public partial class Home : ComponentBase
         };
         
         RankedReaderIDGraph = MudBlazorGraph.CreateGraph(series, rankedReaderIDGraph, null, options);
-        ReaderEventWarning.CheckTooManyReaderScans(5);
+        ReaderEventWarning.CheckTooManyReaderScans(rankedReaderIDGraph,5);
     }
 
     public static void createRankedMachineGraph()

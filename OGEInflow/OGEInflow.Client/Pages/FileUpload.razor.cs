@@ -100,6 +100,9 @@ public partial class FileUpload : ComponentBase
         }
     }
     
+    
+    
+    /* Miscellaneous Section */
     public static void CheckMaxDate(string dateString)
     {
         try
@@ -110,7 +113,7 @@ public partial class FileUpload : ComponentBase
             if (ReaderEvent.MaxDate == null || dateOnly > ReaderEvent.MaxDate)
             {
                 ReaderEvent.MaxDate = dateOnly;
-                Console.WriteLine($"Max date Updated: {ReaderEvent.MaxDate}");
+                // Console.WriteLine($"Max date Updated: {ReaderEvent.MaxDate}");
             }
         }
         catch (FormatException)
@@ -129,7 +132,7 @@ public partial class FileUpload : ComponentBase
             if (ReaderEvent.MinDate == DateTime.MinValue || dateOnly < ReaderEvent.MinDate)
             {
                 ReaderEvent.MinDate = dateOnly;
-                Console.WriteLine($"Min date Updated: {ReaderEvent.MinDate}");
+                // Console.WriteLine($"Min date Updated: {ReaderEvent.MinDate}");
             }
             
         }
