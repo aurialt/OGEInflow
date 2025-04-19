@@ -52,7 +52,7 @@ public partial class Home : ComponentBase
     //Will cause page error if all create graphs aren't put into here
     private static void LoadGraphs()
     {
-        if (StartDate != null || EndDate != null)
+        if (StartDate != null && EndDate != null)
         {
             TimeSpan diff = EndDate.Value - StartDate.Value;
             dateRange = (int)diff.TotalDays;
