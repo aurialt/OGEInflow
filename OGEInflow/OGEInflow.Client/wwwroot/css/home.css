@@ -1,20 +1,35 @@
 .dateFilter {
-margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
 }
-.dateFilter .timeframe_between,.datepicker {
-    display: inline-block;
+
+.timeframe {
+    margin: 0;
+}
+
+.datepicker-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.datepicker {
+    display: flex;
+    align-items: center;
 }
 
 .timeframe_between {
-    margin: 0 20px;
+    margin-top: 20px;
+    font-weight: 500;
 }
-.datepicker {
-    display: inline-block;
-}
+
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(2, 1fr); 
     gap: 16px;
 }
 
@@ -22,8 +37,17 @@ margin: 0 auto;
     background-color: gray;
     color: white;
     padding: 20px;
-    text-align: center;
     border-radius: 8px;
+}
+
+/*Bar Charts*/
+
+.mud-chart-bar {
+    stroke-width: 15px;
+}
+
+.mud-charts-xaxis text{
+    /*writing-mode: vertical-rl; */
 }
 
 
@@ -39,8 +63,4 @@ margin: 0 auto;
     .grid-container {
         grid-template-columns: 1fr;
     }
-}
-
-.datepicker {
-    width: 200px;
 }

@@ -182,8 +182,15 @@ public partial class Home : ComponentBase
     public static void createRankedAvgAreaGraph()
     {
         var rankedAvgAreaGraph = GetTopRankedEventsFiltered(ReaderEvent.ReaderDescDict, 5);
-        
-        ChartOptions options = new ChartOptions();
+
+        ChartOptions options = new ChartOptions
+        {
+            ChartPalette = new[] { "#4EE1EC" }, // bright blue
+            XAxisLines = true,
+            YAxisLines = false,
+            
+            
+        };
     
         List<ChartSeries> series = new List<ChartSeries>
         {
@@ -192,7 +199,9 @@ public partial class Home : ComponentBase
                 Name = "Top 5 Areas (Based on ReaderDesc)",
                 Data = rankedAvgAreaGraph.Values
                     .Select(entry => (double)entry.Count / dateRange)
-                    .ToArray()
+                    .ToArray(),
+                ShowDataMarkers = false
+                
             }
         };
         
