@@ -110,7 +110,7 @@ public partial class FileUpload : ComponentBase
             DateTime fullDateTime = DateTime.Parse(dateString, null, DateTimeStyles.AdjustToUniversal);
             DateTime dateOnly = fullDateTime.Date;
             
-            if (ReaderEvent.MaxDate == null || dateOnly > ReaderEvent.MaxDate)
+            if (dateOnly > ReaderEvent.MaxDate)
             {
                 ReaderEvent.MaxDate = dateOnly;
                 // Console.WriteLine($"Max date Updated: {ReaderEvent.MaxDate}");
