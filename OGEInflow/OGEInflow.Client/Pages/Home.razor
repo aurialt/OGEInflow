@@ -16,11 +16,11 @@
         <div class="datepicker">
             <MudDatePicker @ref="StartPicker"
                            Label="Start Date"
-                           @bind-Date="StartDate"
-                           MinDate="@FirstDate"
-                           MaxDate="EndDate"
+                           MinDate="@MinDate"
+                           MaxDate="@EndDate"
                            AutoClose="@_autoClose"
-                           >
+                           DateChanged="@RefreshGraphs"
+            >
                 <PickerActions>
                     <MudButton Class="mr-auto align-self-start" OnClick="@(() => StartPicker.ClearAsync())">Clear</MudButton>
                     <MudButton OnClick="@(() => StartPicker.CloseAsync(false))">Cancel</MudButton>
@@ -35,10 +35,10 @@
         <div class="datepicker">
             <MudDatePicker @ref="@EndPicker"
                            Label="End Date"
-                           @bind-Date="@EndDate"
                            MinDate="@StartDate"
-                           MaxDate="@LastDate"
-                           AutoClose="@_autoClose">
+                           MaxDate="@MaxDate"
+                           AutoClose="@_autoClose"
+                           DateChanged="@RefreshGraphs">
                 <PickerActions>
                     <MudButton Class="mr-auto align-self-start" OnClick="@(() => EndPicker.ClearAsync())">Clear</MudButton>
                     <MudButton OnClick="@(() => EndPicker.CloseAsync(false))">Cancel</MudButton>
@@ -47,7 +47,6 @@
             </MudDatePicker>
         </div>
     </div>
-    <button onclick="@RefreshGraphs">Refresh Graphs</button>
 </div>
 
 

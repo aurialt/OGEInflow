@@ -14,11 +14,11 @@ namespace OGEInflow.Client.Pages
             RankedMachineGraph,
             RankedAvgAreaGraph;
 
-        private static MudDatePicker StartPicker;
-        private static MudDatePicker EndPicker;
+        private static MudDatePicker StartPicker = new MudDatePicker();
+        private static MudDatePicker EndPicker = new MudDatePicker();
 
-        private static DateTime? FirstDate => ReaderEvent.MinDate;
-        private static DateTime? LastDate => ReaderEvent.MaxDate;
+        private static DateTime? MinDate => ReaderEvent.MinDate;
+        private static DateTime? MaxDate => ReaderEvent.MaxDate;
 
         private static int dateRange;
 
@@ -35,6 +35,22 @@ namespace OGEInflow.Client.Pages
                 await LoadGraphsAsync();
             }
         }
+        
+        private bool _firstRender = true;
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (ReaderEvent.readerEventsList == null) return;
+            //Used to set initial dates after rendering
+            if (firstRender && MinDate.HasValue && MaxDate.HasValue)
+            {
+                StartPicker.Date = MinDate;
+                
+                EndPicker.Date = MaxDate;
+                
+                _firstRender = false;
+            }
+        }
+        
 
         public static void InitializeDateBounds(DateTime startDate, DateTime endDate)
         {
@@ -46,6 +62,9 @@ namespace OGEInflow.Client.Pages
         {
             if (ReaderEvent.readerEventsList == null) return;
 
+            StartDate = StartPicker.Date;
+            EndDate = EndPicker.Date;
+            
             LoadGraphsAsync();
             StateHasChanged();
             Console.WriteLine(" (LoadGraphs) Date Range: " + dateRange);
