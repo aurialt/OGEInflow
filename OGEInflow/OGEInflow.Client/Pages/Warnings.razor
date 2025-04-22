@@ -4,8 +4,35 @@
 <div class="warnings-container">
     <div class="warning-item">
         <!-- MudTable for warnings -->
+        <MudTable Items="tempList" Hover="true">
+            <HeaderContent>
+                <MudTh>Warning</MudTh>
+                <MudTh>Location</MudTh>
+                <MudTh>ReaderDesc</MudTh>
+                <MudTh>ID</MudTh>
+                <MudTh>Machine</MudTh>
+                <MudTh>Actions</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>h</MudTd>
+                <MudTd>h</MudTd>
+                <MudTd>h</MudTd>
+                <MudTd>h</MudTd>
+                <MudTd>h</MudTd>
+                <MudTd>
+                    @* <MudButton Color="Color.Error" Size="Size.Small" OnClick="() => RemoveWarning(context)">Remove</MudButton> *@
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+        
     </div>
     <div class="warning-item">
         <!--Section for filters of  warnings that are togglable-->
     </div>
 </div>
+
+@code {
+
+    List<string> tempList = new();
+
+}
