@@ -3,7 +3,7 @@ namespace OGEInflow.Client.Layout;
 
 public partial class InflowLayout
 {
-    private bool _drawerOpen = true;
+    private bool _drawerOpen = false;
     private bool _isDarkMode = true;
     private MudTheme? _theme = null;
 

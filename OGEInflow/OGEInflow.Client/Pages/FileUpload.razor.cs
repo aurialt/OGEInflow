@@ -92,7 +92,7 @@ public partial class FileUpload : ComponentBase
 
             Console.WriteLine("Events populated");
             Console.WriteLine($"Total events: {ReaderEvent.readerEventsList.Count}");
-            Home.InitializeDateBounds(ReaderEvent.MinDate, ReaderEvent.MaxDate);
+            Activity.InitializeDateBounds(ReaderEvent.MinDate, ReaderEvent.MaxDate);
         }
         else
         {

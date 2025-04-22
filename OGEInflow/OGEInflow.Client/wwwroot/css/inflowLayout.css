@@ -1,7 +1,26 @@
+
 .nav-header {
     display: flex;
     flex-direction: row;
     gap: 10px;
+}
+
+#nav-drawer {
+    top: 64px;
+}
+
+/* Nav Group on Header */
+.nav-header {
+    position: relative; /* So child absolute positioning is relative to this */
+    z-index: 100; /* Ensure it stacks above other content */
+}
+
+.nav-group-container {
+    position: relative;
+}
+
+.mud-nav-group {
+    z-index: 1100; /* Higher than AppBar or other elements */
 }
 
 .menuitem {

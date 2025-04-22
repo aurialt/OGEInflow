@@ -17,8 +17,8 @@
       <Compile Update="Pages\FileUpload.razor.cs">
         <DependentUpon>FileUpload.razor</DependentUpon>
       </Compile>
-      <Compile Update="Pages\Home.razor.cs">
-        <DependentUpon>Home.razor</DependentUpon>
+      <Compile Update="Pages\Activity.razor.cs">
+        <DependentUpon>Activity.razor</DependentUpon>
       </Compile>
     </ItemGroup>
 

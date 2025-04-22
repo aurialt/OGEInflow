@@ -5,25 +5,35 @@
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 <MudLayout>
-    <MudAppBar Elevation="1">
+    <MudAppBar Elevation="2">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
         <MudImage src="img/ogelogo.png" style="width: auto; height: 100% "/>
         <MudText Typo="Typo.h5" Class="ml-3">Inflow</MudText>
         <MudSpacer/>
-        <div class="nav-header">
-            <MudNavGroup Title="Location" Icon="@Icons.Material.Filled.Place" Class="menuitem">
-                <MudNavLink Href="" Match="NavLinkMatch.All">Map</MudNavLink>
-                <MudNavLink Href="">Contact Info</MudNavLink>
+        <div class="nav-group-container">
+            <MudNavGroup Title="Location" Icon="@Icons.Material.Filled.Place">
+                <MudNavLink Href="map.html">Map</MudNavLink>
+                <MudNavLink Href="contact.html">Contact Info</MudNavLink>
             </MudNavGroup>
+        </div>
+        <div class="nav-header">
+            
             <MudText Class="menuitem">Activity</MudText>
             <MudText Class="menuitem">Map</MudText>
         </div>
         <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle"/>
         <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
     </MudAppBar>
-    <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+    <MudDrawer
+        id="nav-drawer"
+        @bind-Open="_drawerOpen"
+        Variant="DrawerVariant.Temporary"
+        Elevation="2"
+        Anchor="Anchor.Left"
+        Overlay="true">
         <NavMenu/>
     </MudDrawer>
+
     <MudMainContent Class="mt-16 pa-4">
         @Body
     </MudMainContent>

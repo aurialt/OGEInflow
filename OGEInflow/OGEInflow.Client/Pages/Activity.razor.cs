@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OGEInflow.Client.Pages
 {
-    public partial class Home : ComponentBase
+    public partial class Activity : ComponentBase
     {
         /* Graphs Section */
         public static MudBlazorGraph ScanActivationsGraph,
