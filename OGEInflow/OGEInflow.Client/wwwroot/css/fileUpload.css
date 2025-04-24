@@ -1,0 +1,16 @@
+.fileupload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Makes it take up full vertical space */
+    width: 100%;
+    text-align: center;
+}
+
+#fileupload-button {
+    width : 300px;
+    height: 50px;
+    font-size: 1.5rem;
+    background-color: blue;
+    color: white;
+}

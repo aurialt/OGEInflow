@@ -2,7 +2,7 @@
 @using OGEInflow.Client.Layout
 @layout InflowLayout
 @using OGEInflow.Services
-<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/activity.css">
 
 
 <PageTitle>Activity</PageTitle>
@@ -53,11 +53,11 @@
 
 
 <div class="grid-container">
-    <div class="grid-item">
-        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedAvgAreaGraph.Series"
-                  XAxisLabels="@RankedAvgAreaGraph.Labels" Width="600px"
-                  ChartOptions="@RankedAvgAreaGraph.Options"></MudChart>
-    </div>
+    @* <div class="grid-item"> *@
+    @*     <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedAvgAreaGraph.Series" *@
+    @*               XAxisLabels="@RankedAvgAreaGraph.Labels" Width="600px" *@
+    @*               ChartOptions="@RankedAvgAreaGraph.Options"></MudChart> *@
+    @* </div> *@
     <!-- Warnings -->
     <div class="grid-item">
         <h2>Warning Flags</h2>

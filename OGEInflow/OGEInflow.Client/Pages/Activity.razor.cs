@@ -81,7 +81,7 @@ namespace OGEInflow.Client.Pages
             FilterReaderEvents();
 
             await Task.WhenAll(
-                createRankedAvgAreaGraphAsync(),
+                // createRankedAvgAreaGraphAsync(),
                 createScanActivationGraphAsync(),
                 createRankedPersonIDGraphAsync(),
                 createRankedReaderIDGraphAsync(),
@@ -104,14 +104,24 @@ namespace OGEInflow.Client.Pages
                 .GroupBy(keySelector)
                 .ToDictionary(g => g.Key, g => g.ToList());
         }
-
+        
         private static Task createScanActivationGraphAsync()
         {
             ChartOptions options = new ChartOptions();
 
             string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
-            var sortedDayOfWeekReaderEvents = ReaderEvent.DayOfWeekReaderEventsDict
+            // Group filteredReaderEvents by day of week
+            var dayOfWeekDict = filteredReaderEvents
+                .Where(re => DateTime.TryParse(re.EventTime, out _))
+                .GroupBy(re => 
+                {
+                    DateTime.TryParse(re.EventTime, out var date);
+                    return date.DayOfWeek.ToString();
+                })
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            var sortedDayOfWeekReaderEvents = dayOfWeekDict
                 .Where(entry => daysOfWeek.Contains(entry.Key))
                 .OrderBy(entry => Array.IndexOf(daysOfWeek, entry.Key))
                 .ToList();
@@ -127,7 +137,7 @@ namespace OGEInflow.Client.Pages
                 }
             };
 
-            ScanActivationsGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.DayOfWeekReaderEventsDict, daysOfWeek, options);
+            ScanActivationsGraph = MudBlazorGraph.CreateGraph(series, dayOfWeekDict, daysOfWeek, options);
             return Task.CompletedTask;
         }
 

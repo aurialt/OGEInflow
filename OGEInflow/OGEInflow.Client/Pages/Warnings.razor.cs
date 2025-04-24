@@ -5,8 +5,10 @@ namespace OGEInflow.Client.Pages;
 
 public partial class Warnings : ComponentBase
 {
+    private List<(string, ReaderEvent)> DoubleScanList = new();
 
     private void addDoubleScanWarning(ReaderEvent re)
     {
+        
     }
 }

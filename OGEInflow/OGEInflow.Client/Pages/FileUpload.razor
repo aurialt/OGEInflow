@@ -4,17 +4,21 @@
 @using OGEInflow.Client.Layout
 @layout InflowLayout
 
+<link rel="stylesheet" href="css/fileUpload.css">
 <PageTitle>File Upload</PageTitle>
 
-<MudFileUpload T="IBrowserFile" OnFilesChanged="FileUploaded">
-    <ActivatorContent>
-        <MudButton Variant="Variant.Filled"
-                   Color="Color.Primary"
-                   StartIcon="@Icons.Material.Filled.CloudUpload">
-            Upload Files
-        </MudButton>
-    </ActivatorContent>
-</MudFileUpload>
+<div class="fileupload-container">
+    
+    
+    <MudFileUpload T="IBrowserFile" OnFilesChanged="FileUploaded">
+        <ActivatorContent>
+            <MudButton id="fileupload-button" Variant="Variant.Filled"
+                       StartIcon="@Icons.Material.Filled.CloudUpload">
+                Upload Files
+            </MudButton>
+        </ActivatorContent>
+    </MudFileUpload>
+</div>
 
 <label>Reader Events Count: @ReaderEvent.readerEventsList.Count</label>
 

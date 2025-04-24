@@ -13,6 +13,9 @@ public static class ReaderEventWarning
     
     public static List<(string PersonID, string time1, string time2)> DoubleScanWarningsList = new();
     public static List<(string ReaderID, int count)> HighReaderUsageWarningsList = new List<(string, int)>();
+    
+    public static List<(ReaderEvent re1, ReaderEvent re2)> DoubleScansReaderEvents = new List<(ReaderEvent, ReaderEvent)>();
+    public static List<ReaderEvent> HighReaderUsageReaderEvents = new List<ReaderEvent>();
 
     
     public static void ClearWarnings()
@@ -30,7 +33,8 @@ public static class ReaderEventWarning
                     .OrderBy(ev => ev.EventTime)
                     .Zip(entry.Value.OrderBy(ev => ev.EventTime).Skip(1), (a, b) => new { a, b })
                     .Where(pair => pair.a.EventTime == pair.b.EventTime)
-                    .Select(pair => (PersonID: entry.Key, time1: pair.a.EventTime, time2: pair.b.EventTime))
+                    .Select(pair => (pair.a, pair.b)) // Convert anonymous object to tuple
+                    // .Select(pair => (PersonID: entry.Key, time1: pair.a.EventTime, time2: pair.b.EventTime))
             )
             .ToList();
         
@@ -39,22 +43,26 @@ public static class ReaderEventWarning
         //     Console.WriteLine($"Double Scan detected: PersonID: {scan.PersonID}, Time: {scan.time1}");
         // }
         
-        DoubleScanWarningsList.AddRange(doubleScans);
+        // DoubleScanWarningsList.AddRange(doubleScans);
+        DoubleScansReaderEvents.AddRange(doubleScans);
         Console.WriteLine("Amount of Double Scans: " + DoubleScanWarningsList.Count);
     }
     
-    public static void CheckTooManyReaderScans(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
-    {
-        var filteredDict = sourceData
-            .Where(entry => entry.Value.Count > threshold)
-            .ToList();
-        Console.WriteLine("CheckTooManyReaderScans called...");
-        foreach (var entry in filteredDict)
-        {
-            Console.WriteLine($"ReaderID: {entry.Key} Event Count: {entry.Value.Count}");
-            HighReaderUsageWarningsList.Add((entry.Key, entry.Value.Count));
-        }
-            
-    }
+    // public static void CheckTooManyReaderScans(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
+    // {
+    //     Console.WriteLine("CheckTooManyReaderScans called...");
+    //     var warnings = sourceData
+    //         .Where(entry => entry.Value.Count > threshold)
+    //         .Select(entry =>
+    //         {
+    //             Console.WriteLine($"ReaderID: {entry.Key} Event Count: {entry.Value.Count}");
+    //             return (entry.Value);
+    //         })
+    //         .ToList();
+    //
+    //     HighReaderUsageReaderEvents.AddRange(warnings);
+    //     // HighReaderUsageWarningsList.AddRange(warnings);
+    // }
+
     
 }
