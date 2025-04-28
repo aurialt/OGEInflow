@@ -84,7 +84,6 @@ namespace OGEInflow.Client.Pages
             FilterReaderEvents();
 
             await Task.WhenAll(
-                // createRankedAvgAreaGraphAsync(),
                 createScanActivationGraphAsync(),
                 createRankedPersonIDGraphAsync(),
                 createRankedReaderIDGraphAsync(),
@@ -108,27 +107,59 @@ namespace OGEInflow.Client.Pages
                 .ToDictionary(g => g.Key, g => g.ToList());
         }
         
+        // private static Task createScanActivationGraphAsync()
+        // {
+        //     ChartOptions options = new ChartOptions();
+        //
+        //     string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+        //
+        //     var sortedDayOfWeekReaderEvents = ReaderEvent.DayOfWeekReaderEventsDict
+        //         .Where(entry => daysOfWeek.Contains(entry.Key))
+        //         .OrderBy(entry => Array.IndexOf(daysOfWeek, entry.Key))
+        //         .ToList();
+        //
+        //     List<ChartSeries> series = new List<ChartSeries>
+        //     {
+        //         new()
+        //         {
+        //             Name = "Scan Activations per Day",
+        //             Data = sortedDayOfWeekReaderEvents
+        //                 .Select(entry => (double)entry.Value.Count)
+        //                 .ToArray()
+        //         }
+        //     };
+        //
+        //     ScanActivationsGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.DayOfWeekReaderEventsDict, daysOfWeek, options);
+        //     return Task.CompletedTask;
+        // }
+        
         private static Task createScanActivationGraphAsync()
         {
             ChartOptions options = new ChartOptions();
-
+        
             string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-
-            // Group filteredReaderEvents by day of week
+        
+            // Parse the events once and group by the day of the week
             var dayOfWeekDict = filteredReaderEvents
-                .Where(re => DateTime.TryParse(re.EventTime, out _))
-                .GroupBy(re => 
+                .Select(re =>
                 {
-                    DateTime.TryParse(re.EventTime, out var date);
-                    return date.DayOfWeek.ToString();
+                    if (DateTime.TryParse(re.EventTime, out var date))
+                    {
+                        return new { re, dayOfWeek = date.DayOfWeek.ToString() };
+                    }
+                    return null;
                 })
-                .ToDictionary(g => g.Key, g => g.ToList());
-
+                .Where(x => x != null)  // Only keep valid events
+                .GroupBy(x => x.dayOfWeek)
+                .ToDictionary(g => g.Key, g => g.Select(x => x.re).ToList());
+        
+            // Sort based on the order of the days
             var sortedDayOfWeekReaderEvents = dayOfWeekDict
                 .Where(entry => daysOfWeek.Contains(entry.Key))
                 .OrderBy(entry => Array.IndexOf(daysOfWeek, entry.Key))
                 .ToList();
-
+        
+            // Prepare chart series data
             List<ChartSeries> series = new List<ChartSeries>
             {
                 new()
@@ -139,10 +170,12 @@ namespace OGEInflow.Client.Pages
                         .ToArray()
                 }
             };
-
+        
+            // Create the graph
             ScanActivationsGraph = MudBlazorGraph.CreateGraph(series, dayOfWeekDict, daysOfWeek, options);
             return Task.CompletedTask;
         }
+
 
         private static Task createRankedPersonIDGraphAsync()
         {
