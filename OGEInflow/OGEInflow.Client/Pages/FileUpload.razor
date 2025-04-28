@@ -9,15 +9,18 @@
 
 <div class="fileupload-container">
     
+    <MudText Typo="Typo.h2">Welcome to Inflow</MudText>
     
+    <div>
     <MudFileUpload T="IBrowserFile" OnFilesChanged="FileUploaded">
         <ActivatorContent>
             <MudButton id="fileupload-button" Variant="Variant.Filled"
                        StartIcon="@Icons.Material.Filled.CloudUpload">
-                Upload Files
+                Upload Your CSV
             </MudButton>
         </ActivatorContent>
     </MudFileUpload>
+    </div>
 </div>
 
 <label>Reader Events Count: @ReaderEvent.readerEventsList.Count</label>

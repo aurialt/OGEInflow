@@ -1,4 +1,6 @@
 using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
 using OGEInflow.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -15,9 +17,15 @@ public partial class FileUpload : ComponentBase
     public static DateTimeOffset LastModified { get; set; }
     public static string ErrorMessage { get; set; } = "";
     
+    
+    public static bool isFileUploaded { get; set; } = false;
+    
     const int MAX_FILESIZE = 5000 * 1024; // 5 MB
     
-    public static async Task FileUploaded(InputFileChangeEventArgs e)
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+    
+    private async Task FileUploaded(InputFileChangeEventArgs e)
     {
         var browserFiles = e.GetMultipleFiles();
 
@@ -48,6 +56,8 @@ public partial class FileUpload : ComponentBase
                     Console.WriteLine("Target file path: " + targetFilePath);
                     
                     PopulateReaderEvents(targetFilePath);
+                    isFileUploaded = true;
+                    NavigationManager.NavigateTo("/activity");
                     
                 }
                 catch (Exception exception)
@@ -60,7 +70,7 @@ public partial class FileUpload : ComponentBase
     
     
     /* ReaderEvent Section */
-    public static void PopulateReaderEvents(string file)
+    private void PopulateReaderEvents(string file)
     {
         if (Path.Exists(file) && Path.GetExtension(file) == ".csv")
         {
@@ -103,7 +113,7 @@ public partial class FileUpload : ComponentBase
     
     
     /* Miscellaneous Section */
-    public static void CheckMaxDate(string dateString)
+    private void CheckMaxDate(string dateString)
     {
         try
         {
@@ -122,7 +132,7 @@ public partial class FileUpload : ComponentBase
         }
     }
     
-    public static void CheckMinDate(string dateString)
+    private void CheckMinDate(string dateString)
     {
         try
         {

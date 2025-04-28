@@ -1,3 +1,21 @@
+/*Page Heading */
+.activity-header {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 50px;
+}
+
+.activity-header > :first-child {
+    justify-self: start;
+}
+
+.activity-header > :last-child {
+    justify-self: end;
+}
+
+/* Date Filter */
 .dateFilter {
     display: flex;
     flex-direction: column;
@@ -27,6 +45,7 @@
 }
 
 
+/*Grid Displays */ 
 .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 

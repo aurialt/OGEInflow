@@ -11,8 +11,7 @@ namespace OGEInflow.Client.Pages
         public static MudBlazorGraph ScanActivationsGraph,
             RankedPersonIDGraph,
             RankedReaderIDGraph,
-            RankedMachineGraph,
-            RankedAvgAreaGraph;
+            RankedMachineGraph;
 
         private static MudDatePicker StartPicker = new MudDatePicker();
         private static MudDatePicker EndPicker = new MudDatePicker();
@@ -27,6 +26,10 @@ namespace OGEInflow.Client.Pages
         private static bool _autoClose = false;
 
         private static List<ReaderEvent> filteredReaderEvents;
+        
+        
+        /* Count variables */
+        private static int PersonCountFromFilter { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -145,6 +148,9 @@ namespace OGEInflow.Client.Pages
         {
             var personIDDict = GroupEventsByKey(re => re.ID);
             var rankedPersonIDGraph = GetTopRanked(personIDDict, 5);
+            
+            //Updates PersonCounter
+            PersonCountFromFilter = rankedPersonIDGraph.Count;
 
             ChartOptions options = new ChartOptions();
 
@@ -204,34 +210,6 @@ namespace OGEInflow.Client.Pages
             };
 
             RankedMachineGraph = MudBlazorGraph.CreateGraph(series, rankedMachineGraph, null, options);
-            return Task.CompletedTask;
-        }
-
-        private static Task createRankedAvgAreaGraphAsync()
-        {
-            var readerDescDict = GroupEventsByKey(re => re.ReaderDesc);
-            var rankedAvgAreaGraph = GetTopRanked(readerDescDict, 5);
-
-            ChartOptions options = new ChartOptions
-            {
-                ChartPalette = new[] { "#4EE1EC" },
-                XAxisLines = true,
-                YAxisLines = false
-            };
-
-            List<ChartSeries> series = new List<ChartSeries>
-            {
-                new()
-                {
-                    Name = "Top 5 Areas (Based on ReaderDesc)",
-                    Data = rankedAvgAreaGraph.Values
-                        .Select(entry => (double)entry.Count / dateRange)
-                        .ToArray(),
-                    ShowDataMarkers = false
-                }
-            };
-
-            RankedAvgAreaGraph = MudBlazorGraph.CreateGraph(series, rankedAvgAreaGraph, null, options);
             return Task.CompletedTask;
         }
 
