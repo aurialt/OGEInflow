@@ -19,6 +19,7 @@ public partial class FileUpload : ComponentBase
     
     
     public static bool isFileUploaded { get; set; } = false;
+    private bool showLoaderSpinner = false;
     
     const int MAX_FILESIZE = 5000 * 1024; // 5 MB
     
@@ -28,6 +29,7 @@ public partial class FileUpload : ComponentBase
     private async Task FileUploaded(InputFileChangeEventArgs e)
     {
         var browserFiles = e.GetMultipleFiles();
+        showLoaderSpinner = true;
 
         foreach (var browserFile in browserFiles)
         {
@@ -57,6 +59,7 @@ public partial class FileUpload : ComponentBase
                     
                     PopulateReaderEvents(targetFilePath);
                     isFileUploaded = true;
+                    showLoaderSpinner = false;
                     NavigationManager.NavigateTo("/activity");
                     
                 }

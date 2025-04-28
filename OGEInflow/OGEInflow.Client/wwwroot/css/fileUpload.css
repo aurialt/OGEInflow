@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh; /* Makes it take up full vertical space */
+    height: 70vh; /* Makes it take up full vertical space */
     width: 100%;
     text-align: center;
 }
@@ -15,3 +15,24 @@
     background-color: blue;
     color: white;
 }
+
+ /* Spinner */
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 

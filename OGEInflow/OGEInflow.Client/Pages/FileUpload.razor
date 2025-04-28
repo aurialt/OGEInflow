@@ -12,27 +12,20 @@
     <MudText Typo="Typo.h2">Welcome to Inflow</MudText>
     
     <div>
-    <MudFileUpload T="IBrowserFile" OnFilesChanged="FileUploaded" Accept=".csv">
-        <ActivatorContent>
-            <MudButton id="fileupload-button" Variant="Variant.Filled"
-                       StartIcon="@Icons.Material.Filled.CloudUpload">
-                Upload Your CSV
-            </MudButton>
-        </ActivatorContent>
-    </MudFileUpload>
+        <MudFileUpload T="IBrowserFile" OnFilesChanged="FileUploaded" Accept=".csv">
+            <ActivatorContent>
+                <MudButton id="fileupload-button" Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.CloudUpload">
+                    Upload Your CSV
+                </MudButton>
+            </ActivatorContent>
+        </MudFileUpload>
     </div>
-</div>
-
-<label>Reader Events Count: @ReaderEvent.readerEventsList.Count</label>
-
-<h2>Selected file</h2>
-<div>
-    <div>File name: @FileName</div>
-    <div>File size: @FileSize.ToString("n0") bytes</div>
-    <div>File type: @FileType</div>
-    <div>Last modified: @LastModified</div>
-    <div>Min Date: @ReaderEvent.MinDate</div>
-    <div>Max Date: @ReaderEvent.MaxDate</div>
+    <br/>
+    @if (showLoaderSpinner)
+    {
+        <span class="loader"></span>
+    }
 </div>
 
 
