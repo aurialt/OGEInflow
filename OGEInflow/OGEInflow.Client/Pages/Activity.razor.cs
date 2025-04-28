@@ -150,7 +150,7 @@ namespace OGEInflow.Client.Pages
             var rankedPersonIDGraph = GetTopRanked(personIDDict, 5);
             
             //Updates PersonCounter
-            PersonCountFromFilter = rankedPersonIDGraph.Count;
+            PersonCountFromFilter = personIDDict.Count;
 
             ChartOptions options = new ChartOptions();
 
