@@ -33,40 +33,37 @@ public partial class FileUpload : ComponentBase
 
         foreach (var browserFile in browserFiles)
         {
-            if (browserFile != null)
+            FileSize = browserFile.Size;
+            FileType = browserFile.ContentType;
+            FileName = browserFile.Name;
+            LastModified = browserFile.LastModified;
+
+            try
             {
-                FileSize = browserFile.Size;
-                FileType = browserFile.ContentType;
-                FileName = browserFile.Name;
-                LastModified = browserFile.LastModified;
+                var fileStream = browserFile.OpenReadStream(MAX_FILESIZE);
 
-                try
-                {
-                    var fileStream = browserFile.OpenReadStream(MAX_FILESIZE);
+                var projectRoot = Directory.GetCurrentDirectory();
+                var uploadFolder = Path.Combine(projectRoot, "Files");
+                Directory.CreateDirectory(uploadFolder);
+                var targetFilePath = Path.Combine(uploadFolder, FileName); 
 
-                    var projectRoot = Directory.GetCurrentDirectory();
-                    var uploadFolder = Path.Combine(projectRoot, "Files");
-                    Directory.CreateDirectory(uploadFolder);
-                    var targetFilePath = Path.Combine(uploadFolder, FileName); 
+                var destinationStream = new FileStream(targetFilePath, FileMode.Create);
+                await fileStream.CopyToAsync(destinationStream);
+                destinationStream.Close();
 
-                    var destinationStream = new FileStream(targetFilePath, FileMode.Create);
-                    await fileStream.CopyToAsync(destinationStream);
-                    destinationStream.Close();
-
-                    Console.WriteLine("File uploaded Name:" + FileName);
-                    Console.WriteLine("File project root" + projectRoot);
-                    Console.WriteLine("Target file path: " + targetFilePath);
+                Console.WriteLine("File uploaded Name:" + FileName);
+                Console.WriteLine("File project root" + projectRoot);
+                Console.WriteLine("Target file path: " + targetFilePath);
                     
-                    PopulateReaderEvents(targetFilePath);
-                    isFileUploaded = true;
-                    showLoaderSpinner = false;
-                    NavigationManager.NavigateTo("/activity");
+                PopulateReaderEvents(targetFilePath);
+                isFileUploaded = true;
+                showLoaderSpinner = false;
+                NavigationManager.NavigateTo("/activity");
                     
-                }
-                catch (Exception exception)
-                {
-                    ErrorMessage = exception.Message;
-                }
+            }
+            catch (Exception exception)
+            {
+                ErrorMessage = exception.Message;
             }
         }
     }

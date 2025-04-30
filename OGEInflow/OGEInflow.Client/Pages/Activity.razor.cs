@@ -20,6 +20,8 @@ namespace OGEInflow.Client.Pages
         private static DateTime? MaxDate => ReaderEvent.MaxDate;
 
         private static int dateRange;
+        
+        
 
         private static DateTime? StartDate { get; set; }
         private static DateTime? EndDate { get; set; }
@@ -27,9 +29,24 @@ namespace OGEInflow.Client.Pages
 
         private static List<ReaderEvent> filteredReaderEvents;
         
+        [Inject]
+        NavigationManager NavigationManager { get; set; }
         
         /* Count variables */
         private static int PersonCountFromFilter { get; set; }
+
+        // private int avgUniquePeople;
+        private int AvgUniquePeople
+        {
+            get
+            {
+                if (dateRange != 0)
+                {
+                    return PersonCountFromFilter / dateRange;
+                }
+                return 0;
+            }
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -164,7 +181,7 @@ namespace OGEInflow.Client.Pages
             {
                 new()
                 {
-                    Name = "Scan Activations per Day",
+                    Name = "Total Scans per Day",
                     Data = sortedDayOfWeekReaderEvents
                         .Select(entry => (double)entry.Value.Count)
                         .ToArray()
