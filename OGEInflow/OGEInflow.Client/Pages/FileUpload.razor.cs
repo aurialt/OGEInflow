@@ -31,6 +31,9 @@ public partial class FileUpload : ComponentBase
         var browserFiles = e.GetMultipleFiles();
         showLoaderSpinner = true;
 
+        ReaderEvent.MinDate = DateTime.MaxValue;
+        ReaderEvent.MaxDate = DateTime.MinValue;
+        
         foreach (var browserFile in browserFiles)
         {
             FileSize = browserFile.Size;
