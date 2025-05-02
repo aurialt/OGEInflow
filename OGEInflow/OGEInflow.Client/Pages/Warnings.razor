@@ -1,5 +1,7 @@
 @page "/Warnings"
 @using OGEInflow.Client.Layout
+@using OGEInflow.Services
+@using OGEInflow.Services.WarningTypes
 @layout InflowLayout
 <h3>Warnings</h3>
 
@@ -32,6 +34,54 @@
         <!--Section for filters of  warnings that are togglable-->
     </div>
 </div>
+
+
+@* <MudDataGrid T="HighReaderUsageWarning" Items="@ReaderEventWarning.HighReaderUsageReaderEvents" Filterable="true" SortMode="SortMode.Multiple"> *@
+@*     <ToolBarContent> *@
+@*         <MudText Typo="Typo.h6">High Reader Usage Warnings</MudText> *@
+@*     </ToolBarContent> *@
+@*     <Columns> *@
+@*         <PropertyColumn Property="x => x.ReaderEvent.ReaderID" /> *@
+@*         <PropertyColumn Property="x => x.ReaderEvent.Location" /> *@
+@*         <PropertyColumn Property="x => x.ReaderEvent.ReaderDesc" Title="Event Description" /> *@
+@*         <PropertyColumn Property="x => x.ScanCount" Title="Scan Count" /> *@
+@*     </Columns> *@
+@*     <PagerContent> *@
+@*         <MudDataGridPager T="HighReaderUsageWarning" /> *@
+@*     </PagerContent> *@
+@* </MudDataGrid> *@
+
+<MudDataGrid T="HighReaderUsageWarning"
+             Items="@ReaderEventWarning.HighReaderUsageReaderEvents"
+             Filterable="true"
+             SortMode="SortMode.Multiple"
+             QuickFilter="@_quickFilter"
+             RowsPerPage="10">
+
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">High Reader Usage Warnings</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="_searchString"
+                      Placeholder="Search"
+                      Adornment="Adornment.Start"
+                      Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mt-0" />
+    </ToolBarContent>
+
+    <Columns>
+        <PropertyColumn Property="x => x.ReaderEvent.ReaderID" />
+        <PropertyColumn Property="x => x.ReaderEvent.Location" />
+        <PropertyColumn Property="x => x.ReaderEvent.ReaderDesc" Title="Event Description" />
+        <PropertyColumn Property="x => x.ScanCount" Title="Scan Count" />
+    </Columns>
+
+    <PagerContent>
+        <MudDataGridPager T="HighReaderUsageWarning" />
+    </PagerContent>
+</MudDataGrid>
+
 
 @code {
 

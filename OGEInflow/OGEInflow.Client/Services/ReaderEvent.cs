@@ -45,11 +45,11 @@ namespace OGEInflow.Services
         public static void GenerateDictionaries()
         {
             GenerateDayOfWeekReaderEventsDict(readerEventsList);
-            // GeneratePersonIDDict(readerEventsList);
-            // GenerateReaderIdDict(readerEventsList);
-            // GenerateReaderDescDict(readerEventsList);
-            // GenerateDevIdDict(readerEventsList);
-            // GenerateMachineDict(readerEventsList);
+            GeneratePersonIDDict(readerEventsList);
+            GenerateReaderIdDict(readerEventsList);
+            GenerateReaderDescDict(readerEventsList);
+            GenerateDevIdDict(readerEventsList);
+            GenerateMachineDict(readerEventsList);
         }
 
         private static void GeneratePersonIDDict(List<ReaderEvent> eventList)

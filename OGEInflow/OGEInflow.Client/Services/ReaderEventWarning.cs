@@ -1,3 +1,5 @@
+using OGEInflow.Services.WarningTypes;
+
 namespace OGEInflow.Services;
 
 
@@ -12,15 +14,15 @@ public static class ReaderEventWarning
     
     
     public static List<(string PersonID, string time1, string time2)> DoubleScanWarningsList = new();
-    public static List<(string ReaderID, int count)> HighReaderUsageWarningsList = new List<(string, int)>();
+    // public static List<(string ReaderID, int count)> HighReaderUsageWarningsList = new List<(string, int)>();
     
     public static List<(ReaderEvent re1, ReaderEvent re2)> DoubleScansReaderEvents = new List<(ReaderEvent, ReaderEvent)>();
-    public static List<ReaderEvent> HighReaderUsageReaderEvents = new List<ReaderEvent>();
+    public static List<HighReaderUsageWarning> HighReaderUsageReaderEvents = new();
 
     
     public static void ClearWarnings()
     {
-        HighReaderUsageWarningsList.Clear();
+        // HighReaderUsageWarningsList.Clear();
     }
     
     public static void CheckDoubleScans(Dictionary<string, List<ReaderEvent>> sourceData)
@@ -48,21 +50,26 @@ public static class ReaderEventWarning
         Console.WriteLine("Amount of Double Scans: " + DoubleScanWarningsList.Count);
     }
     
-    // public static void CheckTooManyReaderScans(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
-    // {
-    //     Console.WriteLine("CheckTooManyReaderScans called...");
-    //     var warnings = sourceData
-    //         .Where(entry => entry.Value.Count > threshold)
-    //         .Select(entry =>
-    //         {
-    //             Console.WriteLine($"ReaderID: {entry.Key} Event Count: {entry.Value.Count}");
-    //             return (entry.Value);
-    //         })
-    //         .ToList();
-    //
-    //     HighReaderUsageReaderEvents.AddRange(warnings);
-    //     // HighReaderUsageWarningsList.AddRange(warnings);
-    // }
+    public static void CheckTooManyReaderScans(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
+    {
+        Console.WriteLine("CheckTooManyReaderScans called...");
+        var warnings = sourceData
+            .Where(entry => entry.Value.Count > threshold)
+            .Select(entry =>
+            {
+                var sample = entry.Value.FirstOrDefault();
+                return new HighReaderUsageWarning
+                {
+                    ReaderEvent = sample,
+                    ScanCount = entry.Value.Count
+                };
+            })
+            .ToList();
+        
+        HighReaderUsageReaderEvents.AddRange(warnings);
+        Console.WriteLine("Amount of Reader Scans: " + HighReaderUsageReaderEvents.Count);
+        // HighReaderUsageWarningsList.AddRange(warnings);
+    }
 
     
 }
