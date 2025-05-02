@@ -59,6 +59,18 @@
     border-radius: 8px;
 }
 
+/*Warning display */
+.warning-container {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.warning-container-image {
+    width: 40px;
+    height: 40px;
+}
+
 /*Bar Charts*/
 
 .mud-chart-bar {
