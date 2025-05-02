@@ -74,11 +74,23 @@
     @*               XAxisLabels="@RankedAvgAreaGraph.Labels" Width="600px" *@
     @*               ChartOptions="@RankedAvgAreaGraph.Options"></MudChart> *@
     @* </div> *@
+    
+    
     <!-- Warnings -->
     <div class="grid-item">
         <h2>Warning Flags</h2>
+        <div class="warning-container">
+            <MudImage src="img/warning.png" Class="warning-container-image"></MudImage>
+            <MudText Typo="Typo.h5">@ReaderEventWarning.HighReaderUsageReaderEvents.Count counts of high scanner usage</MudText>
+        </div>
+        <div class="warning-container">
+            <MudImage src="img/warning.png" Class="warning-container-image"></MudImage>
+            <MudText Typo="Typo.h5">@ReaderEventWarning.DoubleScansReaderEvents.Count counts of double scans</MudText>
+        </div>
+        
     </div>
 
+    
     <div class="grid-item">
         <MudChart ChartType="ChartType.Line" ChartSeries="@ScanActivationsGraph.Series"
                   XAxisLabels="@ScanActivationsGraph.Labels" Width="100%" Height="300px"

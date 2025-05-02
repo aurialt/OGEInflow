@@ -33,6 +33,7 @@ public partial class FileUpload : ComponentBase
 
         ReaderEvent.MinDate = DateTime.MaxValue;
         ReaderEvent.MaxDate = DateTime.MinValue;
+        ReaderEventWarning.ClearWarnings();
         
         foreach (var browserFile in browserFiles)
         {
@@ -105,7 +106,8 @@ public partial class FileUpload : ComponentBase
 
             Console.WriteLine("Events populated");
             Console.WriteLine($"Total events: {ReaderEvent.readerEventsList.Count}");
-            Activity.InitializeDateBounds(ReaderEvent.MinDate, ReaderEvent.MaxDate);
+            RunStartUpMethods();
+            
         }
         else
         {
@@ -153,6 +155,14 @@ public partial class FileUpload : ComponentBase
         {
             ErrorMessage = $"Invalid date format: {dateString}";
         }
+    }
+    
+    //Start-ups
+    private void RunStartUpMethods()
+    {
+        Activity.InitializeDateBounds(ReaderEvent.MinDate, ReaderEvent.MaxDate);
+        ReaderEventWarning.CheckTooManyReaderScans(ReaderEvent.ReaderIDDict, 500); 
+        ReaderEventWarning.CheckDoubleScans(ReaderEvent.PersonIDDict);
     }
 }
 
