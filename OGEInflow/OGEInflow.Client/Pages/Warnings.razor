@@ -12,7 +12,8 @@
                  Filterable="true"
                  SortMode="SortMode.Multiple"
                  QuickFilter="@quickFilterDoubleScan"
-                 RowsPerPage="10">
+                 RowsPerPage="10"
+                 >
 
         <ToolBarContent>
             <MudText Typo="Typo.h6">Double Scan Warnings</MudText>
@@ -34,7 +35,7 @@
         </Columns>
 
         <PagerContent>
-            <MudDataGridPager T="WarningTypes" />
+            <MudDataGridPager T="ReaderEvent" />
         </PagerContent>
     </MudDataGrid>
 
