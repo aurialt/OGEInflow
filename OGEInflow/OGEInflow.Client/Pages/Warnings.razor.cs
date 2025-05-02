@@ -6,17 +6,11 @@ namespace OGEInflow.Client.Pages;
 
 public partial class Warnings : ComponentBase
 {
-    private List<(string, ReaderEvent)> DoubleScanList = new();
-
-    private void addDoubleScanWarning(ReaderEvent re)
-    {
-        
-    }
     
     /* HighReaderUsageWarning MudDataGrid */
     private string _searchString;
 
-    private Func<HighReaderUsageWarning, bool> _quickFilter => x =>
+    private Func<WarningTypes, bool> quickFilterHighUsageScans => x =>
     {
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
@@ -26,6 +20,18 @@ public partial class Warnings : ComponentBase
             (x.ReaderEvent.Location?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
             (x.ReaderEvent.ReaderDesc?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
             x.ScanCount.ToString().Contains(_searchString);
+    };
+    
+    private Func<ReaderEvent, bool> quickFilterDoubleScan => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        return
+            (x.ReaderID?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.Location?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.ReaderDesc?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.EventTime?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false);
     };
     
     

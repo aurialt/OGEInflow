@@ -33,6 +33,7 @@ public partial class FileUpload : ComponentBase
 
         ReaderEvent.MinDate = DateTime.MaxValue;
         ReaderEvent.MaxDate = DateTime.MinValue;
+        ReaderEventWarning.ClearWarnings();
         
         foreach (var browserFile in browserFiles)
         {
@@ -163,7 +164,8 @@ public partial class FileUpload : ComponentBase
     private void RunStartUpMethods()
     {
         Activity.InitializeDateBounds(ReaderEvent.MinDate, ReaderEvent.MaxDate);
-        ReaderEventWarning.CheckTooManyReaderScans(ReaderEvent.ReaderIDDict, 500);  
+        ReaderEventWarning.CheckTooManyReaderScans(ReaderEvent.ReaderIDDict, 500); 
+        ReaderEventWarning.CheckDoubleScans(ReaderEvent.PersonIDDict);
     }
 }
 
