@@ -1,11 +1,20 @@
 @page "/Map"
+@using OGEInflow.Services
+@using OGEInflow.Client.Components
 <link rel="stylesheet" href="css/map.css"/>
 <h3>Map</h3>
 <div class="page-container">
     <div class="map-container">
         <MudImage Class="map-image" Src="img/facility.png"></MudImage>
+        <div class="icon-container" style="top: 220px; left: 30px;">
+            <div class="pin" style="--pin-color: rgb(0,200,100);" @onclick="@TestOutputVal"></div>
+            <div class="label" >4-25</div>
+        </div>
+        
+        <Pin Label="4-25" Top="100px" Left="40px" Class="reader-pin" OnClick="@TestOutputVal" />
+       
+    </div>
+    <div>
+        <p>@testoutput</p>
     </div>
 </div>
-@code {
-    
-}

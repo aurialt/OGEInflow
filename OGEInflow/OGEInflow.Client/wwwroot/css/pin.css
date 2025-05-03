@@ -1,0 +1,34 @@
+/*Pin CSS */
+:root {
+    --pin-size: 40px;               /* diameter of the circle */
+    --pin-color: rgb(0,0,0);    /* pin color */
+}
+
+.pin {
+    position: relative;
+    width: var(--pin-size);
+    height: var(--pin-size);
+    background: var(--pin-color);
+    border-radius: 50% 50% 50% 50%;
+    /* pull the tip underneath */
+    margin-bottom: calc(var(--pin-size) / 2);
+}
+
+/* the pointed tail */
+.pin::after {
+    content: '';
+    position: absolute;
+    bottom: calc(-1 * var(--pin-size) / 2);
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: calc(var(--pin-size) / 2) solid transparent;
+    border-right: calc(var(--pin-size) / 2) solid transparent;
+    border-top: calc(var(--pin-size) / 1.08) solid var(--pin-color);
+}
+
+
+/*Reader Pin */
+.reader-pin {
+    --pin-color: rgb(42, 121, 19);
+}

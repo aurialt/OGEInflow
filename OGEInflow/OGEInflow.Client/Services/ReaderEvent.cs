@@ -32,6 +32,18 @@ namespace OGEInflow.Services
 
         public string ReaderID => $"{DEVID}-{MACHINE}"; // Centralized string concat
 
+        
+        public ReaderEvent()
+        {
+            //For Testing
+            EventTime = DateTime.MinValue.ToString();
+            Location = "Default Location";
+            ReaderDesc = "Default Reader Description";
+            ID = "Default ID";
+            DEVID = "Default DEV ID";
+            MACHINE = "Default MACHINE";
+
+        }
         public ReaderEvent(string eventTime, string location, string readerDesc, string id, string devid, string machine)
         {
             EventTime = eventTime;
