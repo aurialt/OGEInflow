@@ -11,8 +11,15 @@
         {
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
         }
+        @if (_isDarkMode)
+        {
+            <MudImage src="img/ogelogo.png" style="width: auto; height: 100% "/>
+        }
+        else
+        {
+            <MudImage src="img/ogelogo.png" style="width: auto; height: 100%; filter: sepia(5) saturate(100) hue-rotate(-60deg);"/>
+        }
         
-        <MudImage src="img/ogelogo.png" style="width: auto; height: 100% "/>
         <MudText Typo="Typo.h5" Class="ml-3">Inflow</MudText>
         <MudSpacer/>
         @if (FileUpload.isFileUploaded)
