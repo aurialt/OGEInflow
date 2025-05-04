@@ -33,7 +33,7 @@ public partial class InflowLayout
     {
         Black = "#110e2d",
         AppbarText = "#424242",
-        AppbarBackground = "rgba(255,255,255,0.8)",
+        AppbarBackground = "rgba(255,255,255,1)",
         DrawerBackground = "#ffffff",
         GrayLight = "#e8e8e8",
         GrayLighter = "#f9f9f9",
@@ -46,7 +46,7 @@ public partial class InflowLayout
         Background = "#1a1a27",
         BackgroundGray = "#151521",
         AppbarText = "#92929f",
-        AppbarBackground = "rgba(26,26,39,0.8)",
+        AppbarBackground = "rgba(26,26,39,1)",
         DrawerBackground = "#1a1a27",
         ActionDefault = "#74718e",
         ActionDisabled = "#9999994d",

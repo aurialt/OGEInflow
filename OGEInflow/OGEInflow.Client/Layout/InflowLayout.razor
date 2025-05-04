@@ -26,9 +26,8 @@
         {
             
             <div class="nav-header">
-
-                <MudLink Class="menuitem" Href="/activity">Activity</MudLink>
-                <MudLink Class="menuitem" Href="/Map">Map</MudLink>
+                @* <MudLink Class="menuitem" Href="/activity">Activity</MudLink> *@
+                @* <MudLink Class="menuitem" Href="/Map">Map</MudLink> *@
             </div>
             <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle"/>
             <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
@@ -39,7 +38,7 @@
             Variant="DrawerVariant.Temporary"
             Elevation="2"
             Anchor="Anchor.Left"
-            Overlay="true">
+            Overlay="false">
             <NavMenu/>
         </MudDrawer>
     </MudAppBar>
