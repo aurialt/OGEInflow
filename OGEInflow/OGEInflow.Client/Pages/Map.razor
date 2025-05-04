@@ -4,18 +4,42 @@
 <link rel="stylesheet" href="css/map.css"/>
 <h3>Map</h3>
 <div class="page-container">
-    <div class="map-container">
-        <MudImage Class="map-image" Src="img/facility.png"></MudImage>
-        <Pin Label="2-30" Top="100px" Left="40px" OnClick="@TestOutputVal" />
-        <Pin Label="2-30" Top="300px" Left="70px" OnClick="@(() => EditPopup("test", "test", null, null))" />
-        <Panel Label="3-50" Top="100px" Left="100px" OnClick="@TestOutputVal" />
-       
+    <div class="greater-map-container">
+
+        <div class="legend">
+            <div class="legend-item" @onclick="TogglePanels">
+                <div class="legend-square @(ShowPanels ? "map-panel" : "")"></div>
+                <span>Panels</span>
+            </div>
+            <div class="legend-item" @onclick="ToggleReaders">
+                <div class="legend-square @(ShowReaders ? "reader" : "")"></div>
+                <span>Readers</span>
+            </div>
+            <div class="legend-item" @onclick="ToggleHotPoints">
+                <div class="legend-square @(ShowHotPoints ? "hotpoint" : "")"></div>
+                <span>Hot Points</span>
+            </div>
+        </div>
+        <div class="map-container">
+            <MudImage Class="map-image" Src="img/facility.png"></MudImage>
+            @if (ShowPanels)
+            {
+                <Panel Label="3-50" Top="100px" Left="100px" OnClick="@(() => EditPopup("test", "test", null, null))"/>
+            }
+            @if (ShowReaders)
+            {
+                <Pin Label="2-30" Top="100px" Left="40px" OnClick="@(() => EditPopup("test", "test", null, null))"/>
+                <Pin Label="2-30" Top="300px" Left="70px" OnClick="@(() => EditPopup("test", "test", null, null))"/>
+            }
+            
+            
+        </div>
     </div>
     <div>
         <p>@testoutput</p>
     </div>
     @if (ShowPopup)
     {
-        <MapPopup IconName="@IconName" Usage="@Usage" Issues="@Issues" ConnectedReaders="@ConnectedReaders" OnClose="@TogglePopup" />
+        <MapPopup IconName="@IconName" Usage="@Usage" Issues="@Issues" ConnectedReaders="@ConnectedReaders" OnClose="@TogglePopup"/>
     }
 </div>

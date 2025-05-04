@@ -11,6 +11,10 @@ public partial class Map : ComponentBase
     public string Usage { get; set; } = "";
     public List<string> Issues { get; set; } = new();
     public List<string> ConnectedReaders { get; set; } = new();
+
+    private bool ShowPanels { get; set; } = true;
+    private bool ShowReaders { get; set; } = true;
+    private bool ShowHotPoints { get; set; } = false;
     
     private bool ShowPopup {get; set;} = false;
     
@@ -19,13 +23,30 @@ public partial class Map : ComponentBase
     private  void TestOutputVal()
     {
         testoutput++;
-        ToggleGradientColor();
     }
     
     private void ToggleGradientColor()
     {
         Pin.UseGradientColor = !Pin.UseGradientColor;
         StateHasChanged();   // force re-render to update style
+    }
+
+    private void TogglePanels()
+    {
+        ShowPanels = !ShowPanels;
+        StateHasChanged();
+    }
+    private void ToggleReaders()
+    {
+        ShowReaders = !ShowReaders;
+        StateHasChanged();
+    }
+
+    private void ToggleHotPoints()
+    {
+        ShowHotPoints = !ShowHotPoints;
+        ToggleGradientColor();
+        StateHasChanged();
     }
 
     private void EditPopup(string iconName, string usage, List<string>? issues, List<string>? connectedReaders)
