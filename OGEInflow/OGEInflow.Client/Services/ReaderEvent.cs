@@ -27,8 +27,7 @@ namespace OGEInflow.Services
         public static Dictionary<string, List<ReaderEvent>> ReaderDescDict => readerDescDict;
         public static Dictionary<string, List<ReaderEvent>> DevIdDict => devIdDict;
         public static Dictionary<string, List<ReaderEvent>> MachineDict => machineDict;
-
-        // public DateTime ParsedEventTime => DateTime.Parse(EventTime);  // Parsed once per object
+        
 
         public string ReaderID => $"{DEVID}-{MACHINE}"; // Centralized string concat
 
@@ -44,9 +43,9 @@ namespace OGEInflow.Services
             MACHINE = "Default MACHINE";
 
         }
-        public ReaderEvent(string eventTime, string location, string readerDesc, string id, string devid, string machine)
+        public ReaderEvent(DateTime eventTime, string location, string readerDesc, string id, string devid, string machine)
         {
-            EventTime = DateTime.Parse(eventTime);
+            EventTime = eventTime;
             Location = location;
             ReaderDesc = readerDesc;
             ID = id;
