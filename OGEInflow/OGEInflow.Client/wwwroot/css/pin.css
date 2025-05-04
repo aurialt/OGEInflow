@@ -29,6 +29,11 @@
 
 
 /*Reader Pin */
-.reader-pin {
-    --pin-color: rgb(42, 121, 19);
+.pin.reader-pin {
+    background: rgb(42, 121, 19);
+}
+
+.pin.reader-pin::after {
+    /*--pin-color: rgb(42, 121, 19);*/
+    border-top: calc(var(--pin-size) / 1.08) solid rgb(42, 121, 19);
 }

@@ -1,0 +1,15 @@
+/*Pin CSS */
+:root {
+    --panel-width: 40px;
+    --panel-height: 60px;
+    --panel-color: rgb(0,0,0);  
+}
+
+.panel {
+    position: relative;
+    width: var(--panel-width);   /* New variable or replace with fixed px/em/rem value */
+    height: var(--panel-height); /* New variable or replace with fixed px/em/rem value */
+    background: var(--panel-color);
+    border-radius: 8px; /* Optional: soften edges slightly; remove for sharp corners */
+    margin-bottom: calc(var(--panel-height) / 2); /* Adjusted for rectangle height */
+}

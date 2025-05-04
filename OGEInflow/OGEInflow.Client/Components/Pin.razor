@@ -1,29 +1,6 @@
 @using OGEInflow.Services
 <link rel="stylesheet" href="css/pin.css">
 <div class="icon-container" style="top: @Top; left: @Left;">
-    <div class="pin @Class" style="--pin-color: @PinColor;" @onclick="OnClick"></div>
+    <div class="pin @Class" style="--pin-color:@ComputedPinColor" @onclick="OnClick"></div>
     <div class="label">@Label</div>
 </div>
-
-@code {
-    [Parameter]
-    public string Top { get; set; } = "0px";
-    [Parameter]
-    public string Left { get; set; } = "0px";
-    [Parameter] 
-    public string Bottom { get; set; } = "0px";
-    [Parameter]
-    public string Right { get; set; } = "0px";
-
-    [Parameter]
-    public string PinColor { get; set; } = "";
-
-    [Parameter]
-    public string Label { get; set; } = "";
-    
-    [Parameter]
-    public string Class { get; set; } = "";
-
-    [Parameter]
-    public Action OnClick { get; set; }
-}

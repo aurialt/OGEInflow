@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace OGEInflow.Client.Components;
 
-public partial class Pin : ComponentBase
+public partial class Panel : ComponentBase
 {
     [Parameter]
     public string Top { get; set; } = "0px";
@@ -17,7 +17,7 @@ public partial class Pin : ComponentBase
     public string Right { get; set; } = "0px";
 
     [Parameter]
-    public string PinColor { get; set; } = "rgb(42, 121, 19);";
+    public string PanelColor { get; set; } = "#ff0000";
 
     [Parameter]
     public string Label { get; set; } = "";
@@ -28,8 +28,8 @@ public partial class Pin : ComponentBase
     [Parameter]
     public Action OnClick { get; set; }
 
-    public static bool UseGradientColor { get; set; } = false;
-    private string ComputedPinColor => UseGradientColor ? GetColorFromValue(0) : PinColor;
+    public static bool UseGradientColorPanel { get; set; } = false;
+    private string ComputedPanelColor => UseGradientColorPanel ? GetColorFromValue(0) : PanelColor;
 
     private string GetColorFromValue(double value)
     {
