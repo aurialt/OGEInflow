@@ -41,7 +41,20 @@ public partial class CSVData : ComponentBase
         };
     }).ToList();
 
-    private string _searchString;
+    private string _searchStringReader;
+
+    private Func<ReaderScanSummary, bool> quickFilterReaderSummary => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchStringReader))
+            return true;
+
+        return
+            (x.ReaderID?.Contains(_searchStringReader, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.Location?.Contains(_searchStringReader, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.ReaderDesc?.Contains(_searchStringReader, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            x.ScanCount.ToString().Contains(_searchStringReader);
+    };
+
     
     private List<MachineScanSummary> machineSummaries => ReaderEvent.MachineDict.Select(kvp =>
     {
@@ -55,7 +68,17 @@ public partial class CSVData : ComponentBase
     }).ToList();
 
     private string _searchStringMachine;
-    
+    private Func<MachineScanSummary, bool> quickFilterMachineSummary => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchStringMachine))
+            return true;
+
+        return
+            (x.MachineID?.Contains(_searchStringMachine, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.Location?.Contains(_searchStringMachine, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            x.ScanCount.ToString().Contains(_searchStringMachine);
+    };
+
     
     private List<PersonScanSummary> personSummaries => ReaderEvent.PersonIDDict.Select(kvp =>
     {
@@ -72,8 +95,18 @@ public partial class CSVData : ComponentBase
             ScanCount = kvp.Value.Count
         };
     }).ToList();
-
-
+    
     private string _searchStringPerson;
+    private Func<PersonScanSummary, bool> quickFilterPersonSummary => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchStringPerson))
+            return true;
+
+        return
+            (x.PersonID?.Contains(_searchStringPerson, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.ReaderDesc?.Contains(_searchStringPerson, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            x.ScanCount.ToString().Contains(_searchStringPerson);
+    };
+
 
 }
