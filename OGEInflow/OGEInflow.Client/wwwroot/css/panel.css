@@ -5,6 +5,16 @@
     --panel-color: rgb(0,0,0);  
 }
 
+.panel-container {
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .panel {
     position: relative;
     width: var(--panel-width);   /* New variable or replace with fixed px/em/rem value */

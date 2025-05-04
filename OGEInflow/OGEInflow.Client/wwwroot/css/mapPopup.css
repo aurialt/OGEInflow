@@ -29,21 +29,20 @@
 /* Close Button */
 .close-button {
     position: absolute;
-    background-color: red;
-    color: white;
-    font-size: 16px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 50%;
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 5px;
+    right: 20px;
+    color: #424242;
+    font-size: 32px;
+    font-weight: bold;
     cursor: pointer;
+    background: none;
+    border: none;
+    transition: all 0.4s;
 }
 
 /* Close Button Hover Effect */
 .close-button:hover {
-    background-color: darkred;
+    color: darkred;
 }
 
 /* Popup Heading */
@@ -62,4 +61,17 @@
 
 .popup p strong {
     font-weight: bold;
+}
+
+
+/* Warnings */
+.warning-container {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.warning-container-image {
+    width: 40px;
+    height: 40px;
 }

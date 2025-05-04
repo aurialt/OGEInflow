@@ -2,16 +2,45 @@
 <link rel="stylesheet" href="css/mapPopup.css"/>
 <div class="popup">
     <div class="popup-content">
-        <button class="close-button" @onclick="OnClose">X</button>
-        <h3>Reader Event Details</h3>
-        <p><strong>ID:</strong>"default</p>
-        <p><strong>Timestamp:</strong>timestamp</p>
-        <p><strong>Description:</strong>Description</p>
+        <button class="close-button" @onclick="OnClose">×</button>
+        <h3>@IconName</h3>
+        <p><strong>Info</strong></p>
+        <P>Usage: @Usage</p>
+        <p><strong>Issues</strong></p>
+        @if (Issues.Count > 0)
+        {
+            @foreach (string issue in Issues)
+            {
+                <div class="popup-warning-container">
+                    <MudImage src="img/warning.png" Class="popup-warning-container-image"></MudImage>
+                    <MudText Typo="Typo.h5">@issue</MudText>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="pop-warning-container">
+                <MudImage src="img/warning.png" Class="popup-warning-container-image"></MudImage>
+                <MudText Typo="Typo.h5">None. Operating Well</MudText>
+            </div>
+        }
+        @if (ConnectedReaders.Count > 0)
+        {
+            <p><strong>Connected Panels</strong></p>
+            @foreach (string reader in ConnectedReaders)
+            {
+                <p>@reader</p>
+            }
+        }
     </div>
 </div>
 
 @code {
-    [Parameter] public ReaderEvent re { get; set; } = new();
+    [Parameter] public string IconName { get; set; } = "";
+    [Parameter] public string Usage { get; set; } = "";
+    [Parameter] public List<string> Issues { get; set; } = new();
+    [Parameter] public List<string> ConnectedReaders { get; set; } = new();
+    
 
     [Parameter]
     public Action OnClose { get; set; }
