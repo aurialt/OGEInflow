@@ -17,13 +17,8 @@ public partial class Map : ComponentBase
     private bool ShowHotPoints { get; set; } = false;
     
     private bool ShowPopup {get; set;} = false;
-    
-    private int testoutput = 0;
 
-    private  void TestOutputVal()
-    {
-        testoutput++;
-    }
+    private string MapFilterClass => ShowHotPoints ? "map-image map-image-hotpoints-filter" : "map-image";
     
     private void ToggleGradientColor()
     {

@@ -21,18 +21,5 @@ public partial class Pin : ComponentBase
 
     public static bool UseGradientColor { get; set; } = false;
     private string ComputedPinColor => UseGradientColor ? Color : PinColor;
-
-    // public string GetColorFromValue(double value)
-    // {
-    //     // Normalize value between 0 and 1
-    //     value = Math.Clamp(value, 0.0, 1.0);
-    //
-    //     // Example: Gradient from red (bad) to green (good)
-    //     int r = (int)(255 * (1 - value));
-    //     int g = (int)(255 * value);
-    //     int b = 0;
-    //
-    //     return $"rgb({r}, {g}, {b})";
-    // }
     
 }

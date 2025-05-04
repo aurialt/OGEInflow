@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="map-container">
-            <MudImage Class="map-image" Src="img/facility.png"></MudImage>
+            <MudImage Class="@MapFilterClass" Src="img/facility.png"></MudImage>
             @if (ShowPanels)
             {
                 <Panel Label="3-50" Top="100px" Left="100px" OnClick="@(() => EditPopup("test", "test", null, null))"/>
@@ -40,9 +40,6 @@
             
             
         </div>
-    </div>
-    <div>
-        <p>@testoutput</p>
     </div>
     @if (ShowPopup)
     {
