@@ -7,7 +7,7 @@
     <div class="map-container">
         <MudImage Class="map-image" Src="img/facility.png"></MudImage>
         <Pin Label="2-30" Top="100px" Left="40px" OnClick="@TestOutputVal" />
-        <Pin Label="2-30" Top="300px" Left="70px" OnClick="@TogglePopup" />
+        <Pin Label="2-30" Top="300px" Left="70px" OnClick="@(() => EditPopup("test", "test", null, null))" />
         <Panel Label="3-50" Top="100px" Left="100px" OnClick="@TestOutputVal" />
        
     </div>
@@ -16,6 +16,6 @@
     </div>
     @if (ShowPopup)
     {
-        <MapPopup OnClose="@TogglePopup" />
+        <MapPopup IconName="@IconName" Usage="@Usage" Issues="@Issues" ConnectedReaders="@ConnectedReaders" OnClose="@TogglePopup" />
     }
 </div>

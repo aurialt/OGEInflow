@@ -19,7 +19,7 @@
         }
         else
         {
-            <div class="pop-warning-container">
+            <div class="popup-warning-container">
                 <MudImage src="img/warning.png" Class="popup-warning-container-image"></MudImage>
                 <MudText Typo="Typo.h5">None. Operating Well</MudText>
             </div>
@@ -42,6 +42,5 @@
     [Parameter] public List<string> ConnectedReaders { get; set; } = new();
     
 
-    [Parameter]
-    public Action OnClose { get; set; }
+    [Parameter] public Action OnClose { get; set; }
 }

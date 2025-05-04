@@ -65,13 +65,13 @@
 
 
 /* Warnings */
-.warning-container {
+.popup-warning-container {
     display: flex;
     gap: 16px;
     margin-top: 16px;
 }
 
-.warning-container-image {
-    width: 40px;
-    height: 40px;
+.popup-warning-container-image {
+    width: 20px;
+    height: 20px;
 }
