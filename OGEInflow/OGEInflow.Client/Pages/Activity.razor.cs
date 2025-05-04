@@ -50,16 +50,12 @@ namespace OGEInflow.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            if (ReaderEvent.readerEventsList != null)
-            {
-                await LoadGraphsAsync();
-            }
+            await LoadGraphsAsync();
         }
         
         private bool _firstRender = true;
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (ReaderEvent.readerEventsList == null) return;
             //Used to set initial dates after rendering
             if (firstRender && MinDate.HasValue && MaxDate.HasValue)
             {
@@ -112,8 +108,8 @@ namespace OGEInflow.Client.Pages
         {
             filteredReaderEvents = ReaderEvent.readerEventsList
                 .Where(re =>
-                    DateTime.TryParse(re.EventTime, out DateTime eventDate) &&
-                    eventDate >= StartDate.Value && eventDate <= EndDate.Value)
+    
+                    re.EventTime >= StartDate.Value && re.EventTime <= EndDate.Value)
                 .ToList();
         }
 
@@ -160,11 +156,7 @@ namespace OGEInflow.Client.Pages
             var dayOfWeekDict = filteredReaderEvents
                 .Select(re =>
                 {
-                    if (DateTime.TryParse(re.EventTime, out var date))
-                    {
-                        return new { re, dayOfWeek = date.DayOfWeek.ToString() };
-                    }
-                    return null;
+                        return new { re, dayOfWeek = re.EventTime.DayOfWeek.ToString() };
                 })
                 .Where(x => x != null)  // Only keep valid events
                 .GroupBy(x => x.dayOfWeek)

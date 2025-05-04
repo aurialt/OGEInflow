@@ -68,14 +68,14 @@ namespace OGEInflow.Client.Services
         {
             foreach (var (personId, events) in sourceData)
             {
-                var ordered = events.OrderBy(ev => DateTime.Parse(ev.EventTime)).ToList();
+                var ordered = events.OrderBy(ev => ev.EventTime).ToList();
 
                 for (int i = 1; i < ordered.Count; i++)
                 {
                     var a = ordered[i - 1];
                     var b = ordered[i];
-                    var timeA = DateTime.Parse(a.EventTime);
-                    var timeB = DateTime.Parse(b.EventTime);
+                    var timeA = a.EventTime;
+                    var timeB = b.EventTime;
 
                     if (a.DEVID == b.DEVID && (timeB - timeA).TotalSeconds <= 10)
                     {
@@ -120,7 +120,7 @@ namespace OGEInflow.Client.Services
             {
                 foreach (var ev in events)
                 {
-                    var hour = DateTime.Parse(ev.EventTime).Hour;
+                    var hour = ev.EventTime.Hour;
                     if (hour < startHour || hour >= endHour)
                     {
                         AddWarning(new Warning
@@ -128,7 +128,7 @@ namespace OGEInflow.Client.Services
                             WarningID = Guid.NewGuid().ToString(),
                             Type = WarningType.OutsideUseHours,
                             Severity = WarningSeverity.Low,
-                            Timestamp = DateTime.Parse(ev.EventTime),
+                            Timestamp = ev.EventTime,
                             PersonID = ev.ID,
                             ReaderId = ev.DEVID,
                             Message = $"Use at {ev.EventTime} outside allowed hours ({startHour}–{endHour})."

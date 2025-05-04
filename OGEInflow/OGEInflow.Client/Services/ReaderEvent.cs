@@ -2,7 +2,7 @@ namespace OGEInflow.Services
 {
     public class ReaderEvent
     {
-        public string EventTime { get; set; }
+        public DateTime EventTime { get; set; }
         public string Location { get; set; }
         public string ReaderDesc { get; set; }
         public string ID { get; set; }
@@ -28,7 +28,7 @@ namespace OGEInflow.Services
         public static Dictionary<string, List<ReaderEvent>> DevIdDict => devIdDict;
         public static Dictionary<string, List<ReaderEvent>> MachineDict => machineDict;
 
-        public DateTime ParsedEventTime => DateTime.Parse(EventTime);  // Parsed once per object
+        // public DateTime ParsedEventTime => DateTime.Parse(EventTime);  // Parsed once per object
 
         public string ReaderID => $"{DEVID}-{MACHINE}"; // Centralized string concat
 
@@ -36,7 +36,7 @@ namespace OGEInflow.Services
         public ReaderEvent()
         {
             //For Testing
-            EventTime = DateTime.MinValue.ToString();
+            EventTime = DateTime.MinValue;
             Location = "Default Location";
             ReaderDesc = "Default Reader Description";
             ID = "Default ID";
@@ -46,7 +46,7 @@ namespace OGEInflow.Services
         }
         public ReaderEvent(string eventTime, string location, string readerDesc, string id, string devid, string machine)
         {
-            EventTime = eventTime;
+            EventTime = DateTime.Parse(eventTime);
             Location = location;
             ReaderDesc = readerDesc;
             ID = id;
@@ -85,7 +85,7 @@ namespace OGEInflow.Services
             dayOfWeekReaderEventsDict.Clear();
             foreach (var e in eventsList)
             {
-                string dayOfWeek = e.ParsedEventTime.DayOfWeek.ToString();
+                string dayOfWeek = e.EventTime.DayOfWeek.ToString();
                 AddEventToDict(dayOfWeekReaderEventsDict, dayOfWeek, e);
             }
         }
