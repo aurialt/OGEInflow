@@ -6,16 +6,16 @@
 <div class="page-container">
     <div class="map-container">
         <MudImage Class="map-image" Src="img/facility.png"></MudImage>
-        <div class="icon-container" style="top: 220px; left: 30px;">
-            <div class="pin" style="--pin-color: rgb(0,200,100);" @onclick="@TestOutputVal"></div>
-            <div class="label" >4-25</div>
-        </div>
-        
         <Pin Label="2-30" Top="100px" Left="40px" OnClick="@TestOutputVal" />
+        <Pin Label="2-30" Top="300px" Left="70px" OnClick="@TogglePopup" />
         <Panel Label="3-50" Top="100px" Left="100px" OnClick="@TestOutputVal" />
        
     </div>
     <div>
         <p>@testoutput</p>
     </div>
+    @if (ShowPopup)
+    {
+        <MapPopup OnClose="@TogglePopup" />
+    }
 </div>

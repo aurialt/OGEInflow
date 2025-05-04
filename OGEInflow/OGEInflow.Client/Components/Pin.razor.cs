@@ -43,4 +43,5 @@ public partial class Pin : ComponentBase
 
         return $"rgb({r}, {g}, {b})";
     }
+    
 }

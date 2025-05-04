@@ -1,0 +1,18 @@
+@using OGEInflow.Services
+<link rel="stylesheet" href="css/mapPopup.css"/>
+<div class="popup">
+    <div class="popup-content">
+        <button class="close-button" @onclick="OnClose">X</button>
+        <h3>Reader Event Details</h3>
+        <p><strong>ID:</strong>"default</p>
+        <p><strong>Timestamp:</strong>timestamp</p>
+        <p><strong>Description:</strong>Description</p>
+    </div>
+</div>
+
+@code {
+    [Parameter] public ReaderEvent re { get; set; } = new();
+
+    [Parameter]
+    public Action OnClose { get; set; }
+}

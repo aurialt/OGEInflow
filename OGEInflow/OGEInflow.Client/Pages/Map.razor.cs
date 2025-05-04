@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Components;
 using OGEInflow.Services;
 using OGEInflow.Client.Components;
+using OGEInflow.Client.Services;
+
 namespace OGEInflow.Client.Pages;
 
 public partial class Map : ComponentBase
 {
+    private bool ShowPopup {get; set;} = false;
     
     private int testoutput = 0;
 
@@ -18,6 +21,11 @@ public partial class Map : ComponentBase
     {
         Pin.UseGradientColor = !Pin.UseGradientColor;
         StateHasChanged();   // force re-render to update style
+    }
+
+    private void TogglePopup()
+    {
+        ShowPopup = !ShowPopup;
     }
 
 }
