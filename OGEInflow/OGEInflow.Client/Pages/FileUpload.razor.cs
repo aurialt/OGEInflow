@@ -78,7 +78,7 @@ public partial class FileUpload : ComponentBase
             {
                 ReaderEvent.readerEventsList.Clear();
                 string str = sr.ReadLine();
-                while ((str = sr.ReadLine()) != null) // Skips the first line since ReadLine was already Called
+                while (!string.IsNullOrWhiteSpace(str = sr.ReadLine())) // Skips the first line since ReadLine was already Called
                 {
                     List<string> fields = str.Split(',').ToList();
                     DateTime eventTime = DateTime.Parse(fields[0]);

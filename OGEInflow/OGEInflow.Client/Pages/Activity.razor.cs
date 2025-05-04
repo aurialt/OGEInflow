@@ -44,7 +44,7 @@ namespace OGEInflow.Client.Pages
                 {
                     return PersonCountFromFilter / dateRange;
                 }
-                return 0;
+                return PersonCountFromFilter;
             }
         }
 
@@ -106,10 +106,12 @@ namespace OGEInflow.Client.Pages
 
         private static void FilterReaderEvents()
         {
+            var effectiveStart = StartDate.Value.Date;
+            var effectiveEnd = EndDate.Value.Date.AddDays(1).AddTicks(-1); // 23:59:59.9999999
+
             filteredReaderEvents = ReaderEvent.readerEventsList
                 .Where(re =>
-    
-                    re.EventTime >= StartDate.Value && re.EventTime <= EndDate.Value)
+                    re.EventTime >= effectiveStart && re.EventTime <= effectiveEnd)
                 .ToList();
         }
 
