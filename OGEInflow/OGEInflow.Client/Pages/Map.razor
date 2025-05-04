@@ -25,17 +25,13 @@
             <MudImage Class="@MapFilterClass" Src="img/facility.png"></MudImage>
             @if (ShowPanels)
             {
-                <Panel Label="3-50" Top="100px" Left="100px" OnClick="@(() => EditPopup("test", "test", null, null))"/>
+                <Panel Label="3-50" Top="100px" Left="100px" OnClick="@(() => EditMapPopup("test", "test", null, null))"/>
             }
             @if (ShowReaders)
             {
-                <Pin Label="17-182" Top="100px" Left="40px" 
-                     Color="@GetColorFromValue(GetGradientRatio("17-182", ReaderEvent.ReaderIDDict, Settings.ReaderThreshold))" 
-                     OnClick="@(() => EditPopup("17-182", 
-                                                GetUsage("17-182",ReaderEvent.ReaderIDDict, Settings.ReaderThreshold), 
-                                                null, null))"/>
+                <Pin Label="17-182" Top="100px" Left="40px" OnClick="@(() => Pin.ReaderSetMapPopup("17-182"))"/>
                 
-                <Pin Label="4-40" Top="300px" Left="70px" OnClick="@(() => EditPopup("test", "test", null, null))"/>
+                <Pin Label="4-40" Top="300px" Left="70px" OnClick="@(() => EditMapPopup("test", "test", null, null))"/>
             }
             
             
@@ -43,6 +39,6 @@
     </div>
     @if (ShowPopup)
     {
-        <MapPopup IconName="@IconName" Usage="@Usage" Issues="@Issues" ConnectedReaders="@ConnectedReaders" OnClose="@TogglePopup"/>
+        <MapPopup IconName="@IconName" Usage="@Usage" Issues="@Issues" ConnectedReaders="@ConnectedReaders" OnClose="() => OnEditMapPopup?.Invoke()"/>
     }
 </div>

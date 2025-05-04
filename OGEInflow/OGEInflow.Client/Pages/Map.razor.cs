@@ -7,18 +7,28 @@ namespace OGEInflow.Client.Pages;
 
 public partial class Map : ComponentBase
 {
-    public string IconName { get; set; } = "";
-    public string Usage { get; set; } = "";
-    public List<string> Issues { get; set; } = new();
-    public List<string> ConnectedReaders { get; set; } = new();
+    public static string IconName { get; set; } = "";
+    public static string Usage { get; set; } = "";
+    public static List<string> Issues { get; set; } = new();
+    public static List<string> ConnectedReaders { get; set; } = new();
 
     private bool ShowPanels { get; set; } = true;
     private bool ShowReaders { get; set; } = true;
     private bool ShowHotPoints { get; set; } = false;
     
-    private bool ShowPopup {get; set;} = false;
+    private static bool ShowPopup {get; set;} = false;
 
     private string MapFilterClass => ShowHotPoints ? "map-image map-image-hotpoints-filter" : "map-image";
+    
+    public static Action? OnEditMapPopup;
+    protected override void OnInitialized()
+    {
+        OnEditMapPopup = () => InvokeAsync(() =>
+        {
+            TogglePopup();
+            StateHasChanged();
+        });
+    }
     
     private void ToggleGradientColor()
     {
@@ -44,26 +54,26 @@ public partial class Map : ComponentBase
         StateHasChanged();
     }
 
-    private void TogglePopup()
+    private static void TogglePopup()
     {
         ShowPopup = !ShowPopup;
     }
     
-    private void EditPopup(string iconName, string usage, List<string>? issues, List<string>? connectedReaders)
+    public static void EditMapPopup(string iconName, string usage, List<string>? issues, List<string>? connectedReaders)
     {
         IconName = iconName;
         Usage = usage;
         if (issues is not null)
-        Issues = issues;
+            Issues = issues;
         if (connectedReaders is not null)
-        ConnectedReaders = connectedReaders;
-        TogglePopup();
+            ConnectedReaders = connectedReaders;
+        
+        OnEditMapPopup?.Invoke();
     }
-
     
     /* Miscellaneous Methods */
 
-    private double GetGradientRatio(string iconTypeID, Dictionary<string, List<ReaderEvent>> dictionary, int threshold)
+    public static double GetGradientRatio(string iconTypeID, Dictionary<string, List<ReaderEvent>> dictionary, int threshold)
     {
         if (dictionary.TryGetValue(iconTypeID, out var events))
         {
@@ -74,7 +84,7 @@ public partial class Map : ComponentBase
         return 0;
     }
     
-    public  string GetColorFromValue(double value)
+    public static string GetColorFromValue(double value)
     {
         // Normalize value between 0 and 1
         value = Math.Clamp(value, 0.0, 1.0);
@@ -90,7 +100,7 @@ public partial class Map : ComponentBase
 
 
     //Usages
-    public string GetUsage(string iconTypeID, Dictionary<string, List<ReaderEvent>> dictionary, int threshold)
+    public static string GetUsage(string iconTypeID, Dictionary<string, List<ReaderEvent>> dictionary, int threshold)
     {
         if (dictionary.TryGetValue(iconTypeID, out var events))
         {

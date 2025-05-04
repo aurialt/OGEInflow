@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Components;
+using OGEInflow.Client.Pages;
+using OGEInflow.Client.Services;
+using OGEInflow.Services;
 
 namespace OGEInflow.Client.Components;
 
@@ -13,13 +16,35 @@ public partial class Pin : ComponentBase
 
      private string PinColor { get; set; } = "rgb(42, 121, 19);";
      
-    [Parameter] public string Color { get; set; } = "rgb(42, 121, 19);";
-    [Parameter] public string Label { get; set; } = "";
+    public string Color { get; set; } = "";
+    private string label = "";
+
+    [Parameter]
+    public string Label
+    {
+        get
+        {
+            return label;
+        }
+        set
+        {
+            label = value;
+            Color = Map.GetColorFromValue(Map.GetGradientRatio(Label, ReaderEvent.ReaderIDDict, Settings.ReaderThreshold));
+        }
+    }
+    
     [Parameter] public string Class { get; set; } = "";
 
     [Parameter] public Action OnClick { get; set; }
 
     public static bool UseGradientColor { get; set; } = false;
     private string ComputedPinColor => UseGradientColor ? Color : PinColor;
-    
+
+    public static void ReaderSetMapPopup(string tag)
+    {
+        Map.EditMapPopup(tag,
+            Map.GetUsage(tag, ReaderEvent.ReaderIDDict, Settings.ReaderThreshold),
+            null,
+            null);
+    }
 }
