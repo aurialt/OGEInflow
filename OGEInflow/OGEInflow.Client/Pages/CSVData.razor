@@ -1,8 +1,44 @@
 @page "/CSVData"
+@using OGEInflow.Services
 <link rel="stylesheet" href="css/csvData.css"/>
 <div class="page-container">
     <h3>CSVData</h3>
     <div class="MudDataGrid-container">
+        <!-- Reader Events-->
+        <MudDataGrid T="ReaderEvent"
+                     Items="readerEventsSummary"
+                     Filterable="true"
+                     SortMode="SortMode.Multiple"
+                     QuickFilter="@quickFilterReaderEvent"
+                     RowsPerPage="10">
+
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Reader Event Log</MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchStringReaderEvent"
+                              Placeholder="Search"
+                              Adornment="Adornment.Start"
+                              Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium"
+                              Class="mt-0" />
+            </ToolBarContent>
+
+            <Columns>
+                <PropertyColumn Property="x => x.ReaderID" Title="Reader ID" />
+                <PropertyColumn Property="x => x.ReaderDesc" Title="Reader Description" />
+                <PropertyColumn Property="x => x.Location" />
+                <PropertyColumn Property="x => x.ID" />
+                <PropertyColumn Property="x => x.EventTime" Title="Time" />
+            </Columns>
+
+            <PagerContent>
+                <MudDataGridPager T="ReaderEvent" />
+            </PagerContent>
+        </MudDataGrid>
+        
+        
+        <!-- ReaderIDs -->
         <MudDataGrid T="ReaderScanSummary"
                      Items="readerSummaries"
                      QuickFilter="@quickFilterReaderSummary"

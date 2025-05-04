@@ -29,6 +29,23 @@ public class PersonScanSummary
 
 public partial class CSVData : ComponentBase
 {
+    private List<ReaderEvent> readerEventsSummary => ReaderEvent.readerEventsList;
+    
+    private string _searchStringReaderEvent;
+
+    private Func<ReaderEvent, bool> quickFilterReaderEvent => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchStringReaderEvent))
+            return true;
+
+        return
+            (x.ReaderDesc?.Contains(_searchStringReaderEvent, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.ID?.Contains(_searchStringReaderEvent, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.ReaderID?.Contains(_searchStringReaderEvent, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            x.EventTime.ToString("g").Contains(_searchStringReaderEvent, StringComparison.OrdinalIgnoreCase);
+    };
+
+    
     private List<ReaderScanSummary> readerSummaries => ReaderEvent.ReaderIDDict.Select(kvp =>
     {
         var firstEvent = kvp.Value.FirstOrDefault(); // to extract Location and Description
