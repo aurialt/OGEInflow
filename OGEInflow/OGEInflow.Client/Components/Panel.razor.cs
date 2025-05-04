@@ -44,8 +44,8 @@ public partial class Panel : ComponentBase
     [Parameter]
     public Action OnClick { get; set; }
 
-    public static bool UseGradientColorPanel { get; set; } = false;
-    private string ComputedPanelColor => UseGradientColorPanel ? Color : PanelColor;
+    public static bool UseGradientColor { get; set; } = false;
+    private string ComputedPanelColor => UseGradientColor ? Color : PanelColor;
 
     public static void PanelSetMapPopup(string tag)
     {

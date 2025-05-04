@@ -1,38 +1,34 @@
 using Microsoft.AspNetCore.Components;
-using OGEInflow.Services;
-using OGEInflow.Services.WarningTypes;
-
+using OGEInflow.Client.Services;
 namespace OGEInflow.Client.Pages;
 
 public partial class Warnings : ComponentBase
 {
     
-    /* HighReaderUsageWarning MudDataGrid */
-    private string _searchString;
 
-    private Func<WarningTypes, bool> quickFilterHighUsageScans => x =>
+// Quick filter for Double Scan (based on Warning properties)
+    private string _searchStringDoubleScans;
+    private Func<Warning, bool> quickFilterDoubleScan => x =>
     {
-        if (string.IsNullOrWhiteSpace(_searchString))
+        if (string.IsNullOrWhiteSpace(_searchStringDoubleScans))
             return true;
 
         return
-            (x.ReaderEvent.ReaderID?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
-            (x.ReaderEvent.Location?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
-            (x.ReaderEvent.ReaderDesc?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
-            x.ScanCount.ToString().Contains(_searchString);
+            (x.ReaderId?.Contains(_searchStringDoubleScans, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.Message?.Contains(_searchStringDoubleScans, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            x.Timestamp.ToString().Contains(_searchStringDoubleScans);
     };
-    
-    private Func<ReaderEvent, bool> quickFilterDoubleScan => x =>
+
+// Quick filter for High Reader Usage
+    private string _searchStringHighUsageScans;
+    private Func<Warning, bool> quickFilterHighUsageScans => x =>
     {
-        if (string.IsNullOrWhiteSpace(_searchString))
+        if (string.IsNullOrWhiteSpace(_searchStringHighUsageScans))
             return true;
 
         return
-            (x.ReaderID?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
-            (x.Location?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
-            (x.ReaderDesc?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false) ||
-            (x.EventTime?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ?? false);
+            (x.ReaderId?.Contains(_searchStringHighUsageScans, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (x.Message?.Contains(_searchStringHighUsageScans, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            x.Timestamp.ToString().Contains(_searchStringHighUsageScans);
     };
-    
-    
 }

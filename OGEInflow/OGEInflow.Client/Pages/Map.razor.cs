@@ -33,6 +33,7 @@ public partial class Map : ComponentBase
     private void ToggleGradientColor()
     {
         Pin.UseGradientColor = !Pin.UseGradientColor;
+        Panel.UseGradientColor = !Panel.UseGradientColor;
         StateHasChanged();   // force re-render to update style
     }
 

@@ -1,24 +1,22 @@
 @page "/Warnings"
 @using OGEInflow.Client.Layout
-@using OGEInflow.Services
-@using OGEInflow.Services.WarningTypes
+@using OGEInflow.Client.Services
 @layout InflowLayout
 <h3>Warnings</h3>
 
 <div class="warnings-container">
-    <!-- DoubleScans -->
-    <MudDataGrid T="ReaderEvent"
-                 Items="@ReaderEventWarning.DoubleScansReaderEvents"
+
+    <MudDataGrid T="Warning"
+                 Items="@WarningManager.FlattenedDoubleScanWarnings"
                  Filterable="true"
                  SortMode="SortMode.Multiple"
                  QuickFilter="@quickFilterDoubleScan"
-                 RowsPerPage="10"
-                 >
+                 RowsPerPage="10">
 
         <ToolBarContent>
             <MudText Typo="Typo.h6">Double Scan Warnings</MudText>
             <MudSpacer />
-            <MudTextField @bind-Value="_searchString"
+            <MudTextField @bind-Value="_searchStringDoubleScans"
                           Placeholder="Search"
                           Adornment="Adornment.Start"
                           Immediate="true"
@@ -28,21 +26,19 @@
         </ToolBarContent>
 
         <Columns>
-            <PropertyColumn Property="x => x.ReaderID" />
-            <PropertyColumn Property="x => x.Location" />
-            <PropertyColumn Property="x => x.ReaderDesc" Title="Reader Description" />
-            <PropertyColumn Property="x => x.EventTime" Title="Time" />
+            <PropertyColumn Property="x => x.PersonID" Title="Person ID" />
+            <PropertyColumn Property="x => x.ReaderId" Title="Reader ID" />
+            <PropertyColumn Property="x => x.Message" />
+            <PropertyColumn Property="x => x.Timestamp" Title="Time" />
         </Columns>
 
         <PagerContent>
-            <MudDataGridPager T="ReaderEvent" />
+            <MudDataGridPager T="Warning" />
         </PagerContent>
     </MudDataGrid>
 
-
-    <!-- High Usage Reader Events -->
-    <MudDataGrid T="WarningTypes"
-                 Items="@ReaderEventWarning.HighReaderUsageReaderEvents"
+    <MudDataGrid T="Warning"
+                 Items="@WarningManager.FlattenedHighReaderUsageWarnings"
                  Filterable="true"
                  SortMode="SortMode.Multiple"
                  QuickFilter="@quickFilterHighUsageScans"
@@ -51,7 +47,7 @@
         <ToolBarContent>
             <MudText Typo="Typo.h6">High Reader Usage Warnings</MudText>
             <MudSpacer />
-            <MudTextField @bind-Value="_searchString"
+            <MudTextField @bind-Value="_searchStringDoubleScans"
                           Placeholder="Search"
                           Adornment="Adornment.Start"
                           Immediate="true"
@@ -61,14 +57,13 @@
         </ToolBarContent>
 
         <Columns>
-            <PropertyColumn Property="x => x.ReaderEvent.ReaderID" />
-            <PropertyColumn Property="x => x.ReaderEvent.Location" />
-            <PropertyColumn Property="x => x.ReaderEvent.ReaderDesc" Title="Reader Description" />
-            <PropertyColumn Property="x => x.ScanCount" Title="Scan Count" />
+            <PropertyColumn Property="x => x.ReaderId" Title="Reader ID" />
+            <PropertyColumn Property="x => x.Message" />
+            <PropertyColumn Property="x => x.Timestamp" Title="Time" />
         </Columns>
 
         <PagerContent>
-            <MudDataGridPager T="WarningTypes" />
+            <MudDataGridPager T="Warning" />
         </PagerContent>
     </MudDataGrid>
 </div>
