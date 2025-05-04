@@ -1,98 +1,102 @@
 @page "/CSVData"
-@using OGEInflow.Services
-<h3>CSVData</h3>
+<link rel="stylesheet" href="css/csvData.css"/>
+<div class="page-container">
+    <h3>CSVData</h3>
+    <div class="MudDataGrid-container">
+        <MudDataGrid T="ReaderScanSummary"
+                     Items="readerSummaries"
+                     QuickFilter="@quickFilterReaderSummary"
+                     Filterable="true"
+                     SortMode="SortMode.Multiple"
+                     RowsPerPage="10">
 
-<MudDataGrid T="ReaderScanSummary"
-             Items="readerSummaries"
-             QuickFilter="@quickFilterReaderSummary"
-             Filterable="true"
-             SortMode="SortMode.Multiple"
-             RowsPerPage="10">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Total Scans per Reader</MudText>
+                <MudSpacer/>
+                <MudTextField @bind-Value="_searchStringReader"
+                              Placeholder="Search"
+                              Adornment="Adornment.Start"
+                              Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium"
+                              Class="mt-0"/>
+            </ToolBarContent>
 
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">Total Scans per Reader</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="_searchStringReader"
-                      Placeholder="Search"
-                      Adornment="Adornment.Start"
-                      Immediate="true"
-                      AdornmentIcon="@Icons.Material.Filled.Search"
-                      IconSize="Size.Medium"
-                      Class="mt-0" />
-    </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.ReaderID"/>
+                <PropertyColumn Property="x => x.Location"/>
+                <PropertyColumn Property="x => x.ReaderDesc" Title="Reader Description"/>
+                <PropertyColumn Property="x => x.ScanCount" Title="Total Scans"/>
+            </Columns>
 
-    <Columns>
-        <PropertyColumn Property="x => x.ReaderID" />
-        <PropertyColumn Property="x => x.Location" />
-        <PropertyColumn Property="x => x.ReaderDesc" Title="Reader Description" />
-        <PropertyColumn Property="x => x.ScanCount" Title="Total Scans" />
-    </Columns>
-
-    <PagerContent>
-        <MudDataGridPager T="ReaderScanSummary" />
-    </PagerContent>
-</MudDataGrid>
-
-
-<!-- Panel Section -->
-<MudDataGrid T="MachineScanSummary"
-             Items="machineSummaries"
-             QuickFilter="quickFilterMachineSummary"
-             Filterable="true"
-             SortMode="SortMode.Multiple"
-             RowsPerPage="10">
-
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">Total Scans per Panel (Machine)</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="_searchStringMachine"
-                      Placeholder="Search"
-                      Adornment="Adornment.Start"
-                      Immediate="true"
-                      AdornmentIcon="@Icons.Material.Filled.Search"
-                      IconSize="Size.Medium"
-                      Class="mt-0" />
-    </ToolBarContent>
-
-    <Columns>
-        <PropertyColumn Property="x => x.MachineID" />
-        <PropertyColumn Property="x => x.Location" />
-        <PropertyColumn Property="x => x.ScanCount" Title="Total Scans" />
-    </Columns>
-
-    <PagerContent>
-        <MudDataGridPager T="MachineScanSummary" />
-    </PagerContent>
-</MudDataGrid>
+            <PagerContent>
+                <MudDataGridPager T="ReaderScanSummary"/>
+            </PagerContent>
+        </MudDataGrid>
 
 
-<!-- Person Section -->
-<MudDataGrid T="PersonScanSummary"
-             Items="personSummaries"
-             QuickFilter="quickFilterPersonSummary"
-             Filterable="true"
-             SortMode="SortMode.Multiple"
-             RowsPerPage="10">
+        <!-- Panel Section -->
+        <MudDataGrid T="MachineScanSummary"
+                     Items="machineSummaries"
+                     QuickFilter="quickFilterMachineSummary"
+                     Filterable="true"
+                     SortMode="SortMode.Multiple"
+                     RowsPerPage="10">
 
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">Total Scans per Person</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="_searchStringPerson"
-                      Placeholder="Search"
-                      Adornment="Adornment.Start"
-                      Immediate="true"
-                      AdornmentIcon="@Icons.Material.Filled.Search"
-                      IconSize="Size.Medium"
-                      Class="mt-0" />
-    </ToolBarContent>
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Total Scans per Panel (Machine)</MudText>
+                <MudSpacer/>
+                <MudTextField @bind-Value="_searchStringMachine"
+                              Placeholder="Search"
+                              Adornment="Adornment.Start"
+                              Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium"
+                              Class="mt-0"/>
+            </ToolBarContent>
 
-    <Columns>
-        <PropertyColumn Property="x => x.PersonID" />
-        <PropertyColumn Property="x => x.ReaderDesc" Title="Most Common Location"/>
-        <PropertyColumn Property="x => x.ScanCount" Title="Total Scans" />
-    </Columns>
+            <Columns>
+                <PropertyColumn Property="x => x.MachineID"/>
+                <PropertyColumn Property="x => x.Location"/>
+                <PropertyColumn Property="x => x.ScanCount" Title="Total Scans"/>
+            </Columns>
 
-    <PagerContent>
-        <MudDataGridPager T="PersonScanSummary" />
-    </PagerContent>
-</MudDataGrid>
+            <PagerContent>
+                <MudDataGridPager T="MachineScanSummary"/>
+            </PagerContent>
+        </MudDataGrid>
+
+
+        <!-- Person Section -->
+        <MudDataGrid T="PersonScanSummary"
+                     Items="personSummaries"
+                     QuickFilter="quickFilterPersonSummary"
+                     Filterable="true"
+                     SortMode="SortMode.Multiple"
+                     RowsPerPage="10">
+
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Total Scans per Person</MudText>
+                <MudSpacer/>
+                <MudTextField @bind-Value="_searchStringPerson"
+                              Placeholder="Search"
+                              Adornment="Adornment.Start"
+                              Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium"
+                              Class="mt-0"/>
+            </ToolBarContent>
+
+            <Columns>
+                <PropertyColumn Property="x => x.PersonID"/>
+                <PropertyColumn Property="x => x.ReaderDesc" Title="Most Common Location"/>
+                <PropertyColumn Property="x => x.ScanCount" Title="Total Scans"/>
+            </Columns>
+
+            <PagerContent>
+                <MudDataGridPager T="PersonScanSummary"/>
+            </PagerContent>
+        </MudDataGrid>
+    </div>
+</div>
+

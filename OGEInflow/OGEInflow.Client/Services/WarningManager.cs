@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using OGEInflow.Services;
 
 namespace OGEInflow.Client.Services
@@ -21,7 +18,7 @@ namespace OGEInflow.Client.Services
         public static void LoadWarnings()
         {
             GenerateDoubleScanWarnings(ReaderEvent.PersonIDDict);
-            GenerateHighUsageWarnings(ReaderEvent.ReaderIDDict);
+            GenerateHighUsageWarnings(ReaderEvent.ReaderIDDict, Settings.ReaderThreshold);
             GenerateOutsideUseHourWarnings(ReaderEvent.PersonIDDict);
         }
         

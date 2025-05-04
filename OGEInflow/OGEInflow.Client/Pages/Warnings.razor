@@ -2,68 +2,71 @@
 @using OGEInflow.Client.Layout
 @using OGEInflow.Client.Services
 @layout InflowLayout
-<h3>Warnings</h3>
+<link rel="stylesheet" href="css/warnings.css"/>
 
-<div class="warnings-container">
+<div class="page-container">
+    <h3>Warnings</h3>
+    <div class="warnings-container">
 
-    <MudDataGrid T="Warning"
-                 Items="@WarningManager.FlattenedDoubleScanWarnings"
-                 Filterable="true"
-                 SortMode="SortMode.Multiple"
-                 QuickFilter="@quickFilterDoubleScan"
-                 RowsPerPage="10">
+        <MudDataGrid T="Warning"
+                     Items="@WarningManager.FlattenedDoubleScanWarnings"
+                     Filterable="true"
+                     SortMode="SortMode.Multiple"
+                     QuickFilter="@quickFilterDoubleScan"
+                     RowsPerPage="10">
 
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Double Scan Warnings</MudText>
-            <MudSpacer />
-            <MudTextField @bind-Value="_searchStringDoubleScans"
-                          Placeholder="Search"
-                          Adornment="Adornment.Start"
-                          Immediate="true"
-                          AdornmentIcon="@Icons.Material.Filled.Search"
-                          IconSize="Size.Medium"
-                          Class="mt-0" />
-        </ToolBarContent>
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Double Scan Warnings</MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchStringDoubleScans"
+                              Placeholder="Search"
+                              Adornment="Adornment.Start"
+                              Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium"
+                              Class="mt-0" />
+            </ToolBarContent>
 
-        <Columns>
-            <PropertyColumn Property="x => x.PersonID" Title="Person ID" />
-            <PropertyColumn Property="x => x.ReaderId" Title="Reader ID" />
-            <PropertyColumn Property="x => x.Message" />
-            <PropertyColumn Property="x => x.Timestamp" Title="Time" />
-        </Columns>
+            <Columns>
+                <PropertyColumn Property="x => x.PersonID" Title="Person ID" />
+                <PropertyColumn Property="x => x.ReaderId" Title="Reader ID" />
+                <PropertyColumn Property="x => x.Message" />
+                <PropertyColumn Property="x => x.Timestamp" Title="Time" />
+            </Columns>
 
-        <PagerContent>
-            <MudDataGridPager T="Warning" />
-        </PagerContent>
-    </MudDataGrid>
+            <PagerContent>
+                <MudDataGridPager T="Warning" />
+            </PagerContent>
+        </MudDataGrid>
 
-    <MudDataGrid T="Warning"
-                 Items="@WarningManager.FlattenedHighReaderUsageWarnings"
-                 Filterable="true"
-                 SortMode="SortMode.Multiple"
-                 QuickFilter="@quickFilterHighUsageScans"
-                 RowsPerPage="10">
+        <MudDataGrid T="Warning"
+                     Items="@WarningManager.FlattenedHighReaderUsageWarnings"
+                     Filterable="true"
+                     SortMode="SortMode.Multiple"
+                     QuickFilter="@quickFilterHighUsageScans"
+                     RowsPerPage="10">
 
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">High Reader Usage Warnings</MudText>
-            <MudSpacer />
-            <MudTextField @bind-Value="_searchStringDoubleScans"
-                          Placeholder="Search"
-                          Adornment="Adornment.Start"
-                          Immediate="true"
-                          AdornmentIcon="@Icons.Material.Filled.Search"
-                          IconSize="Size.Medium"
-                          Class="mt-0" />
-        </ToolBarContent>
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">High Reader Usage Warnings</MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchStringDoubleScans"
+                              Placeholder="Search"
+                              Adornment="Adornment.Start"
+                              Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium"
+                              Class="mt-0" />
+            </ToolBarContent>
 
-        <Columns>
-            <PropertyColumn Property="x => x.ReaderId" Title="Reader ID" />
-            <PropertyColumn Property="x => x.Message" />
-            <PropertyColumn Property="x => x.Timestamp" Title="Time" />
-        </Columns>
+            <Columns>
+                <PropertyColumn Property="x => x.ReaderId" Title="Reader ID" />
+                <PropertyColumn Property="x => x.Message" />
+                <PropertyColumn Property="x => x.Timestamp" Title="Time" />
+            </Columns>
 
-        <PagerContent>
-            <MudDataGridPager T="Warning" />
-        </PagerContent>
-    </MudDataGrid>
+            <PagerContent>
+                <MudDataGridPager T="Warning" />
+            </PagerContent>
+        </MudDataGrid>
+    </div>
 </div>
