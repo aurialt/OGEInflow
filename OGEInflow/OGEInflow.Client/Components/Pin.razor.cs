@@ -11,26 +11,28 @@ public partial class Pin : ComponentBase
 
     [Parameter] public string Right { get; set; } = "0px";
 
-    [Parameter] public string PinColor { get; set; } = "rgb(42, 121, 19);";
+     private string PinColor { get; set; } = "rgb(42, 121, 19);";
+     
+    [Parameter] public string Color { get; set; } = "rgb(42, 121, 19);";
     [Parameter] public string Label { get; set; } = "";
     [Parameter] public string Class { get; set; } = "";
 
     [Parameter] public Action OnClick { get; set; }
 
     public static bool UseGradientColor { get; set; } = false;
-    private string ComputedPinColor => UseGradientColor ? GetColorFromValue(0) : PinColor;
+    private string ComputedPinColor => UseGradientColor ? Color : PinColor;
 
-    private string GetColorFromValue(double value)
-    {
-        // Normalize value between 0 and 1
-        value = Math.Clamp(value, 0.0, 1.0);
-
-        // Example: Gradient from red (bad) to green (good)
-        int r = (int)(255 * (1 - value));
-        int g = (int)(255 * value);
-        int b = 0;
-
-        return $"rgb({r}, {g}, {b})";
-    }
+    // public string GetColorFromValue(double value)
+    // {
+    //     // Normalize value between 0 and 1
+    //     value = Math.Clamp(value, 0.0, 1.0);
+    //
+    //     // Example: Gradient from red (bad) to green (good)
+    //     int r = (int)(255 * (1 - value));
+    //     int g = (int)(255 * value);
+    //     int b = 0;
+    //
+    //     return $"rgb({r}, {g}, {b})";
+    // }
     
 }

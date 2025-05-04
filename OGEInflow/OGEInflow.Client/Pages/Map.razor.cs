@@ -49,6 +49,11 @@ public partial class Map : ComponentBase
         StateHasChanged();
     }
 
+    private void TogglePopup()
+    {
+        ShowPopup = !ShowPopup;
+    }
+    
     private void EditPopup(string iconName, string usage, List<string>? issues, List<string>? connectedReaders)
     {
         IconName = iconName;
@@ -60,11 +65,46 @@ public partial class Map : ComponentBase
         TogglePopup();
     }
 
-    private void TogglePopup()
+    
+    /* Miscellaneous Methods */
+
+    private double GetGradientRatio(string iconTypeID, Dictionary<string, List<ReaderEvent>> dictionary, int threshold)
     {
-        ShowPopup = !ShowPopup;
+        if (dictionary.TryGetValue(iconTypeID, out var events))
+        {
+            Console.WriteLine($"ID: {iconTypeID} - {events.Count} events");
+            return (double)events.Count / threshold;
+        }
+        Console.WriteLine("Error in finding hot-point gradient ratio with iconTypeID: " + iconTypeID);
+        return 0;
     }
     
+    public  string GetColorFromValue(double value)
+    {
+        // Normalize value between 0 and 1
+        value = Math.Clamp(value, 0.0, 1.0);
+
+        // Example: Gradient from red (bad) to green (good)
+        int r = (int)(255 * (1 - value));
+        int g = (int)(255 * value);
+        int b = 0;
+    
+        Console.Write($" Ratio: {value} rgb: ({r}, {g}, {b})");
+        return $"rgb({r}, {g}, {b})";
+    }
+
+
+    //Usages
+    public string GetUsage(string iconTypeID, Dictionary<string, List<ReaderEvent>> dictionary, int threshold)
+    {
+        if (dictionary.TryGetValue(iconTypeID, out var events))
+        {
+            Console.WriteLine($"ID: {iconTypeID} - {events.Count} events");
+            return $"{events.Count} / {threshold} scans";
+        }
+        Console.WriteLine("Failed to find in dictionary with iconTypeID: " + iconTypeID);
+        return "";
+    }
     
 
 }

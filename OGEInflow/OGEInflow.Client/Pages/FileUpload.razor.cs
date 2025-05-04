@@ -5,6 +5,7 @@ using OGEInflow.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
+using OGEInflow.Client.Services;
 
 namespace OGEInflow.Client.Pages;
 
@@ -161,7 +162,7 @@ public partial class FileUpload : ComponentBase
     private void RunStartUpMethods()
     {
         Activity.InitializeDateBounds(ReaderEvent.MinDate, ReaderEvent.MaxDate);
-        ReaderEventWarning.CheckTooManyReaderScans(ReaderEvent.ReaderIDDict, 500); 
+        ReaderEventWarning.CheckTooManyReaderScans(ReaderEvent.ReaderIDDict, Settings.ReaderThreshold); 
         ReaderEventWarning.CheckDoubleScans(ReaderEvent.PersonIDDict);
     }
 }

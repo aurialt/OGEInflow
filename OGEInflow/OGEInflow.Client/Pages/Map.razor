@@ -1,6 +1,7 @@
 @page "/Map"
 @using OGEInflow.Services
 @using OGEInflow.Client.Components
+@using OGEInflow.Client.Services
 <link rel="stylesheet" href="css/map.css"/>
 <h3>Map</h3>
 <div class="page-container">
@@ -28,8 +29,13 @@
             }
             @if (ShowReaders)
             {
-                <Pin Label="2-30" Top="100px" Left="40px" OnClick="@(() => EditPopup("test", "test", null, null))"/>
-                <Pin Label="2-30" Top="300px" Left="70px" OnClick="@(() => EditPopup("test", "test", null, null))"/>
+                <Pin Label="17-182" Top="100px" Left="40px" 
+                     Color="@GetColorFromValue(GetGradientRatio("17-182", ReaderEvent.ReaderIDDict, Settings.ReaderThreshold))" 
+                     OnClick="@(() => EditPopup("17-182", 
+                                                GetUsage("17-182",ReaderEvent.ReaderIDDict, Settings.ReaderThreshold), 
+                                                null, null))"/>
+                
+                <Pin Label="4-40" Top="300px" Left="70px" OnClick="@(() => EditPopup("test", "test", null, null))"/>
             }
             
             
