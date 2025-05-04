@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Components;
+using OGEInflow.Client.Pages;
+using OGEInflow.Client.Services;
+using OGEInflow.Services;
 
 namespace OGEInflow.Client.Components;
 
@@ -16,11 +19,24 @@ public partial class Panel : ComponentBase
     [Parameter]
     public string Right { get; set; } = "0px";
 
-    [Parameter]
-    public string PanelColor { get; set; } = "#ff0000";
+    [Parameter] public string PanelColor { get; set; } = "#ff0000";
+
+    public string Color { get; set; } = "";
+    private string label = "";
 
     [Parameter]
-    public string Label { get; set; } = "";
+    public string Label
+    {
+        get
+        {
+            return label;
+        }
+        set
+        {
+            label = value;
+            Color = Map.GetColorFromValue(Map.GetGradientRatio(label, ReaderEvent.MachineDict, Settings.PanelThreshold));
+        }
+    }
 
     [Parameter]
     public string Class { get; set; } = "";
@@ -29,18 +45,13 @@ public partial class Panel : ComponentBase
     public Action OnClick { get; set; }
 
     public static bool UseGradientColorPanel { get; set; } = false;
-    private string ComputedPanelColor => UseGradientColorPanel ? GetColorFromValue(0) : PanelColor;
+    private string ComputedPanelColor => UseGradientColorPanel ? Color : PanelColor;
 
-    private string GetColorFromValue(double value)
+    public static void PanelSetMapPopup(string tag)
     {
-        // Normalize value between 0 and 1
-        value = Math.Clamp(value, 0.0, 1.0);
-
-        // Example: Gradient from red (bad) to green (good)
-        int r = (int)(255 * (1 - value));
-        int g = (int)(255 * value);
-        int b = 0;
-
-        return $"rgb({r}, {g}, {b})";
+        Map.EditMapPopup(tag,
+            Map.GetUsage(tag, ReaderEvent.MachineDict, Settings.PanelThreshold),
+            null,
+            null);
     }
 }
