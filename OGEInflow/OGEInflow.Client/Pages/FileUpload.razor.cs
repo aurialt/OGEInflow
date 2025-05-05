@@ -113,11 +113,11 @@ public partial class FileUpload : ComponentBase
     
     
     /* Miscellaneous Section */
-    private void CheckMinMaxDate(DateTime dateString)
+    private void CheckMinMaxDate(DateTime dateWithTime)
     {
         try
         {
-            DateTime fullDateTime = dateString.ToUniversalTime();
+            DateTime fullDateTime = dateWithTime;
             DateTime dateOnly = fullDateTime.Date;
             
             if (dateOnly > ReaderEvent.MaxDate)
@@ -133,7 +133,7 @@ public partial class FileUpload : ComponentBase
         }
         catch (FormatException)
         {
-            ErrorMessage = $"Invalid date format: {dateString}";
+            ErrorMessage = $"Invalid date format: {dateWithTime}";
         }
     }
     
