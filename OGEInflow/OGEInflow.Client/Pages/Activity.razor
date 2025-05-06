@@ -80,8 +80,14 @@
         </div>
         
     </div>
+    <!-- Most Active Hours-->
+    <div class="grid-item">
+        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedHoursGraphs.Series"
+                  XAxisLabels="@RankedHoursGraphs.Labels" Width="100%" Height="300px"
+                  ChartOptions="RankedHoursGraphs.Options"></MudChart>
+    </div>
 
-    
+    <!-- Scan Activations -->
     <div class="grid-item">
         <MudChart ChartType="ChartType.Line" ChartSeries="@ScanActivationsGraph.Series"
                   XAxisLabels="@ScanActivationsGraph.Labels" Width="100%" Height="300px"

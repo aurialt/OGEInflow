@@ -8,7 +8,8 @@ namespace OGEInflow.Client.Pages
     public partial class Activity : ComponentBase
     {
         /* Graphs Section */
-        public static MudBlazorGraph ScanActivationsGraph,
+        public static MudBlazorGraph RankedHoursGraphs,
+            ScanActivationsGraph,
             RankedPersonIDGraph,
             RankedReaderIDGraph,
             RankedMachineGraph;
@@ -97,6 +98,7 @@ namespace OGEInflow.Client.Pages
             FilterReaderEvents();
 
             await Task.WhenAll(
+                createRankedHoursGraphAsync(),
                 createScanActivationGraphAsync(),
                 createRankedPersonIDGraphAsync(),
                 createRankedReaderIDGraphAsync(),
@@ -147,6 +149,35 @@ namespace OGEInflow.Client.Pages
         //     ScanActivationsGraph = MudBlazorGraph.CreateGraph(series, ReaderEvent.DayOfWeekReaderEventsDict, daysOfWeek, options);
         //     return Task.CompletedTask;
         // }
+
+        private static Task createRankedHoursGraphAsync()
+        {
+            var eventTimeDict = GroupEventsByKey(re => re.EventTime.Hour.ToString());
+            var rankedHoursGraph = GetTopRanked(eventTimeDict, 5);
+
+            var xAxisLabels = rankedHoursGraph.Keys
+                .Select(hourStr => int.Parse(hourStr))
+                .OrderBy(h => h)
+                .Select(h => $"{h:00}:00")
+                .ToArray();
+            
+            ChartOptions options = new ChartOptions();
+            
+            
+            List<ChartSeries> series = new List<ChartSeries>
+            {
+                new()
+                {
+                    Name = "Most Common Scan-in Hours",
+                    Data = rankedHoursGraph.Values
+                        .Select(entry => (double)entry.Count)
+                        .ToArray()
+                }
+            };
+
+            RankedHoursGraphs = MudBlazorGraph.CreateGraph(series, eventTimeDict, xAxisLabels, options);
+            return Task.CompletedTask;
+        }
         
         private static Task createScanActivationGraphAsync()
         {

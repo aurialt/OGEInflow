@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.JavaScript;
+
 namespace OGEInflow.Services
 {
     public class ReaderEvent
@@ -13,8 +15,9 @@ namespace OGEInflow.Services
         public static DateTime MaxDate { get; set; }
 
         public static List<ReaderEvent> readerEventsList = new List<ReaderEvent>();
-
+        
         private static Dictionary<string, List<ReaderEvent>> dayOfWeekReaderEventsDict = new();
+        private static Dictionary<DateTime, List<ReaderEvent>> eventTimeReaderEventsDict = new();
         private static Dictionary<string, List<ReaderEvent>> personIDDict = new();
         private static Dictionary<string, List<ReaderEvent>> readerIdDict = new();
         private static Dictionary<string, List<ReaderEvent>> readerDescDict = new();
@@ -22,6 +25,8 @@ namespace OGEInflow.Services
         private static Dictionary<string, List<ReaderEvent>> machineDict = new();
 
         public static Dictionary<string, List<ReaderEvent>> DayOfWeekReaderEventsDict => dayOfWeekReaderEventsDict;
+        
+        public static Dictionary<DateTime, List<ReaderEvent>> EventTimeReaderEventsDict => eventTimeReaderEventsDict;
         public static Dictionary<string, List<ReaderEvent>> PersonIDDict => personIDDict;
         public static Dictionary<string, List<ReaderEvent>> ReaderIDDict => readerIdDict;
         public static Dictionary<string, List<ReaderEvent>> ReaderDescDict => readerDescDict;
@@ -56,6 +61,7 @@ namespace OGEInflow.Services
         public static void GenerateDictionaries()
         {
             GenerateDayOfWeekReaderEventsDict(readerEventsList);
+            GenerateEventTimeReaderEventsDict(readerEventsList);
             GeneratePersonIDDict(readerEventsList);
             GenerateReaderIdDict(readerEventsList);
             GenerateReaderDescDict(readerEventsList);
@@ -63,6 +69,15 @@ namespace OGEInflow.Services
             GenerateMachineDict(readerEventsList);
         }
 
+        private static void GenerateEventTimeReaderEventsDict(List<ReaderEvent> eventsList)
+        {
+            eventTimeReaderEventsDict.Clear();
+            foreach (var e in eventsList)
+            {
+                AddEventToDictDateTime(eventTimeReaderEventsDict, e.EventTime, e);
+            }
+        }
+        
         private static void GeneratePersonIDDict(List<ReaderEvent> eventList)
         {
             personIDDict.Clear();
@@ -114,6 +129,16 @@ namespace OGEInflow.Services
         }
 
         private static void AddEventToDict(Dictionary<string, List<ReaderEvent>> targetDict, string key, ReaderEvent eventItem)
+        {
+            if (!targetDict.TryGetValue(key, out var list))
+            {
+                list = new List<ReaderEvent>();
+                targetDict[key] = list;
+            }
+            list.Add(eventItem);
+        }
+        
+        private static void AddEventToDictDateTime(Dictionary<DateTime, List<ReaderEvent>> targetDict, DateTime key, ReaderEvent eventItem)
         {
             if (!targetDict.TryGetValue(key, out var list))
             {
