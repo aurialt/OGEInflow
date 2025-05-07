@@ -66,51 +66,80 @@
 
 
 
-<div class="grid-container">
+<MudGrid GutterSize="3" Class="equal-height-grid">
     <!-- Warnings -->
-    <div class="grid-item">
-        <h2>Warning Flags</h2>
-        <div class="warning-container">
-            <MudImage src="img/warning.png" Class="warning-container-image"></MudImage>
-            <MudText Typo="Typo.h5">@WarningManager.FlattenedHighReaderUsageWarnings.Count() counts of high scanner usage</MudText>
-        </div>
-        <div class="warning-container">
-            <MudImage src="img/warning.png" Class="warning-container-image"></MudImage>
-            <MudText Typo="Typo.h5">@WarningManager.FlattenedDoubleScanWarnings.Count() counts of double scans</MudText>
-        </div>
-        
-    </div>
-    <!-- Most Active Hours-->
-    <div class="grid-item">
-        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedHoursGraphs.Series"
-                  XAxisLabels="@RankedHoursGraphs.Labels" Width="100%" Height="300px"
-                  ChartOptions="RankedHoursGraphs.Options"></MudChart>
-    </div>
+    <MudItem xs="12" sm="6">
+        <MudPaper Class="pa-4">
+            <MudText Typo="Typo.h5">Warning Flags</MudText>
+            <div class="warning-container">
+                <MudImage Src="img/warning.png" Class="warning-container-image" />
+                <MudText Typo="Typo.h6">@WarningManager.FlattenedHighReaderUsageWarnings.Count() counts of high scanner usage</MudText>
+            </div>
+            <div class="warning-container">
+                <MudImage Src="img/warning.png" Class="warning-container-image" />
+                <MudText Typo="Typo.h6">@WarningManager.FlattenedDoubleScanWarnings.Count() counts of double scans</MudText>
+            </div>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Most Active Hours -->
+    <MudItem xs="12" sm="6">
+        <MudPaper Class="pa-4">
+            <MudChart ChartType="ChartType.Bar"
+                      ChartSeries="@RankedHoursGraphs.Series"
+                      XAxisLabels="@RankedHoursGraphs.Labels"
+                      Width="100%"
+                      Height="300px"
+                      ChartOptions="@RankedHoursGraphs.Options" />
+        </MudPaper>
+    </MudItem>
 
     <!-- Scan Activations -->
-    <div class="grid-item">
-        <MudChart ChartType="ChartType.Line" ChartSeries="@ScanActivationsGraph.Series"
-                  XAxisLabels="@ScanActivationsGraph.Labels" Width="100%" Height="300px"
-                  ChartOptions="ScanActivationsGraph.Options"></MudChart>
-    </div>
+    <MudItem xs="12" sm="6">
+        <MudPaper Class="pa-4">
+            <MudChart ChartType="ChartType.Line"
+                      ChartSeries="@ScanActivationsGraph.Series"
+                      XAxisLabels="@ScanActivationsGraph.Labels"
+                      Width="100%"
+                      Height="300px"
+                      ChartOptions="@ScanActivationsGraph.Options" />
+        </MudPaper>
+    </MudItem>
+
     <!-- Most Active Reader -->
-    <div class="grid-item">
-        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedReaderIDGraph.Series"
-                  XAxisLabels="@RankedReaderIDGraph.Labels" Width="100%" Height="350px"
-                  ChartOptions="RankedReaderIDGraph.Options"></MudChart>
-    </div>
+    <MudItem xs="12" sm="6">
+        <MudPaper Class="pa-4">
+            <MudChart ChartType="ChartType.Bar"
+                      ChartSeries="@RankedReaderIDGraph.Series"
+                      XAxisLabels="@RankedReaderIDGraph.Labels"
+                      Width="100%"
+                      Height="350px"
+                      ChartOptions="@RankedReaderIDGraph.Options" />
+        </MudPaper>
+    </MudItem>
 
     <!-- Most Active People Ranked -->
-    <div class="grid-item">
-        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedPersonIDGraph.Series"
-                  XAxisLabels="@RankedPersonIDGraph.Labels"Width="100%" Height="80%"
-                  ChartOptions="RankedPersonIDGraph.Options"></MudChart>
-    </div>
-    <!-- Most Active Panels Ranked -->
-    <div class="grid-item">
-        <MudChart ChartType="ChartType.Bar" ChartSeries="@RankedMachineGraph.Series"
-                  XAxisLabels="@RankedMachineGraph.Labels" Width="100%" Height="350"
-                  ChartOptions="RankedMachineGraph.Options"></MudChart>
-    </div>
+    <MudItem xs="12" sm="6">
+        <MudPaper Class="pa-4">
+            <MudChart ChartType="ChartType.Bar"
+                      ChartSeries="@RankedPersonIDGraph.Series"
+                      XAxisLabels="@RankedPersonIDGraph.Labels"
+                      Width="100%"
+                      Height="300px"
+                      ChartOptions="@RankedPersonIDGraph.Options" />
+        </MudPaper>
+    </MudItem>
 
-</div>
+    <!-- Most Active Panels Ranked -->
+    <MudItem xs="12" sm="6">
+        <MudPaper Class="pa-4">
+            <MudChart ChartType="ChartType.Bar"
+                      ChartSeries="@RankedMachineGraph.Series"
+                      XAxisLabels="@RankedMachineGraph.Labels"
+                      Width="100%"
+                      Height="350px"
+                      ChartOptions="@RankedMachineGraph.Options" />
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+

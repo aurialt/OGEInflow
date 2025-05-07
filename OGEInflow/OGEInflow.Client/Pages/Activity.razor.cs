@@ -108,8 +108,8 @@ namespace OGEInflow.Client.Pages
 
         private static void FilterReaderEvents()
         {
-            var effectiveStart = StartDate.Value.Date;
-            var effectiveEnd = EndDate.Value.Date.AddDays(1).AddTicks(-1); // 23:59:59.9999999
+            var effectiveStart = StartDate != null ? StartDate.Value.Date : MinDate;
+            var effectiveEnd = EndDate != null ? EndDate.Value.Date.AddDays(1).AddTicks(-1) : MaxDate; // 23:59:59.9999999
 
             filteredReaderEvents = ReaderEvent.readerEventsList
                 .Where(re =>
