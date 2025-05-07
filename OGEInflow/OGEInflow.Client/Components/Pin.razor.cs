@@ -44,13 +44,18 @@ public partial class Pin : ComponentBase
     {
         Map.EditMapPopup(tag,
             Map.GetUsage(tag, ReaderEvent.ReaderIDDict, Settings.ReaderThreshold),
-            null,
+            GetWarningsForIssuesList(tag),
             null);
     }
 
-    // private List<string> GetWarningsForIssuesList(string tag)
-    // {
-    //     
-    //     
-    // }
+    private static List<string> GetWarningsForIssuesList(string tag)
+    {
+        List<string> warnings = new List<string>();
+        if (WarningManager.HighReaderUsageWarnings.ContainsKey(tag))
+        {
+            warnings.Add(WarningManager.HighReaderUsageWarnings[tag][0].Message);
+        }
+        
+        return warnings;
+    }
 }

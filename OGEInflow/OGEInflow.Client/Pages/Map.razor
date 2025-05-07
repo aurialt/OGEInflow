@@ -24,7 +24,8 @@
             <MudImage Class="@MapFilterClass" Src="img/facility.png"></MudImage>
             @if (ShowPanels)
             {
-                <Panel Label="3-50" Top="100px" Left="100px" OnClick="@(() => EditMapPopup("test", "test", null, null))"/>
+                <Panel Label="3-50" Top="100px" Left="100px" OnClick="@(() => EditMapPopup("test", "test",
+                    null, null))"/>
                 <Panel Label="182" Top="100px" Left="200px" OnClick="@(() => Panel.PanelSetMapPopup("182"))"/>
             }
             @if (ShowReaders)
