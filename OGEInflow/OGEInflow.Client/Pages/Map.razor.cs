@@ -84,14 +84,12 @@ public partial class Map : ComponentBase
         return 0;
     }
     
-    public static string GetColorFromValue(double value)
+    public static string GetColorFromGradientRatioValue(double value)
     {
-        // Normalize value between 0 and 1
         value = Math.Clamp(value, 0.0, 1.0);
-
-        // Example: Gradient from red (bad) to green (good)
-        int r = (int)(255 * (1 - value));
-        int g = (int)(255 * value);
+        
+        int r = (int)(255 * value);
+        int g = (int)(255 * (1 - value));
         int b = 0;
     
         Console.Write($" Ratio: {value} rgb: ({r}, {g}, {b})");

@@ -14,7 +14,7 @@ public partial class Pin : ComponentBase
 
     [Parameter] public string Right { get; set; } = "0px";
 
-     private string PinColor { get; set; } = "rgb(42, 121, 19);";
+     private string PinColor { get; set; } = "rgb(50, 189, 211);";
      
     public string Color { get; set; } = "";
     private string label = "";
@@ -29,7 +29,7 @@ public partial class Pin : ComponentBase
         set
         {
             label = value;
-            Color = Map.GetColorFromValue(Map.GetGradientRatio(Label, ReaderEvent.ReaderIDDict, Settings.ReaderThreshold));
+            Color = Map.GetColorFromGradientRatioValue(Map.GetGradientRatio(Label, ReaderEvent.ReaderIDDict, Settings.ReaderThreshold));
         }
     }
     

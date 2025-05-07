@@ -50,14 +50,14 @@
     transition: background-color 0.3s;
 }
 
-.legend-square.map-panel {
-    background-color: red;
+.legend-square.reader {
+    background-color: rgb(50, 189, 211);
 }
 
-.legend-square.reader {
-    background-color: green;
+.legend-square.map-panel  {
+    background-color: rgb(201, 61, 255);
 }
 
 .legend-square.hotpoint {
-    background-color: purple;
+    background-color: #ff6a00;
 }

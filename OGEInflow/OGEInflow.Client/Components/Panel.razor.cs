@@ -19,7 +19,7 @@ public partial class Panel : ComponentBase
     [Parameter]
     public string Right { get; set; } = "0px";
 
-    [Parameter] public string PanelColor { get; set; } = "#ff0000";
+    [Parameter] public string PanelColor { get; set; } = "rgb(201, 61, 255);";
 
     public string Color { get; set; } = "";
     private string label = "";
@@ -34,7 +34,7 @@ public partial class Panel : ComponentBase
         set
         {
             label = value;
-            Color = Map.GetColorFromValue(Map.GetGradientRatio(label, ReaderEvent.MachineDict, Settings.PanelThreshold));
+            Color = Map.GetColorFromGradientRatioValue(Map.GetGradientRatio(label, ReaderEvent.MachineDict, Settings.PanelThreshold));
         }
     }
 
@@ -51,7 +51,14 @@ public partial class Panel : ComponentBase
     {
         Map.EditMapPopup(tag,
             Map.GetUsage(tag, ReaderEvent.MachineDict, Settings.PanelThreshold),
-            null,
+            GetWarningsForIssuesList(tag),
             null);
+    }
+
+    private static List<string> GetWarningsForIssuesList(string tag)
+    {
+        List<string> warnings = new List<string>();
+        
+        return warnings;
     }
 }

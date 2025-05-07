@@ -24,15 +24,11 @@
             <MudImage Class="@MapFilterClass" Src="img/facility.png"></MudImage>
             @if (ShowPanels)
             {
-                <Panel Label="3-50" Top="100px" Left="100px" OnClick="@(() => EditMapPopup("test", "test",
-                    null, null))"/>
                 <Panel Label="182" Top="100px" Left="200px" OnClick="@(() => Panel.PanelSetMapPopup("182"))"/>
             }
             @if (ShowReaders)
             {
                 <Pin Label="17-182" Top="100px" Left="40px" OnClick="@(() => Pin.ReaderSetMapPopup("17-182"))"/>
-                
-                <Pin Label="4-40" Top="300px" Left="70px" OnClick="@(() => EditMapPopup("test", "test", null, null))"/>
             }
             
             
