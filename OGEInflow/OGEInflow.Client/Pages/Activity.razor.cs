@@ -35,8 +35,7 @@ namespace OGEInflow.Client.Pages
         
         /* Count variables */
         private static int PersonCountFromFilter { get; set; }
-
-        // private int avgUniquePeople;
+        
         private int AvgUniquePeople
         {
             get
@@ -48,6 +47,7 @@ namespace OGEInflow.Client.Pages
                 return PersonCountFromFilter;
             }
         }
+        
 
         protected override async Task OnInitializedAsync()
         {
@@ -221,7 +221,7 @@ namespace OGEInflow.Client.Pages
 
         private static Task createRankedPersonIDGraphAsync()
         {
-            var personIDDict = GroupEventsByKey(re => re.ID);
+            var personIDDict = GroupEventsByKey(re => $"{re.ID.Substring(0,12)}...");
             var rankedPersonIDGraph = GetTopRanked(personIDDict, 5);
             
             //Updates PersonCounter
