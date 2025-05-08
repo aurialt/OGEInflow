@@ -55,12 +55,13 @@
         </div>
     </div>
 
-    <div class="nav-group-container">
-        <MudNavGroup Title="Location" Icon="@Icons.Material.Filled.Place">
-            <MudNavLink Href="map.html">Map</MudNavLink>
-            <MudNavLink Href="contact.html">Contact Info</MudNavLink>
-        </MudNavGroup>
-    </div>
+    <MudSpacer></MudSpacer>
+    @* <div class="nav-group-container"> *@
+    @*     <MudNavGroup Title="Location" Icon="@Icons.Material.Filled.Place"> *@
+    @*         <MudNavLink Href="map.html">Map</MudNavLink> *@
+    @*         <MudNavLink Href="contact.html">Contact Info</MudNavLink> *@
+    @*     </MudNavGroup> *@
+    @* </div> *@
 </div>
 
 
@@ -72,13 +73,40 @@
         <MudPaper Class="pa-4">
             <MudText Typo="Typo.h5">Warning Flags</MudText>
             <div class="warning-container">
-                <MudImage Src="img/warning.png" Class="warning-container-image" />
-                <MudText Typo="Typo.h6">@WarningManager.FlattenedPastReaderThresholdWarnings.Count() counts of high scanner usage</MudText>
+                <MudImage Src="@(WarningManager.FlattenedDoubleScanWarnings.Any() ? "img/warning.png" : "img/checkmark.png")" Class="warning-container-image" />
+                <MudText Typo="Typo.h6">@WarningManager.FlattenedDoubleScanWarnings.Count() counts of person double scans</MudText>
             </div>
+
             <div class="warning-container">
-                <MudImage Src="img/warning.png" Class="warning-container-image" />
-                <MudText Typo="Typo.h6">@WarningManager.FlattenedDoubleScanWarnings.Count() counts of double scans</MudText>
+                <MudImage Src="@(WarningManager.FlattenedPastReaderThresholdWarnings.Any() ? "img/warning.png" : "img/checkmark.png")" Class="warning-container-image" />
+                <MudText Typo="Typo.h6">@WarningManager.FlattenedPastReaderThresholdWarnings.Count() readers past usage threshold</MudText>
             </div>
+
+            <div class="warning-container">
+                <MudImage Src="@(WarningManager.FlattenedNearReaderThresholdWarnings.Any() ? "img/warning.png" : "img/checkmark.png")" Class="warning-container-image" />
+                <MudText Typo="Typo.h6">@WarningManager.FlattenedNearReaderThresholdWarnings.Count() counts near reader usage threshold</MudText>
+            </div>
+
+            <div class="warning-container">
+                <MudImage Src="@(WarningManager.FlattenedPastPanelThresholdWarnings.Any() ? "img/warning.png" : "img/checkmark.png")" Class="warning-container-image" />
+                <MudText Typo="Typo.h6">@WarningManager.FlattenedPastPanelThresholdWarnings.Count() panels past usage threshold</MudText>
+            </div>
+
+            <div class="warning-container">
+                <MudImage Src="@(WarningManager.FlattenedNearPanelThresholdWarnings.Any() ? "img/warning.png" : "img/checkmark.png")" Class="warning-container-image" />
+                <MudText Typo="Typo.h6">@WarningManager.FlattenedNearPanelThresholdWarnings.Count() panels near usage threshold</MudText>
+            </div>
+
+            <div class="warning-container">
+                <MudImage Src="@(WarningManager.FlattenedReaderDoubleScanThresholdWarnings.Any() ? "img/warning.png" : "img/checkmark.png")" Class="warning-container-image" />
+                <MudText Typo="Typo.h6">@WarningManager.FlattenedReaderDoubleScanThresholdWarnings.Count() readers excessively having double scans</MudText>
+            </div>
+
+            <div class="warning-container">
+                <MudImage Src="@(WarningManager.FlattenedOutsideUseHourWarnings.Any() ? "img/warning.png" : "img/checkmark.png")" Class="warning-container-image" />
+                <MudText Typo="Typo.h6">@WarningManager.FlattenedOutsideUseHourWarnings.Count() scans outside allowed hours</MudText>
+            </div>
+
         </MudPaper>
     </MudItem>
 
