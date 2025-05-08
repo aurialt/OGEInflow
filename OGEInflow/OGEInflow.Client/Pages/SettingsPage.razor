@@ -76,7 +76,7 @@
     {
         Settings.ReaderDoubleScanThreshold = value;
         WarningManager.ReaderDoubleScanThresholdWarnings.Clear();
-        WarningManager.GenerateReaderDoubleScanThresholdWarnings(ReaderEvent.ReaderIDDict, value);
+        WarningManager.GenerateReaderDoubleScanThresholdWarnings(WarningManager.ReaderDoubleScanThresholdWarnings, value);
     }
 
     private async Task UpdateIsOpenAllDay(bool value)

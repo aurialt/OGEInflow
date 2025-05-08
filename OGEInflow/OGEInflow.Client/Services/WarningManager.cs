@@ -32,7 +32,7 @@ namespace OGEInflow.Client.Services
             GenerateThresholdWarnings(ReaderEvent.ReaderIDDict, Settings.ReaderNearThreshold, WarningType.NearReaderThreshold);
             GenerateThresholdWarnings(ReaderEvent.MachineDict, Settings.PanelThreshold, WarningType.PastPanelThreshold);
             GenerateThresholdWarnings(ReaderEvent.MachineDict, Settings.PanelNearThreshold, WarningType.NearPanelThreshold);
-            GenerateReaderDoubleScanThresholdWarnings(ReaderEvent.ReaderIDDict, Settings.ReaderDoubleScanThreshold);
+            GenerateReaderDoubleScanThresholdWarnings(ReaderDoubleScanThresholdWarnings, Settings.ReaderDoubleScanThreshold);
             if (!Settings.isOpenAllDay)
                 GenerateOutsideUseHourWarnings(ReaderEvent.PersonIDDict, Settings.OpeningTime, Settings.ClosingTime);
         }
@@ -146,13 +146,13 @@ namespace OGEInflow.Client.Services
                         Timestamp = DateTime.Now,
                         PersonID = "", // N/A
                         ReaderId = readerId,
-                        Message = $"Reader {readerId} had {events.Count} scans (>{threshold})."
+                        Message = $"Reader {readerId} had {events.Count} scans. Schedule maintenance."
                     });
                 }
             }
         }
         
-        public static void GenerateReaderDoubleScanThresholdWarnings(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
+        public static void GenerateReaderDoubleScanThresholdWarnings(Dictionary<string, List<Warning>> sourceData, int threshold)
         {
             foreach (var (readerId, events) in sourceData)
             {
@@ -166,7 +166,7 @@ namespace OGEInflow.Client.Services
                         Timestamp = DateTime.Now,
                         PersonID = "", // N/A
                         ReaderId = readerId,
-                        Message = $"Reader {readerId} had {events.Count} scans (>{threshold}). Check for issues in reader"
+                        Message = $"Reader {readerId} had several double scans: {events.Count} (>{threshold}). Check for issues in reader."
                     });
                 }
             }
