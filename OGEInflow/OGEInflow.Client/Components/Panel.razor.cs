@@ -59,6 +59,15 @@ public partial class Panel : ComponentBase
     {
         List<string> warnings = new List<string>();
         
+        if(WarningManager.PastPanelThresholdWarnings.ContainsKey(tag))
+        {
+            warnings.AddRange(WarningManager.PastPanelThresholdWarnings[tag][0].Message);
+        }
+        else if (WarningManager.NearPanelThresholdWarnings.ContainsKey(tag))
+        {
+            warnings.AddRange(WarningManager.NearPanelThresholdWarnings[tag][0].Message);
+        }
+        
         return warnings;
     }
 }

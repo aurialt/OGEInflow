@@ -14,7 +14,11 @@ public class Warning
 public enum WarningType
 {
     DoubleScan,
-    HighReaderUsage,
+    PastReaderThreshold,
+    NearReaderThreshold,
+    PastPanelThreshold,
+    NearPanelThreshold,
+    ReaderDoubleScanThreshold, 
     OutsideUseHours
 }
 

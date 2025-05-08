@@ -51,9 +51,18 @@ public partial class Pin : ComponentBase
     private static List<string> GetWarningsForIssuesList(string tag)
     {
         List<string> warnings = new List<string>();
-        if (WarningManager.HighReaderUsageWarnings.ContainsKey(tag))
+        if (WarningManager.PastReaderThresholdWarnings.ContainsKey(tag))
         {
-            warnings.Add(WarningManager.HighReaderUsageWarnings[tag][0].Message);
+            warnings.Add(WarningManager.PastReaderThresholdWarnings[tag][0].Message);
+        }
+        else if (WarningManager.NearReaderThresholdWarnings.ContainsKey(tag))
+        {
+            warnings.Add(WarningManager.NearReaderThresholdWarnings[tag][0].Message);
+        }
+
+        if (WarningManager.ReaderDoubleScanThresholdWarnings.ContainsKey(tag))
+        {
+            warnings.Add(WarningManager.ReaderDoubleScanThresholdWarnings[tag][0].Message);
         }
         
         return warnings;
