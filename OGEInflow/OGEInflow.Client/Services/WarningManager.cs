@@ -189,7 +189,7 @@ namespace OGEInflow.Client.Services
                             Severity = WarningSeverity.Low,
                             Timestamp = ev.EventTime,
                             PersonID = ev.ID,
-                            ReaderId = ev.DEVID,
+                            ReaderId = ev.ReaderID,
                             Message = $"Use at {ev.EventTime} outside allowed hours ({startHour}–{endHour})."
                         });
                     }
