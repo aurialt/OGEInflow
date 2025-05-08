@@ -28,12 +28,13 @@ namespace OGEInflow.Client.Services
         public static void LoadWarnings()
         {
             GenerateDoubleScanWarnings(ReaderEvent.PersonIDDict);
-            GeneratePastReaderThresholdWarnings(ReaderEvent.ReaderIDDict, Settings.ReaderThreshold);
-            GenerateNearReaderThresholdWarnings(ReaderEvent.ReaderIDDict, Settings.ReaderNearThreshold);
-            GeneratePastPanelThresholdWarnings(ReaderEvent.MachineDict, Settings.PanelThreshold);
-            GenerateNearPanelThresholdWarnings(ReaderEvent.MachineDict, Settings.PanelNearThreshold);
+            GenerateThresholdWarnings(ReaderEvent.ReaderIDDict, Settings.ReaderThreshold, WarningType.PastReaderThreshold);
+            GenerateThresholdWarnings(ReaderEvent.ReaderIDDict, Settings.ReaderNearThreshold, WarningType.NearReaderThreshold);
+            GenerateThresholdWarnings(ReaderEvent.MachineDict, Settings.PanelThreshold, WarningType.PastPanelThreshold);
+            GenerateThresholdWarnings(ReaderEvent.MachineDict, Settings.PanelNearThreshold, WarningType.NearPanelThreshold);
             GenerateReaderDoubleScanThresholdWarnings(ReaderEvent.ReaderIDDict, Settings.ReaderDoubleScanThreshold);
-            GenerateOutsideUseHourWarnings(ReaderEvent.PersonIDDict);
+            if (!Settings.isOpenAllDay)
+                GenerateOutsideUseHourWarnings(ReaderEvent.PersonIDDict, Settings.OpeningTime, Settings.ClosingTime);
         }
         
         public static void ClearWarnings()
@@ -99,7 +100,7 @@ namespace OGEInflow.Client.Services
             }
         }
 
-        private static void GenerateDoubleScanWarnings(Dictionary<string, List<ReaderEvent>> sourceData)
+        public static void GenerateDoubleScanWarnings(Dictionary<string, List<ReaderEvent>> sourceData)
         {
             foreach (var (personId, events) in sourceData)
             {
@@ -129,9 +130,10 @@ namespace OGEInflow.Client.Services
             }
         }
 
-        private static void GeneratePastReaderThresholdWarnings(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
+        public static void GenerateThresholdWarnings(Dictionary<string, List<ReaderEvent>> sourceData, int threshold,
+            WarningType type)
         {
-            //For future reference, could make this dependent on NearReaders to make it more efficient & better performance
+            //For future reference, could make Past Calls dependent on near to make it more efficient & better performance
             foreach (var (readerId, events) in sourceData)
             {
                 if (events.Count > threshold)
@@ -139,7 +141,7 @@ namespace OGEInflow.Client.Services
                     AddWarning(new Warning
                     {
                         WarningID = Guid.NewGuid().ToString(),
-                        Type = WarningType.PastReaderThreshold,
+                        Type = type,
                         Severity = WarningSeverity.High,
                         Timestamp = DateTime.Now,
                         PersonID = "", // N/A
@@ -150,69 +152,7 @@ namespace OGEInflow.Client.Services
             }
         }
         
-        private static void GenerateNearReaderThresholdWarnings(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
-        {
-            foreach (var (readerId, events) in sourceData)
-            {
-                if (events.Count > threshold)
-                {
-                    AddWarning(new Warning
-                    {
-                        WarningID = Guid.NewGuid().ToString(),
-                        Type = WarningType.NearReaderThreshold,
-                        Severity = WarningSeverity.High,
-                        Timestamp = DateTime.Now,
-                        PersonID = "", // N/A
-                        ReaderId = readerId,
-                        Message = $"Reader {readerId} had {events.Count} scans (>{threshold})."
-                    });
-                }
-            }
-        }
-        
-        private static void GeneratePastPanelThresholdWarnings(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
-        {
-            //For future reference, could make this dependent on NearReaders to make it more efficient & better performance
-            foreach (var (readerId, events) in sourceData)
-            {
-                if (events.Count > threshold)
-                {
-                    AddWarning(new Warning
-                    {
-                        WarningID = Guid.NewGuid().ToString(),
-                        Type = WarningType.PastReaderThreshold,
-                        Severity = WarningSeverity.High,
-                        Timestamp = DateTime.Now,
-                        PersonID = "", // N/A
-                        ReaderId = readerId,
-                        Message = $"Reader {readerId} had {events.Count} scans (>{threshold})."
-                    });
-                }
-            }
-        }
-
-        
-        private static void GenerateNearPanelThresholdWarnings(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
-        {
-            foreach (var (readerId, events) in sourceData)
-            {
-                if (events.Count > threshold)
-                {
-                    AddWarning(new Warning
-                    {
-                        WarningID = Guid.NewGuid().ToString(),
-                        Type = WarningType.NearPanelThreshold,
-                        Severity = WarningSeverity.High,
-                        Timestamp = DateTime.Now,
-                        PersonID = "", // N/A
-                        ReaderId = readerId,
-                        Message = $"Reader {readerId} had {events.Count} scans (>{threshold})."
-                    });
-                }
-            }
-        }
-        
-        private static void GenerateReaderDoubleScanThresholdWarnings(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
+        public static void GenerateReaderDoubleScanThresholdWarnings(Dictionary<string, List<ReaderEvent>> sourceData, int threshold)
         {
             foreach (var (readerId, events) in sourceData)
             {
@@ -233,7 +173,7 @@ namespace OGEInflow.Client.Services
         }
         
 
-        private static void GenerateOutsideUseHourWarnings(Dictionary<string, List<ReaderEvent>> sourceData, int startHour = 6, int endHour = 20)
+        public static void GenerateOutsideUseHourWarnings(Dictionary<string, List<ReaderEvent>> sourceData, int startHour, int endHour)
         {
             foreach (var (personId, events) in sourceData)
             {

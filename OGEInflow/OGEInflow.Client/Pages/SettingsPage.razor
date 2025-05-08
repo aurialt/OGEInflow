@@ -1,0 +1,117 @@
+@page "/Settings"
+@using OGEInflow.Client.Services
+@using OGEInflow.Services
+<link rel="stylesheet" href="css/settingsPage.css" />
+<h3>Settings</h3>
+
+<MudPaper Class="settings-container" Elevation="2">
+    <MudText Typo="Typo.h5">Warning Threshold Settings</MudText>
+
+    <MudNumericField T="int" Value="@Settings.PanelThreshold" Label="Panel Threshold" Min="0"
+                     ValueChanged="UpdatePanelThreshold" />
+
+    <MudNumericField T="int" Value="@Settings.PanelNearThreshold" Label="Panel Near Threshold" Min="0"
+                     ValueChanged="UpdatePanelNearThreshold" />
+
+    <MudNumericField T="int" Value="@Settings.ReaderThreshold" Label="Reader Threshold" Min="0"
+                     ValueChanged="UpdateReaderThreshold" />
+
+    <MudNumericField T="int" Value="@Settings.ReaderNearThreshold" Label="Reader Near Threshold" Min="0"
+                     ValueChanged="UpdateReaderNearThreshold" />
+
+    <MudNumericField T="int" Value="@Settings.ReaderDoubleScanThreshold" Label="Reader Double Scan Threshold" Min="0"
+                     ValueChanged="UpdateReaderDoubleScanThreshold" />
+
+    <MudDivider />
+    <MudText Typo="Typo.h5">Open Hours Settings</MudText>
+
+    <MudSwitch T="bool" Checked="@Settings.isOpenAllDay"
+               CheckedChanged="UpdateIsOpenAllDay"
+               Color="Color.Primary"
+               Label="Open 24 Hours" />
+
+    @if (!Settings.isOpenAllDay)
+    {
+        <MudNumericField T="int" Value="@Settings.OpeningTime"
+                         Label="Opening Time (Hour)" Min="0" Max="23"
+                         ValueChanged="UpdateOpeningTime" />
+
+        <MudNumericField T="int" Value="@Settings.ClosingTime"
+                         Label="Closing Time (Hour)" Min="0" Max="23"
+                         ValueChanged="UpdateClosingTime" />
+    }
+</MudPaper>
+
+
+@code {
+    private async Task UpdatePanelThreshold(int value)
+    {
+        Settings.PanelThreshold = value;
+        WarningManager.PastPanelThresholdWarnings.Clear();
+        WarningManager.GenerateThresholdWarnings(ReaderEvent.MachineDict, value, WarningType.PastPanelThreshold);
+    }
+
+    private async Task UpdatePanelNearThreshold(int value)
+    {
+        Settings.PanelNearThreshold = value;
+        WarningManager.NearPanelThresholdWarnings.Clear();
+        WarningManager.GenerateThresholdWarnings(ReaderEvent.MachineDict, value, WarningType.NearPanelThreshold);
+    }
+
+    private async Task UpdateReaderThreshold(int value)
+    {
+        Settings.ReaderThreshold = value;
+        WarningManager.PastReaderThresholdWarnings.Clear();
+        WarningManager.GenerateThresholdWarnings(ReaderEvent.ReaderIDDict, value, WarningType.PastReaderThreshold);
+    }
+
+    private async Task UpdateReaderNearThreshold(int value)
+    {
+        Settings.ReaderNearThreshold = value;
+        WarningManager.NearReaderThresholdWarnings.Clear();
+        WarningManager.GenerateThresholdWarnings(ReaderEvent.ReaderIDDict, value, WarningType.NearReaderThreshold);
+    }
+
+    private async Task UpdateReaderDoubleScanThreshold(int value)
+    {
+        Settings.ReaderDoubleScanThreshold = value;
+        WarningManager.ReaderDoubleScanThresholdWarnings.Clear();
+        WarningManager.GenerateReaderDoubleScanThresholdWarnings(ReaderEvent.ReaderIDDict, value);
+    }
+
+    private async Task UpdateIsOpenAllDay(bool value)
+    {
+        Settings.isOpenAllDay = value;
+        WarningManager.OutsideUseHourWarnings.Clear();
+        if (!value)
+        {
+            WarningManager.GenerateOutsideUseHourWarnings(
+                ReaderEvent.PersonIDDict,
+                Settings.OpeningTime,
+                Settings.ClosingTime);
+        }
+        StateHasChanged();
+    }
+
+    private async Task UpdateOpeningTime(int value)
+    {
+        Settings.OpeningTime = value;
+        WarningManager.OutsideUseHourWarnings.Clear();
+        WarningManager.GenerateOutsideUseHourWarnings(
+            ReaderEvent.PersonIDDict,
+            value,
+            Settings.ClosingTime);
+    }
+
+    private async Task UpdateClosingTime(int value)
+    {
+        Settings.ClosingTime = value;
+        WarningManager.OutsideUseHourWarnings.Clear();
+        WarningManager.GenerateOutsideUseHourWarnings(
+            ReaderEvent.PersonIDDict,
+            Settings.OpeningTime,
+            value);
+    }
+}
+
+}

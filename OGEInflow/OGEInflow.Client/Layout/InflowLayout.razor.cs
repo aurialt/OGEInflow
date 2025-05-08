@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 namespace OGEInflow.Client.Layout;
 
@@ -6,7 +7,15 @@ public partial class InflowLayout
     private bool _drawerOpen = false;
     private bool _isDarkMode = true;
     private MudTheme? _theme = null;
+    
+    [Inject]
+    NavigationManager Navigation { get; set; }
 
+    private void GoToSettings()
+    {
+        Navigation.NavigateTo("/Settings");
+        
+    }
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -73,4 +82,6 @@ public partial class InflowLayout
         true => Icons.Material.Rounded.AutoMode,
         false => Icons.Material.Outlined.DarkMode,
     };
+    
+
 }
